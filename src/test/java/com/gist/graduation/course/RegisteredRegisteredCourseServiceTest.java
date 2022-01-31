@@ -6,22 +6,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
-class CourseServiceTest {
+class RegisteredRegisteredCourseServiceTest {
 
     @Autowired
-    private CourseService courseService;
+    private RegisteredCourseService registeredCourseService;
 
     @Test
     void addCourseList() throws IOException {
-        courseService.addCourseList();
+        registeredCourseService.addCourseList();
     }
 
     @Test
-    void getEnglishTest(){
-        courseService.getLanguage();
+    void getEnglishTest() {
+        registeredCourseService.getLanguage();
     }
 
 

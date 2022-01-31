@@ -1,7 +1,6 @@
 package com.gist.graduation.utils;
 
-import com.gist.graduation.course.CoreCourseInfo;
-import com.gist.graduation.course.Course;
+import com.gist.graduation.course.RegisteredCourse;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -27,15 +26,15 @@ public class CourseListParser {
     public static final int CREDIT_CELL_NUMBER = 11;
 
     @Bean
-    public List<Course> getCourseList() throws IOException {
+    public List<RegisteredCourse> getCourseList() throws IOException {
         ClassPathResource undergraduateResource = new ClassPathResource("course-information/course_information_undergraduate.xls");
         ClassPathResource graduateResource = new ClassPathResource("course-information/course_information_graduate.xls");
-        List<Course> undergradCourses = parseCourseExcelFile(undergraduateResource);
-        List<Course> gradCourses = parseCourseExcelFile(graduateResource);
-        for (Course undergradCours : undergradCourses) {
-            for (Course gradCours : gradCourses) {
-                if (gradCours.getYear() == undergradCours.getYear() && gradCours.getSemester().equals(undergradCours.getSemester())){
-                    undergradCours.getCoreCourseInfos().addAll(gradCours.getCoreCourseInfos());
+        List<RegisteredCourse> undergradCourses = parseCourseExcelFile(undergraduateResource);
+        List<RegisteredCourse> gradCourses = parseCourseExcelFile(graduateResource);
+        for (RegisteredCourse undergradCours : undergradCourses) {
+            for (RegisteredCourse gradCours : gradCourses) {
+                if (gradCours.getYear() == undergradCours.getYear() && gradCours.getSemester().equals(undergradCours.getSemester())) {
+                    undergradCours.getCourses().addAll(gradCours.getCourses());
                 }
             }
         }
@@ -43,7 +42,7 @@ public class CourseListParser {
         return undergradCourses;
     }
 
-    private List<Course> parseCourseExcelFile(ClassPathResource resource) throws IOException {
+    private List<RegisteredCourse> parseCourseExcelFile(ClassPathResource resource) throws IOException {
         File file = resource.getFile();
         Workbook workbook = new HSSFWorkbook(new FileInputStream(file));
         Sheet sheet = workbook.getSheetAt(0);
@@ -51,8 +50,8 @@ public class CourseListParser {
 
         int year = 0;
         String semester = "";
-        Course course = null;
-        List<Course> result = new ArrayList<>();
+        RegisteredCourse registeredCourse = null;
+        List<RegisteredCourse> result = new ArrayList<>();
 
         for (Row row : sheet) {
             if (!row.getCell(INDEX).getStringCellValue().matches("[0-9]+")) {
@@ -65,24 +64,15 @@ public class CourseListParser {
             if (year != Integer.parseInt(yearString) || !semester.equals(semesterString)) {
                 year = Integer.parseInt(yearString);
                 semester = semesterString;
-                course = new Course(year, semester, new ArrayList<>());
-                result.add(course);
+                registeredCourse = new RegisteredCourse(year, semester, new ArrayList<>());
+                result.add(registeredCourse);
             }
 
-//            System.out.print(" " + row.getCell(YEAR_CELL_NUMBER));
-//            System.out.print(" " + row.getCell(SEMESTER_CELL_NUMBER));
-            String courseIndex = row.getCell(INDEX).getStringCellValue();
             String courseCode = row.getCell(CODE_CELL_NUMBER).getStringCellValue().split("-")[0];
-//            System.out.print(" " + courseCode);
             String courseName = row.getCell(COUSER_NAME_CELL_NUMBER).getStringCellValue();
-//            System.out.print(" " + courseName);
             String creditString = row.getCell(CREDIT_CELL_NUMBER).getStringCellValue();
-            creditString = creditString.substring(creditString.length()-1);
-//            System.out.print(" " + creditString);
-//            System.out.println();
-            course.getCoreCourseInfos().add(new CoreCourseInfo(courseIndex, courseCode,courseName,Integer.parseInt(creditString)));
+            creditString = creditString.substring(creditString.length() - 1);
         }
-//        System.out.println(course);
         return result;
     }
 

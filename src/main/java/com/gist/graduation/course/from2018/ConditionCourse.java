@@ -7,7 +7,7 @@ import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @ToString
@@ -22,5 +22,6 @@ public class ConditionCourse {
 
     private int totalCredit;
 
-    private List<Course> courses;
+    private Set<Course> courses;
+
 }

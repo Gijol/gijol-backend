@@ -10,23 +10,35 @@ class CourseListPrinterTest {
 
     private CourseListPrinter courseListPrinter;
     private CourseListParser courseListParser;
+    private List<RegisteredCourse> courseList;
 
     @BeforeEach
-    void setup() {
+    void setup() throws IOException{
         courseListParser = new CourseListParser();
         courseListPrinter = new CourseListPrinter();
+        courseList = courseListParser.getCourseList();
     }
 
     @Test
-    void englishPrinterTest() throws IOException {
-        List<RegisteredCourse> courseList = courseListParser.getCourseList();
+    void englishPrinterTest() {
         courseListPrinter.printCoreEnglishCourses(courseList);
     }
 
     @Test
-    void writingPrinterTest() throws IOException {
-        List<RegisteredCourse> courseList = courseListParser.getCourseList();
+    void writingPrinterTest(){
         courseListPrinter.printCoreWritingClass(courseList);
+    }
+
+    @Test
+    void calculusPrinterTest(){
+        courseListPrinter.printCalculusClass(courseList);
+    }
+
+    @Test
+    void coreMathTest() {
+        courseListPrinter.printClassByCreditAndName(courseList, "다변수", 3);
+        courseListPrinter.printClassByCreditAndName(courseList, "선형대수학", 3);
+        courseListPrinter.printClassByCreditAndName(courseList, " 미분방정식", 3);
     }
 
 }

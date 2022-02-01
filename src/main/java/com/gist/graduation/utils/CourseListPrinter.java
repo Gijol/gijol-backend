@@ -32,6 +32,26 @@ public class CourseListPrinter {
         }
     }
 
+    public void printCalculusClass(List<RegisteredCourse> registeredCourseList){
+        Set<RegisteredCourse> writingConditionCourse = registeredCourseList.stream()
+                .filter(s -> s.getName().contains("미적분"))
+                .filter(s -> s.getCredit() == 3)
+                .collect(Collectors.toSet());
+        for (RegisteredCourse registeredCourse : writingConditionCourse) {
+            printCoursePretty(registeredCourse);
+        }
+    }
+
+    public void printClassByCreditAndName(List<RegisteredCourse> registeredCourseList, String name, int credit){
+        Set<RegisteredCourse> conditionCourse = registeredCourseList.stream()
+                .filter(s -> s.getName().contains(name))
+                .filter(s -> s.getCredit() == credit)
+                .collect(Collectors.toSet());
+        for (RegisteredCourse registeredCourse : conditionCourse) {
+            printCoursePretty(registeredCourse);
+        }
+    }
+
     private void printCoursePretty(RegisteredCourse registeredCourse) {
         System.out.printf("\"%s\", ", registeredCourse.getName());
         System.out.printf("\"%s\", ", registeredCourse.getCode());

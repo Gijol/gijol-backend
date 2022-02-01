@@ -1,12 +1,8 @@
 package com.gist.graduation.utils;
 
-import com.gist.graduation.course.Course;
-import com.gist.graduation.course.RegisteredCourse;
-import com.gist.graduation.course.RegisteredCourseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,31 +11,32 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CourseListPrinter {
 
-    private final RegisteredCourseRepository registeredCourseRepository;
-
-    private Set<Course> getCoreEnglishCourses(List<RegisteredCourse> registeredCourseList) {
-        Set<Course> englishConditionCourse = new HashSet<>();
-        for (RegisteredCourse registeredCourse : registeredCourseList) {
-            List<Course> registeredEnglishCourses = registeredCourse.getCourses().stream()
-                    .filter(s -> s.getName().contains("영어 Ⅰ") || s.getName().contains("영어 II"))
-                    .filter(s -> s.getCode().contains("GS1") || s.getCode().contains("GS2"))
-                    .filter(s -> s.getCredit() == 2)
-                    .collect(Collectors.toList());
-            englishConditionCourse.addAll(registeredEnglishCourses);
+    public void printCoreEnglishCourses(List<RegisteredCourse> registeredCourseList) {
+        Set<RegisteredCourse> englishConditionCourse = registeredCourseList.stream()
+                .filter(s -> s.getName().contains("영어 Ⅰ") || s.getName().contains("영어 II"))
+                .filter(s -> s.getCode().contains("GS1") || s.getCode().contains("GS2"))
+                .filter(s -> s.getCredit() == 2)
+                .collect(Collectors.toSet());
+        for (RegisteredCourse registeredCourse : englishConditionCourse) {
+            printCoursePretty(registeredCourse);
         }
-        return englishConditionCourse;
     }
 
-    private Set<Course> getCoreWritingClass(List<RegisteredCourse> registeredCourseList) {
-        Set<Course> writingConditionCourse = new HashSet<>();
-        for (RegisteredCourse registeredCourse : registeredCourseList) {
-            List<Course> registeredEnglishCourses = registeredCourse.getCourses().stream()
-                    .filter(s -> s.getName().contains("글쓰기"))
-                    .filter(s -> s.getCredit() == 3)
-                    .collect(Collectors.toList());
-            writingConditionCourse.addAll(registeredEnglishCourses);
+    public void printCoreWritingClass(List<RegisteredCourse> registeredCourseList) {
+        Set<RegisteredCourse> writingConditionCourse = registeredCourseList.stream()
+                .filter(s -> s.getName().contains("글쓰기"))
+                .filter(s -> s.getCredit() == 3)
+                .collect(Collectors.toSet());
+        for (RegisteredCourse course : writingConditionCourse) {
+            printCoursePretty(course);
         }
-        return writingConditionCourse;
+    }
+
+    private void printCoursePretty(RegisteredCourse registeredCourse) {
+        System.out.printf("\"%s\", ", registeredCourse.getName());
+        System.out.printf("\"%s\", ", registeredCourse.getCode());
+        System.out.printf("\"%s\"\n", registeredCourse.getCredit());
+
     }
 
 

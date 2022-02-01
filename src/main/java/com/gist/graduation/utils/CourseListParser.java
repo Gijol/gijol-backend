@@ -1,6 +1,5 @@
 package com.gist.graduation.utils;
 
-import com.gist.graduation.course.RegisteredCourse;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -22,23 +21,18 @@ public class CourseListParser {
     public static final int YEAR_CELL_NUMBER = 1;
     public static final int SEMESTER_CELL_NUMBER = 2;
     public static final int CODE_CELL_NUMBER = 4;
-    public static final int COUSER_NAME_CELL_NUMBER = 5;
+    public static final int COURSE_NAME_CELL_NUMBER = 5;
+    public static final int COURSE_TYPE_CELL_NUMBER = 6;
+    public static final int LIBERART_TYPE_CELL_NUMBER = 7;
     public static final int CREDIT_CELL_NUMBER = 11;
 
     @Bean
     public List<RegisteredCourse> getCourseList() throws IOException {
-        ClassPathResource undergraduateResource = new ClassPathResource("course-information/course_information_undergraduate.xls");
-        ClassPathResource graduateResource = new ClassPathResource("course-information/course_information_graduate.xls");
+        ClassPathResource undergraduateResource = new ClassPathResource("/course-information/course_information_undergraduate.xls");
+        ClassPathResource graduateResource = new ClassPathResource("/course-information/course_information_graduate.xls");
         List<RegisteredCourse> undergradCourses = parseCourseExcelFile(undergraduateResource);
-        List<RegisteredCourse> gradCourses = parseCourseExcelFile(graduateResource);
-        for (RegisteredCourse undergradCours : undergradCourses) {
-            for (RegisteredCourse gradCours : gradCourses) {
-                if (gradCours.getYear() == undergradCours.getYear() && gradCours.getSemester().equals(undergradCours.getSemester())) {
-                    undergradCours.getCourses().addAll(gradCours.getCourses());
-                }
-            }
-        }
-
+//        List<RegisteredCourse> gradCourses = parseCourseExcelFile(graduateResource);
+//        undergradCourses.add
         return undergradCourses;
     }
 
@@ -48,32 +42,28 @@ public class CourseListParser {
         Sheet sheet = workbook.getSheetAt(0);
         removeDuplicate(sheet);
 
-        int year = 0;
-        String semester = "";
-        RegisteredCourse registeredCourse = null;
-        List<RegisteredCourse> result = new ArrayList<>();
+        List<RegisteredCourse> registeredCourses = new ArrayList<>();
 
         for (Row row : sheet) {
             if (!row.getCell(INDEX).getStringCellValue().matches("[0-9]+")) {
                 continue;
             }
 
+            String indexString = row.getCell(INDEX).getStringCellValue();
             String yearString = row.getCell(YEAR_CELL_NUMBER).getStringCellValue();
             String semesterString = row.getCell(SEMESTER_CELL_NUMBER).getStringCellValue();
-
-            if (year != Integer.parseInt(yearString) || !semester.equals(semesterString)) {
-                year = Integer.parseInt(yearString);
-                semester = semesterString;
-                registeredCourse = new RegisteredCourse(year, semester, new ArrayList<>());
-                result.add(registeredCourse);
-            }
-
             String courseCode = row.getCell(CODE_CELL_NUMBER).getStringCellValue().split("-")[0];
-            String courseName = row.getCell(COUSER_NAME_CELL_NUMBER).getStringCellValue();
+            String courseName = row.getCell(COURSE_NAME_CELL_NUMBER).getStringCellValue();
+            String courseType = row.getCell(COURSE_TYPE_CELL_NUMBER).getStringCellValue();
             String creditString = row.getCell(CREDIT_CELL_NUMBER).getStringCellValue();
             creditString = creditString.substring(creditString.length() - 1);
+            RegisteredCourse registeredCourse = new RegisteredCourse(indexString, Integer.parseInt(yearString), semesterString, courseType, courseName, courseCode, Integer.parseInt(creditString));
+            if (row.getCell(LIBERART_TYPE_CELL_NUMBER) != null) {
+                registeredCourse.setLiberalArtType(row.getCell(LIBERART_TYPE_CELL_NUMBER).getStringCellValue());
+            }
+            registeredCourses.add(registeredCourse);
         }
-        return result;
+        return registeredCourses;
     }
 
     private void removeDuplicate(Sheet sheet) {

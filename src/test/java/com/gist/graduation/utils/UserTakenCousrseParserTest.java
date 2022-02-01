@@ -1,11 +1,12 @@
 package com.gist.graduation.utils;
 
-import com.gist.graduation.user.taken_course.TakenCourse;
+import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
-import java.util.List;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class UserTakenCousrseParserTest {
 
@@ -13,8 +14,17 @@ class UserTakenCousrseParserTest {
     void UserTakenCourseParserTest() throws IOException {
         ClassPathResource gradeResource = new ClassPathResource("test-grade/grade_report.xls");
         UserTakenCousrseParser userTakenCousrseParser = new UserTakenCousrseParser();
-        List<TakenCourse> takenCourses = userTakenCousrseParser.parseUserTakenCousrse(gradeResource.getFile());
-        System.out.println(takenCourses);
+        UserTakenCoursesList takenCourses = userTakenCousrseParser.parseUserTakenCousrse(gradeResource.getFile());
+        takenCourses.getTakenCourses().forEach(System.out::println);
+    }
+
+
+    @Test
+    public void getStdIdTest() throws IOException {
+        ClassPathResource gradeResource = new ClassPathResource("test-grade/grade_report.xls");
+        UserTakenCousrseParser userTakenCousrseParser = new UserTakenCousrseParser();
+        Integer studentId = userTakenCousrseParser.getStudentId(gradeResource.getFile());
+        assertThat(studentId).isEqualTo(20);
     }
 
 }

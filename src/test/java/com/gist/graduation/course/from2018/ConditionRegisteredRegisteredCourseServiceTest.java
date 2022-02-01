@@ -1,6 +1,7 @@
 package com.gist.graduation.course.from2018;
 
-import org.junit.jupiter.api.Test;
+import com.gist.graduation.requirment.domain.GraduationRequirementStatusRepository;
+import com.gist.graduation.utils.UserTakenCousrseParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -8,10 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 class ConditionRegisteredRegisteredCourseServiceTest {
 
     @Autowired
-    private ConditionCourseService conditionCourseService;
+    private UserTakenCousrseParser userTakenCousrseParser;
 
-    @Test
-    void getLanguage() {
-        conditionCourseService.getLanguage();
-    }
+    @Autowired
+    private GraduationRequirementStatusRepository graduationRequirementStatusRepository;
+
+
 }

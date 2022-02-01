@@ -1,6 +1,7 @@
 package com.gist.graduation.utils;
 
 import com.gist.graduation.user.taken_course.TakenCourse;
+import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -22,7 +23,7 @@ public class UserTakenCousrseParser {
     public static final int CREDIT_CELL_NUM = 4;
     public static final int GRADE_CELL_NUM = 5;
 
-    public List<TakenCourse> parseUserTakenCousrse(File file) throws IOException {
+    public UserTakenCoursesList parseUserTakenCousrse(File file) throws IOException {
         Workbook workbook = new HSSFWorkbook(new FileInputStream(file));
         Sheet sheet = workbook.getSheetAt(0);
 
@@ -47,7 +48,16 @@ public class UserTakenCousrseParser {
 
             addTakenCourse(courseArray, year, semester, row);
         }
-        return courseArray;
+        return new UserTakenCoursesList(courseArray);
+    }
+
+    public Integer getStudentId(File file) throws IOException {
+        Workbook workbook = new HSSFWorkbook(new FileInputStream(file));
+        Sheet sheet = workbook.getSheetAt(0);
+        // row 1 and cell 0 is filled with student id in grade.
+        String studentId = sheet.getRow(1).getCell(0).getStringCellValue().strip();
+        studentId = studentId.substring(studentId.length() - 6, studentId.length() - 4);
+        return Integer.valueOf(studentId);
     }
 
     private boolean isDividedByYear(Row row) {

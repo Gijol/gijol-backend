@@ -13,6 +13,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class CourseListParser {
@@ -28,12 +30,26 @@ public class CourseListParser {
 
     @Bean
     public List<RegisteredCourse> getCourseList() throws IOException {
-        ClassPathResource undergraduateResource = new ClassPathResource("/course-information/course_information_undergraduate.xls");
+//        ClassPathResource undergraduateResource = new ClassPathResource("/course-information/course_information_undergraduate.xls");
+//        ClassPathResource undergraduateResource = new ClassPathResource("/course-information/course_information_undergraduate_from2018.xls");
+        ClassPathResource undergraduateResource = new ClassPathResource("/course-information/course_information_undergraduate_from2019.xls");
         ClassPathResource graduateResource = new ClassPathResource("/course-information/course_information_graduate.xls");
         List<RegisteredCourse> undergradCourses = parseCourseExcelFile(undergraduateResource);
 //        List<RegisteredCourse> gradCourses = parseCourseExcelFile(graduateResource);
 //        undergradCourses.add
         return undergradCourses;
+    }
+
+    public Set<RegisteredCourse> getMajorCourseList(String code) throws IOException {
+        ClassPathResource undergraduateResource = new ClassPathResource("/course-information/course_information_undergraduate_from2019.xls");
+        List<RegisteredCourse> undergradCourses = parseCourseExcelFile(undergraduateResource);
+
+        Set<RegisteredCourse> conditionCourse = undergradCourses.stream()
+                .filter(s -> s.getCode().contains(code))
+                .filter(s -> s.getType().equals("필수"))
+                .collect(Collectors.toSet());
+
+        return conditionCourse;
     }
 
     private List<RegisteredCourse> parseCourseExcelFile(ClassPathResource resource) throws IOException {

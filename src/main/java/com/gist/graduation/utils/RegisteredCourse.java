@@ -1,11 +1,14 @@
 package com.gist.graduation.utils;
 
+import com.gist.graduation.user.taken_course.TakenCourse;
 import com.mongodb.lang.Nullable;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @ToString
@@ -47,4 +50,7 @@ public class RegisteredCourse {
     public int hashCode() {
         return Objects.hash(name, code, credit);
     }
+
+
+
 }

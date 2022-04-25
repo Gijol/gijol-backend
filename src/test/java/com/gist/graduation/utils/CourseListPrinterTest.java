@@ -57,6 +57,7 @@ class CourseListPrinterTest {
         courseListPrinter.printByCode(courseList, "PS");
     }
 
+
     @Test
     void printMajor() throws IOException {
         for (MajorType majorType : MajorType.values()) {

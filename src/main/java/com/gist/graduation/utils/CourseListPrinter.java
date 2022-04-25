@@ -76,6 +76,16 @@ public class CourseListPrinter {
         }
     }
 
+    public void printByCode(List<RegisteredCourse> registeredCourseList, String code){
+        Set<RegisteredCourse> conditionCourse = registeredCourseList.stream()
+                .filter(s -> s.getCode().contains(code))
+                .collect(Collectors.toSet());
+
+        for (RegisteredCourse registeredCourse : conditionCourse) {
+            printCoursePretty(registeredCourse);
+        }
+    }
+
     public void printCoursePretty(RegisteredCourse registeredCourse) {
         System.out.print("new TakenCourse(");
         System.out.printf("\"%s\", ", registeredCourse.getName());

@@ -53,6 +53,11 @@ class CourseListPrinterTest {
     }
 
     @Test
+    void physicsPrintTest() {
+        courseListPrinter.printByCode(courseList, "PS");
+    }
+
+    @Test
     void printMajor() throws IOException {
         for (MajorType majorType : MajorType.values()) {
             Set<RegisteredCourse> courseList = courseListParser.getMajorCourseList(majorType.name());

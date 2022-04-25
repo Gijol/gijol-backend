@@ -18,7 +18,7 @@ public class BasicScience extends RequirementStatusBaseEntity {
             checkMathFrom2018(inputUserTakenCoursesList);
         }
 
-        if (getMessage().isEmpty()) {
+        if (this.getMessages().isEmpty()) {
             isSatisfied();
         }
 
@@ -51,11 +51,11 @@ public class BasicScience extends RequirementStatusBaseEntity {
                 .collect(Collectors.toList());
 
         if (userTakenMathCourses.stream().noneMatch(calculus::contains)) {
-            getMessage().add(String.format("%s 중 한 과목을 수강해야 합니다.", calculus));
+            this.getMessages().add(String.format("%s 중 한 과목을 수강해야 합니다.", calculus));
         }
 
         if (userTakenMathCourses.stream().noneMatch(coreMath::contains)) {
-            getMessage().add(String.format("%s 중 한 과목을 수강해야 합니다.", coreMath));
+            this.getMessages().add(String.format("%s 중 한 과목을 수강해야 합니다.", coreMath));
         }
 
         getUserTakenCoursesList().addAll(userTakenMathCourses);
@@ -91,9 +91,6 @@ public class BasicScience extends RequirementStatusBaseEntity {
         TakenCourse biologyExperiment = new TakenCourse("일반생물학 실험", "GS1311", "1");
 
         TakenCourse computerProgramming = new TakenCourse("컴퓨터 프로그래밍", "GS1401", "3");
-
-
-
     }
 
     private List<TakenCourse> checkEachScience(Map<String, Object> scienceMap, UserTakenCoursesList inputUserTakenCourse, List<TakenCourse> science, TakenCourse scienceExperiment) {

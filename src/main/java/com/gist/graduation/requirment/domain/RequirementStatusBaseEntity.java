@@ -18,19 +18,27 @@ public class RequirementStatusBaseEntity {
 
     private Integer totalCredits;
 
-    private Boolean satisfied;
+    private Integer maxCredits;
 
-    private final List<String> message;
+    private Boolean satisfied;  
+
+    private final List<String> messages;
+
 
     public RequirementStatusBaseEntity() {
         this.userTakenCoursesList = new UserTakenCoursesList(new ArrayList<>());
         this.totalCredits = 0;
+        this.maxCredits = 0;
         this.satisfied = false;
-        this.message = new ArrayList<>();
+        this.messages = new ArrayList<>();
     }
 
     public void addCredit(Integer credit) {
         this.totalCredits += credit;
+    }
+
+    public void setMaxCredits(Integer maxCredits) {
+        this.maxCredits = maxCredits;
     }
 
     public void isSatisfied() {
@@ -41,5 +49,7 @@ public class RequirementStatusBaseEntity {
         this.userTakenCoursesList.getTakenCourses().add(course);
     }
 
-
+    public void addMessage(String message){
+        this.messages.add(message);
+    }
 }

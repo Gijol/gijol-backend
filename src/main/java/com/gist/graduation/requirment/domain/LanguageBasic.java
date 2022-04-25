@@ -17,7 +17,7 @@ public class LanguageBasic extends RequirementStatusBaseEntity {
             checkWritingFrom2018(inputUserTakenCoursesList);
         }
 
-        if (getMessage().isEmpty()) {
+        if (this.getMessages().isEmpty()) {
             isSatisfied();
         }
 
@@ -38,11 +38,11 @@ public class LanguageBasic extends RequirementStatusBaseEntity {
         );
 
         if (userTakenCoursesList.notExist(english1) && userTakenCoursesList.notExist(englishPresentation)) {
-            getMessage().add(String.format("%s 또는 %s을 수강해야 합니다.", english1.courseNameAndCode(), englishPresentation.courseNameAndCode()));
+            this.getMessages().add(String.format("%s 또는 %s을 수강해야 합니다.", english1.courseNameAndCode(), englishPresentation.courseNameAndCode()));
         }
 
         if (inputUserTakenCoursesList.notExist(english2)) {
-            getMessage().add(String.format("%s를 수강해야 합니다.", english2.courseNameAndCode()));
+            this.getMessages().add(String.format("%s를 수강해야 합니다.", english2.courseNameAndCode()));
         }
 
     }
@@ -63,7 +63,7 @@ public class LanguageBasic extends RequirementStatusBaseEntity {
                 .collect(Collectors.toList());
 
         if (userTakenCourses.isEmpty()) {
-            getMessage().add(String.format("%s 중 한 과목을 수강해야 합니다.", writingCourses));
+            this.getMessages().add(String.format("%s 중 한 과목을 수강해야 합니다.", writingCourses));
         }
 
         getUserTakenCoursesList().addAll(userTakenCourses);

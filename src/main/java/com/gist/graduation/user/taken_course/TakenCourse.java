@@ -3,7 +3,6 @@ package com.gist.graduation.user.taken_course;
 import com.gist.graduation.utils.RegisteredCourse;
 import lombok.Getter;
 import lombok.ToString;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -64,6 +63,4 @@ public class TakenCourse {
                 .map(TakenCourse::of)
                 .collect(Collectors.toList());
     }
-
-
 }

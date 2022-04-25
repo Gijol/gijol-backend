@@ -35,8 +35,4 @@ class MajorTest {
         System.out.println(major.getUserTakenCoursesList().toString());
         System.out.println(major.getTotalCredits());
     }
-
-
-
-
 }

@@ -2,6 +2,7 @@ package com.gist.graduation.user.taken_course;
 
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @ToString
@@ -13,8 +14,16 @@ public class UserTakenCoursesList {
         this.takenCourses = takenCourses;
     }
 
+    public UserTakenCoursesList() {
+        this.takenCourses = new ArrayList<>();
+    }
+
     public List<TakenCourse> getTakenCourses() {
         return takenCourses;
+    }
+
+    public boolean contains(TakenCourse takenCourse) {
+        return takenCourses.contains(takenCourse);
     }
 
     public boolean notExist(TakenCourse takenCourse) {

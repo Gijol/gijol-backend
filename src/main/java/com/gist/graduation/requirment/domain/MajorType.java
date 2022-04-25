@@ -2,12 +2,8 @@ package com.gist.graduation.requirment.domain;
 
 import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
-import com.gist.graduation.utils.CourseListParser;
-import org.apache.poi.ss.formula.functions.T;
-import org.thymeleaf.util.ListUtils;
 
-import java.io.IOException;
-import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public enum MajorType {
@@ -73,7 +69,7 @@ public enum MajorType {
                     new TakenCourse("화학합성실험", "CH2105", "3"),
                     new TakenCourse("생화학 Ⅰ", "CH3106", "3"),
                     new TakenCourse("무기화학", "CH3107", "3")
-                    ));
+            ));
 
     private int TotalMajorCredits;
     private final List<TakenCourse> mandatoryMajorCourse;
@@ -96,7 +92,6 @@ public enum MajorType {
                 .stream()
                 .filter(majorType.mandatoryMajorCourse::contains)
                 .collect(Collectors.toList());
-
     }
 
     public static List<TakenCourse> getLackMajorMandatoryCourse(UserTakenCoursesList inputUserTakenCoursesList, MajorType majorType) {
@@ -105,6 +100,4 @@ public enum MajorType {
                 .filter(inputUserTakenCoursesList::notExist)
                 .collect(Collectors.toList());
     }
-
-
 }

@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.gist.graduation.requirment.domain.major.MajorMandatoryConstants.Physics.*;
+import static com.gist.graduation.requirment.domain.constants.MajorMandatoryConstants.Physics.*;
 
 @RequiredArgsConstructor
 public enum PhysicsMajor {

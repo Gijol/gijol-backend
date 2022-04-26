@@ -8,8 +8,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.gist.graduation.requirment.domain.major.MajorMandatoryConstants.Biology.*;
-import static com.gist.graduation.requirment.domain.major.MajorMandatoryConstants.Environment.*;
+import static com.gist.graduation.requirment.domain.constants.MajorMandatoryConstants.Environment.*;
 
 @RequiredArgsConstructor
 public enum EnvironmentMajor {
@@ -65,7 +64,7 @@ public enum EnvironmentMajor {
         major.getUserTakenCoursesList().addAll(inputUserTakenCourseList.getTakenCourses()
                 .stream()
                 .filter(s -> !mandatoryCourses.contains(s))
-                .filter(s -> s.getCourseCode().contains(BS))
+                .filter(s -> s.getCourseCode().contains(EV))
                 .collect(Collectors.toList()));
     }
 }

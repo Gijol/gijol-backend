@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.gist.graduation.requirment.domain.major.MajorMandatoryConstants.EECS.*;
+import static com.gist.graduation.requirment.domain.constants.MajorMandatoryConstants.EECS.*;
 
 @RequiredArgsConstructor
 public enum EECSMajor {

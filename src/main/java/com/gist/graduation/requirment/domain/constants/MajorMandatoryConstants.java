@@ -1,8 +1,7 @@
-package com.gist.graduation.requirment.domain.major;
+package com.gist.graduation.requirment.domain.constants;
 
 
 import com.gist.graduation.user.taken_course.TakenCourse;
-import org.apache.poi.ss.formula.functions.T;
 
 public class MajorMandatoryConstants {
 
@@ -19,6 +18,8 @@ public class MajorMandatoryConstants {
         public static final TakenCourse MA2102 = new TakenCourse("열역학", "MA2102", "3");
         public static final TakenCourse MA2103 = new TakenCourse("유기재료화학", "MA2103", "3");
         public static final TakenCourse MA2104 = new TakenCourse("고분자과학", "MA2104", "3");
+        public static final TakenCourse MA3101 = new TakenCourse("재료과학", "MA3101", "3");
+        public static final TakenCourse MA3102 = new TakenCourse("고분자과학", "MA3102", "3");
         public static final TakenCourse MA3104 = new TakenCourse("전자재료실험", "MA3104", "3");
         public static final TakenCourse MA3105 = new TakenCourse("유기재료실험", "MA3105", "3");
     }
@@ -54,7 +55,7 @@ public class MajorMandatoryConstants {
     public static class Environment {
         public static final String EV = "EV";
         public static final TakenCourse EV3101 = new TakenCourse("환경공학", "EV3101", "3");
-        public static final TakenCourse EV3104 =  new TakenCourse("대기학", "EV3104", "3");
+        public static final TakenCourse EV3104 = new TakenCourse("대기학", "EV3104", "3");
         public static final TakenCourse EV3105 = new TakenCourse("해양학", "EV3105", "3");
         public static final TakenCourse EV3106 = new TakenCourse("환경분석실험 I", "EV3106", "3");
         public static final TakenCourse EV3111 = new TakenCourse("지구시스템과학", "EV3111", "3");
@@ -76,6 +77,21 @@ public class MajorMandatoryConstants {
         public static final TakenCourse BS3113 = new TakenCourse("생화학 I", "BS3113", "3");
     }
 
-    //todo mc
+    public static class MechanicalEngineering {
+        public static final String MC = "MC";
+        public static final TakenCourse MC2100 = new TakenCourse("열역학", "MC2100", "3");
+        public static final TakenCourse MC2100_1 = new TakenCourse("열역학 I", "MC2100", "3");
+        public static final TakenCourse MC2101 = new TakenCourse("고체역학", "MC2101", "3");
+        public static final TakenCourse MC2101_1 = new TakenCourse("고체역학 I", "MC2101", "3");
+        public static final TakenCourse MC2102 = new TakenCourse("유체역학", "MC2102", "3");
+        public static final TakenCourse MC2102_1 = new TakenCourse("유체역학 I", "MC2102", "3");
+        public static final TakenCourse MC2103 = new TakenCourse("동역학", "MC2103", "3");
+        public static final TakenCourse MC3103 = new TakenCourse("기구동역학", "MC3103", "3");
+        public static final TakenCourse MC3105 = new TakenCourse("유체역학", "MC3105", "3");
+        public static final TakenCourse MC3106 = new TakenCourse("기계공학실험Ⅰ", "MC3106", "3");
+        public static final TakenCourse MC3107 = new TakenCourse("기계공학실험Ⅱ", "MC3107", "3");
+        public static final TakenCourse MC3212 = new TakenCourse("기계공학실험Ⅰ", "MC3212", "3");
+        public static final TakenCourse MC4101 = new TakenCourse("기계시스템설계 및 제작 I", "MC4101", "3");
+    }
 
 }

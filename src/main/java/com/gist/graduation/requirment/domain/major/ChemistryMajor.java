@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.gist.graduation.requirment.domain.major.MajorMandatoryConstants.Chemistry.*;
+import static com.gist.graduation.requirment.domain.constants.MajorMandatoryConstants.Chemistry.*;
 
 @RequiredArgsConstructor
 public enum ChemistryMajor {
@@ -48,7 +48,7 @@ public enum ChemistryMajor {
 
     private static void checkException(List<TakenCourse> userTakenMandatoryCourses) {
         List<TakenCourse> physicalChemistryA = List.of(CH2102, CH3104);
-        if (userTakenMandatoryCourses.containsAll(physicalChemistryA)){
+        if (userTakenMandatoryCourses.containsAll(physicalChemistryA)) {
             userTakenMandatoryCourses.remove(CH3104);
         }
     }

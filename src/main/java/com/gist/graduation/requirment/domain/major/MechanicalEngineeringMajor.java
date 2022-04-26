@@ -8,8 +8,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.gist.graduation.requirment.domain.major.MajorMandatoryConstants.Chemistry.*;
-import static com.gist.graduation.requirment.domain.major.MajorMandatoryConstants.MechanicalEngineering.*;
+import static com.gist.graduation.requirment.domain.constants.MajorMandatoryConstants.MechanicalEngineering.*;
 
 @RequiredArgsConstructor
 public enum MechanicalEngineeringMajor {
@@ -44,17 +43,8 @@ public enum MechanicalEngineeringMajor {
                 .stream()
                 .filter(mandatoryCourses::contains)
                 .collect(Collectors.toList());
-        checkException(userTakenMandatoryCourses);
 
         userTakenCoursesList.addAll(userTakenMandatoryCourses);
-    }
-
-    private static void checkException(List<TakenCourse> userTakenMandatoryCourses) {
-        // todo add MC exception
-//        List<TakenCourse> physicalChemistryA = List.of(CH2102, CH3104);
-//        if (userTakenMandatoryCourses.containsAll(physicalChemistryA)){
-//            userTakenMandatoryCourses.remove(CH3104);
-//        }
     }
 
     private static void addLackOfMandatoryCourses(UserTakenCoursesList inputUserTakenCourseList, Major major, MechanicalEngineeringMajor mechanicalEngineeringMajor) {
@@ -65,8 +55,26 @@ public enum MechanicalEngineeringMajor {
                 .filter(inputUserTakenCourseList::notExist)
                 .collect(Collectors.toList());
 
+        removeDuplication(lackOfMandatoryCourses);
+
         for (TakenCourse lackOfMandatoryCourse : lackOfMandatoryCourses) {
             major.addMessage(String.format("%s를 수강해야 합니다.", lackOfMandatoryCourse.toString()));
+        }
+    }
+
+    private static void removeDuplication(List<TakenCourse> userTakenMandatoryCourses) {
+        List<TakenCourse> thermodynamics = List.of(MC2100, MC2100_1);
+        List<TakenCourse> solidMechanics = List.of(MC2101, MC2101_1);
+        List<TakenCourse> fluidMechanics = List.of(MC2102, MC2102_1);
+
+        if (userTakenMandatoryCourses.containsAll(thermodynamics)){
+            userTakenMandatoryCourses.remove(MC2100);
+        }
+        if (userTakenMandatoryCourses.containsAll(solidMechanics)){
+            userTakenMandatoryCourses.remove(MC2101);
+        }
+        if (userTakenMandatoryCourses.containsAll(fluidMechanics)){
+            userTakenMandatoryCourses.remove(MC2102);
         }
     }
 
@@ -76,7 +84,7 @@ public enum MechanicalEngineeringMajor {
         major.getUserTakenCoursesList().addAll(inputUserTakenCourseList.getTakenCourses()
                 .stream()
                 .filter(s -> !mandatoryCourses.contains(s))
-                .filter(s -> s.getCourseCode().contains(CH))
+                .filter(s -> s.getCourseCode().contains(MC))
                 .collect(Collectors.toList()));
     }
 }

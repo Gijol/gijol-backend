@@ -8,15 +8,13 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.gist.graduation.requirment.domain.major.MajorMandatoryConstants.Biology.BS;
-import static com.gist.graduation.requirment.domain.major.MajorMandatoryConstants.Environment.*;
-import static com.gist.graduation.requirment.domain.major.MajorMandatoryConstants.MaterialScience.*;
+import static com.gist.graduation.requirment.domain.constants.MajorMandatoryConstants.MaterialScience.*;
 
 @RequiredArgsConstructor
 public enum MaterialScienceMajor {
 
     FROM2018(List.of(18), 36, List.of(MA3101, MA3102, MA3104, MA3105)),
-    FROM2019(List.of(19,20, 21), 36, List.of(MA2101, MA2102, MA2103, MA2104, MA3104, MA3105));
+    FROM2019(List.of(19, 20, 21), 36, List.of(MA2101, MA2102, MA2103, MA2104, MA3104, MA3105));
 
     private final List<Integer> studentId;
     private final int totalCredit;
@@ -65,7 +63,7 @@ public enum MaterialScienceMajor {
         major.getUserTakenCoursesList().addAll(inputUserTakenCourseList.getTakenCourses()
                 .stream()
                 .filter(s -> !mandatoryCourses.contains(s))
-                .filter(s -> s.getCourseCode().contains(BS))
+                .filter(s -> s.getCourseCode().contains(MA))
                 .collect(Collectors.toList()));
     }
 }

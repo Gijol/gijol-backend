@@ -1,12 +1,10 @@
 package com.gist.graduation.utils;
 
-import com.gist.graduation.requirment.domain.MajorType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
 class CourseListPrinterTest {
 
@@ -15,7 +13,7 @@ class CourseListPrinterTest {
     private List<RegisteredCourse> courseList;
 
     @BeforeEach
-    void setup() throws IOException{
+    void setup() throws IOException {
         courseListParser = new CourseListParser();
         courseListPrinter = new CourseListPrinter();
         courseList = courseListParser.getCourseList();
@@ -27,12 +25,12 @@ class CourseListPrinterTest {
     }
 
     @Test
-    void writingPrinterTest(){
+    void writingPrinterTest() {
         courseListPrinter.printCoreWritingClass(courseList);
     }
 
     @Test
-    void calculusPrinterTest(){
+    void calculusPrinterTest() {
         courseListPrinter.printCalculusClass(courseList);
     }
 
@@ -57,14 +55,5 @@ class CourseListPrinterTest {
         courseListPrinter.printByCode(courseList, "PS");
     }
 
-
-    @Test
-    void printMajor() throws IOException {
-        for (MajorType majorType : MajorType.values()) {
-            Set<RegisteredCourse> courseList = courseListParser.getMajorCourseList(majorType.name());
-            courseListPrinter.printCourseCollectionPretty(courseList);
-            System.out.println();
-        }
-    }
 
 }

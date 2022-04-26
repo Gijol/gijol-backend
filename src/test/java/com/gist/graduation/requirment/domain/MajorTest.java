@@ -1,8 +1,6 @@
 package com.gist.graduation.requirment.domain;
 
-import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
-import com.gist.graduation.utils.CourseListParser;
 import com.gist.graduation.utils.UserTakenCousrseParser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,8 +8,6 @@ import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class MajorTest {
 

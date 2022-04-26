@@ -13,10 +13,9 @@ import static com.gist.graduation.requirment.domain.constants.MajorMandatoryCons
 @RequiredArgsConstructor
 public enum EECSMajor {
 
-    FROM2018(List.of(18, 19, 20, 21, 22), 36, List.of(EC3101, EC3102));
+    FROM2018(List.of(18, 19, 20, 21, 22), List.of(EC3101, EC3102));
 
     private final List<Integer> studentId;
-    private final int totalCredit;
     private final List<TakenCourse> mandatoryCourses;
 
 

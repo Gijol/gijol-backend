@@ -13,12 +13,11 @@ import static com.gist.graduation.requirment.domain.constants.MajorMandatoryCons
 @RequiredArgsConstructor
 public enum EnvironmentMajor {
 
-    FROM2018(List.of(18), 36, List.of(EV3101, EV3104, EV3105, EV3106, EV4105, EV4106)),
-    FROM2019(List.of(19), 36, List.of(EV3101, EV3106, EV4105, EV4107)),
-    FROM2020(List.of(20, 21), 36, List.of(EV3101, EV3106, EV3111, EV4106, EV4107));
+    FROM2018(List.of(18), List.of(EV3101, EV3104, EV3105, EV3106, EV4105, EV4106)),
+    FROM2019(List.of(19), List.of(EV3101, EV3106, EV4105, EV4107)),
+    FROM2020(List.of(20, 21), List.of(EV3101, EV3106, EV3111, EV4106, EV4107));
 
     private final List<Integer> studentId;
-    private final int totalCredit;
     private final List<TakenCourse> mandatoryCourses;
 
     public static void checkverified(UserTakenCoursesList inputUserTakenCourseList, Major major, Integer studentId) {

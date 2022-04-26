@@ -13,13 +13,12 @@ import static com.gist.graduation.requirment.domain.constants.MajorMandatoryCons
 @RequiredArgsConstructor
 public enum BiologyMajor {
 
-    FROM2018(List.of(18), 36, List.of(BS3101, BS3105, BS3111, BS3112, BS3113)),
-    FROM2019(List.of(19, 20), 36, List.of(BS2101, BS2102, BS3101, BS3105, BS3111, BS3112, BS3113)),
-    FROM2021(List.of(21), 36, List.of(BS2101, BS2102, BS2103, BS2104, BS3101, BS3105, BS3112));
+    FROM2018(List.of(18), List.of(BS3101, BS3105, BS3111, BS3112, BS3113)),
+    FROM2019(List.of(19, 20), List.of(BS2101, BS2102, BS3101, BS3105, BS3111, BS3112, BS3113)),
+    FROM2021(List.of(21), List.of(BS2101, BS2102, BS2103, BS2104, BS3101, BS3105, BS3112));
 
 
     private final List<Integer> studentId;
-    private final int totalCredit;
     private final List<TakenCourse> mandatoryCourses;
 
 

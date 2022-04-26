@@ -12,7 +12,5 @@ public class Major extends RequirementStatusBaseEntity {
         if (this.getMessages().isEmpty()) {
             isSatisfied();
         }
-
-        addCredit(this.getUserTakenCoursesList().sumCreditOfCourses());
     }
 }

@@ -31,4 +31,11 @@ class ScienceBasicTest {
         scienceBasic.checkRequirementByStudentId(studentId, takenCourses);
         System.out.println(scienceBasic);
     }
+
+    @Test
+    void checkMajor(){
+        Major major = new Major();
+        major.checkRequirementByStudentId(studentId, takenCourses, MajorType.EC);
+        System.out.println(major);
+    }
 }

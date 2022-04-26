@@ -1,4 +1,5 @@
 package com.gist.graduation.requirment.domain;
+import com.gist.graduation.requirment.domain.science.ScienceBasic;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import lombok.Getter;
 import lombok.ToString;
@@ -10,6 +11,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class GraduationRequirementStatus {
 
     private final LanguageBasic languageBasic;
+//    private final ScienceBasic scienceBasic;
+//    private final Major major;
 
     //todo add domain
 

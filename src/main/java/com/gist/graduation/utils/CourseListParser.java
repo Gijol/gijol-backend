@@ -1,10 +1,11 @@
 package com.gist.graduation.utils;
 
+import com.gist.graduation.requirment.domain.constants.HumanitiesExceptionConstants;
+import com.gist.graduation.user.taken_course.TakenCourse;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -28,19 +30,14 @@ public class CourseListParser {
     public static final int LIBERART_TYPE_CELL_NUMBER = 7;
     public static final int CREDIT_CELL_NUMBER = 11;
 
-    @Bean
-    public List<RegisteredCourse> getCourseList() throws IOException {
-//        ClassPathResource undergraduateResource = new ClassPathResource("/course-information/course_information_undergraduate.xls");
-//        ClassPathResource undergraduateResource = new ClassPathResource("/course-information/course_information_undergraduate_from2018.xls");
+    public static List<RegisteredCourse> getCourseList() throws IOException {
         ClassPathResource undergraduateResource = new ClassPathResource("/course-information/course_information_undergraduate.xls");
         ClassPathResource graduateResource = new ClassPathResource("/course-information/course_information_graduate.xls");
         List<RegisteredCourse> undergradCourses = parseCourseExcelFile(undergraduateResource);
-//        List<RegisteredCourse> gradCourses = parseCourseExcelFile(graduateResource);
-//        undergradCourses.add
         return undergradCourses;
     }
 
-    public Set<RegisteredCourse> getMajorCourseList(String code) throws IOException {
+    public static Set<RegisteredCourse> getMajorCourseList(String code) throws IOException {
         ClassPathResource undergraduateResource = new ClassPathResource("/course-information/course_information_undergraduate.xls");
         List<RegisteredCourse> undergradCourses = parseCourseExcelFile(undergraduateResource);
 
@@ -52,7 +49,46 @@ public class CourseListParser {
         return conditionCourse;
     }
 
-    private List<RegisteredCourse> parseCourseExcelFile(ClassPathResource resource) throws IOException {
+
+    public static List<TakenCourse> getHumanitiesCoursesList() {
+        ClassPathResource undergraduateResource = new ClassPathResource("/course-information/course_information_undergraduate.xls");
+        try {
+            List<RegisteredCourse> undergradCourses = parseCourseExcelFile(undergraduateResource);
+            List<String> humanitiesCodeList = new ArrayList<>();
+            addHumanitiesCode(humanitiesCodeList);
+
+            Set<RegisteredCourse> conditionCourse = new HashSet<>();
+
+            for (String code : humanitiesCodeList) {
+                addRegisteredCoursesByCode(undergradCourses, conditionCourse, code);
+            }
+
+            List<TakenCourse> conditionCourseList = TakenCourse.setToListOf(conditionCourse);
+            HumanitiesExceptionConstants.NotHumanities.removeHumanitiesException(conditionCourseList);
+
+            return conditionCourseList;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    private static void addRegisteredCoursesByCode(List<RegisteredCourse> undergradCourses, Set<RegisteredCourse> conditionCourse, String code) {
+        conditionCourse.addAll(undergradCourses.stream()
+                .filter(s -> s.getCode().contains(code))
+                .collect(Collectors.toSet()));
+    }
+
+    private static void addHumanitiesCode(List<String> humanitiesCodeList) {
+        for (int i = 2; i <= 4; i++) {
+            for (int j = 5; j <= 9; j++) {
+                Integer num = 10 * i + j;
+                humanitiesCodeList.add(("GS" + num));
+            }
+        }
+    }
+
+    private static List<RegisteredCourse> parseCourseExcelFile(ClassPathResource resource) throws IOException {
         File file = resource.getFile();
         Workbook workbook = new HSSFWorkbook(new FileInputStream(file));
         Sheet sheet = workbook.getSheetAt(0);
@@ -82,7 +118,7 @@ public class CourseListParser {
         return registeredCourses;
     }
 
-    private void removeDuplicate(Sheet sheet) {
+    private static void removeDuplicate(Sheet sheet) {
         List<String> courseLists = new ArrayList<>();
         List<Row> toRemoveRows = new ArrayList<>();
 

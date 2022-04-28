@@ -1,6 +1,7 @@
 package com.gist.graduation.utils;
 
 import com.gist.graduation.user.taken_course.CourseType;
+import com.gist.graduation.user.taken_course.TakenCourse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -100,7 +101,15 @@ public class CourseListPrinter {
             System.out.printf("\"%s\", ", course.getCode());
             System.out.printf("\"%s\"),\n", course.getCredit());
         }
+    }
 
+    public void printTakenCourseCollectionPretty(Collection<TakenCourse> takenCourses) {
+        for (TakenCourse course : takenCourses) {
+            System.out.print("new TakenCourse(");
+            System.out.printf("\"%s\", ", course.getCourseName());
+            System.out.printf("\"%s\", ", course.getCourseCode());
+            System.out.printf("\"%s\"),\n", course.getCredit());
+        }
     }
 
 

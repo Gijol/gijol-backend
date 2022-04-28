@@ -4,7 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 class CourseListPrinterTest {
 
@@ -51,8 +53,21 @@ class CourseListPrinterTest {
     }
 
     @Test
-    void physicsPrintTest() {
-        courseListPrinter.printByCode(courseList, "PS");
+    void humanitiesTest() {
+        courseListPrinter.printTakenCourseCollectionPretty(CourseListParser.getHumanitiesCoursesList()
+                .stream()
+                .sorted((a, b) -> a.getCourseCode().compareTo(b.getCourseCode()))
+                .collect(Collectors.toList()));
+    }
+
+    @Test
+    void GSCTest() {
+        List<String> gscCode = List.of("GS25", "GS26", "GS27", "GS28", "GS29", "GS35");
+        courseListPrinter.printTakenCourseCollectionPretty(CourseListParser.getHumanitiesCoursesList()
+                .stream()
+                .filter(s -> gscCode.stream().anyMatch(t -> s.getCourseCode().contains(t)))
+                .sorted((a, b) -> a.getCourseCode().compareTo(b.getCourseCode()))
+                .collect(Collectors.toList()));
     }
 
 

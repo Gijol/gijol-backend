@@ -12,6 +12,8 @@ public class Humanities extends RequirementStatusBaseEntity {
 
     public void checkRequirementByStudentId(Integer studentId, UserTakenCoursesList inputUserTakenCoursesList) {
         if (studentId >= 18) {
+            checkMandatoryHumanities(inputUserTakenCoursesList);
+            checkOtherHumanitiesCredit(inputUserTakenCoursesList);
 
         }
 
@@ -25,7 +27,6 @@ public class Humanities extends RequirementStatusBaseEntity {
     private void checkMandatoryHumanities(UserTakenCoursesList inputUserTakenCoursesList) {
         checkHUSMandatory(inputUserTakenCoursesList);
         checkPPEMandatory(inputUserTakenCoursesList);
-
     }
 
     private void checkHUSMandatory(UserTakenCoursesList inputUserTakenCoursesList) {
@@ -34,8 +35,8 @@ public class Humanities extends RequirementStatusBaseEntity {
                 .filter(husCoursesList::contains)
                 .collect(Collectors.toList());
 
-        int husMinimumCondition = 12 - getSumofCredits(userTakneHUSCourses);
-        if ( husMinimumCondition > 0) {
+        int husMinimumCondition = 6 - getSumofCredits(userTakneHUSCourses);
+        if (husMinimumCondition > 0) {
             addMessage(String.format("HUS 과목을 %d학점 더 들어야 합니다.", (husMinimumCondition)));
         }
 
@@ -50,8 +51,8 @@ public class Humanities extends RequirementStatusBaseEntity {
                 .filter(PPECoursesList::contains)
                 .collect(Collectors.toList());
 
-        int ppeMinimumCondition = 12 - getSumofCredits(userTaknePPECourses);
-        if ( ppeMinimumCondition > 0) {
+        int ppeMinimumCondition = 6 - getSumofCredits(userTaknePPECourses);
+        if (ppeMinimumCondition > 0) {
             addMessage(String.format("PPE 과목을 %d학점 더 들어야 합니다.", (ppeMinimumCondition)));
         }
 
@@ -66,8 +67,14 @@ public class Humanities extends RequirementStatusBaseEntity {
                 .filter(humanitiesCourseList::contains)
                 .filter(s -> !this.getUserTakenCoursesList().contains(s))
                 .collect(Collectors.toList());
+        this.getUserTakenCoursesList().addAll(userTakenHumanitiesCourses);
 
-        //todo add credits
+        int humanitiesMinimunCredit = 24;
+        int humanitiesMinimumCondition = humanitiesMinimunCredit - this.getUserTakenCoursesList().sumCreditOfCourses();
+
+        if (humanitiesMinimumCondition > 0) {
+            addMessage(String.format("인문사회 과목을 %d학점 더 들어야 합니다.", (humanitiesMinimumCondition)));
+        }
 
     }
 

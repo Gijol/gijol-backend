@@ -11,7 +11,6 @@ public class MajorMandatoryConstants {
         public static final TakenCourse EC3102 = new TakenCourse("컴퓨터 시스템 이론 및 실험", "EC3102", "4");
     }
 
-
     public static class MaterialScience {
         public static final String MA = "MA";
         public static final TakenCourse MA2101 = new TakenCourse("재료과학", "MA2101", "3");
@@ -38,6 +37,7 @@ public class MajorMandatoryConstants {
         public static final TakenCourse CH3106 = new TakenCourse("생화학 Ⅰ", "CH3106", "3");
         public static final TakenCourse CH3107 = new TakenCourse("무기화학", "CH3107", "3");
     }
+
 
     public static class Physics {
         public static final String PS = "PS";

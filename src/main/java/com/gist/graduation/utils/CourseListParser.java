@@ -30,11 +30,16 @@ public class CourseListParser {
     public static final int LIBERART_TYPE_CELL_NUMBER = 7;
     public static final int CREDIT_CELL_NUMBER = 11;
 
-    public static List<RegisteredCourse> getCourseList() throws IOException {
+    public static List<RegisteredCourse> getCourseList() {
         ClassPathResource undergraduateResource = new ClassPathResource("/course-information/course_information_undergraduate.xls");
         ClassPathResource graduateResource = new ClassPathResource("/course-information/course_information_graduate.xls");
-        List<RegisteredCourse> undergradCourses = parseCourseExcelFile(undergraduateResource);
-        return undergradCourses;
+        try {
+            List<RegisteredCourse> undergradCourses = parseCourseExcelFile(undergraduateResource);
+            return undergradCourses;
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return new ArrayList<>();
     }
 
     public static Set<RegisteredCourse> getMajorCourseList(String code) throws IOException {
@@ -47,6 +52,12 @@ public class CourseListParser {
                 .collect(Collectors.toSet());
 
         return conditionCourse;
+    }
+
+    public static List<TakenCourse> getHumanitiesWithoutGSC() {
+        List<TakenCourse> humanitiesCoursesList = getHumanitiesCoursesList();
+        HumanitiesExceptionConstants.GSC.removeGSCCourses(humanitiesCoursesList);
+        return humanitiesCoursesList;
     }
 
 
@@ -70,7 +81,7 @@ public class CourseListParser {
         } catch (Exception e) {
             System.out.println(e);
         }
-        return null;
+        return new ArrayList<>();
     }
 
     private static void addRegisteredCoursesByCode(List<RegisteredCourse> undergradCourses, Set<RegisteredCourse> conditionCourse, String code) {

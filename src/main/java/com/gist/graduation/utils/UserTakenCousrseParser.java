@@ -6,7 +6,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,7 +13,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
 public class UserTakenCousrseParser {
 
     public static final int TYPE_CELL_NUM = 0;
@@ -23,7 +21,7 @@ public class UserTakenCousrseParser {
     public static final int CREDIT_CELL_NUM = 4;
     public static final int GRADE_CELL_NUM = 5;
 
-    public UserTakenCoursesList parseUserTakenCousrse(File file) throws IOException {
+    public static UserTakenCoursesList parseUserTakenCousrse(File file) throws IOException {
         Workbook workbook = new HSSFWorkbook(new FileInputStream(file));
         Sheet sheet = workbook.getSheetAt(0);
 
@@ -51,7 +49,7 @@ public class UserTakenCousrseParser {
         return new UserTakenCoursesList(courseArray);
     }
 
-    public Integer getStudentId(File file) throws IOException {
+    public static Integer getStudentId(File file) throws IOException {
         Workbook workbook = new HSSFWorkbook(new FileInputStream(file));
         Sheet sheet = workbook.getSheetAt(0);
         // row 1 and cell 0 is filled with student id in grade.
@@ -60,19 +58,19 @@ public class UserTakenCousrseParser {
         return Integer.valueOf(studentId);
     }
 
-    private boolean isDividedByYear(Row row) {
+    private static boolean isDividedByYear(Row row) {
         return row.getCell(COURSE_NAME_CELL_NUM) != null && row.getCell(COURSE_NAME_CELL_NUM).getStringCellValue().contains("학기>");
     }
 
-    private boolean endOfCode(Row row) {
+    private static boolean endOfCode(Row row) {
         return row.getCell(CODE_CELL_NUM).getStringCellValue().equals("[학사]");
     }
 
-    private boolean notExistCodeRow(Row row) {
+    private static boolean notExistCodeRow(Row row) {
         return row.getCell(CODE_CELL_NUM) == null || row.getCell(CODE_CELL_NUM).getStringCellValue().equals("Code") || row.getCell(CODE_CELL_NUM).getStringCellValue().isBlank();
     }
 
-    private void addTakenCourse(List<TakenCourse> courseArray, String year, String semester, Row row) {
+    private static void addTakenCourse(List<TakenCourse> courseArray, String year, String semester, Row row) {
         String courseName = row.getCell(COURSE_NAME_CELL_NUM).getStringCellValue();
         String grade = row.getCell(GRADE_CELL_NUM).getStringCellValue();
         String courseCode = row.getCell(CODE_CELL_NUM).getStringCellValue();

@@ -1,5 +1,5 @@
 package com.gist.graduation.requirment.domain;
-import com.gist.graduation.requirment.domain.science.ScienceBasic;
+import com.gist.graduation.requirment.domain.language.LanguageBasic;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import lombok.Getter;
 import lombok.ToString;

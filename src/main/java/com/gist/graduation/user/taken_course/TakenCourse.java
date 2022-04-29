@@ -58,7 +58,7 @@ public class TakenCourse {
         return new TakenCourse(registeredCourse.getName(), registeredCourse.getCode(), String.valueOf(registeredCourse.getCredit()));
     }
 
-    public static List<TakenCourse> SetToListOf(Set<RegisteredCourse> inputCourses) {
+    public static List<TakenCourse> setToListOf(Set<RegisteredCourse> inputCourses) {
         return inputCourses.stream()
                 .map(TakenCourse::of)
                 .collect(Collectors.toList());

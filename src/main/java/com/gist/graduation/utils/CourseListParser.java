@@ -40,6 +40,7 @@ public class CourseListParser {
             System.out.println(e.getMessage());
         }
         return new ArrayList<>();
+
     }
 
     public static Set<RegisteredCourse> getMajorCourseList(String code) throws IOException {
@@ -82,6 +83,7 @@ public class CourseListParser {
             System.out.println(e);
         }
         return new ArrayList<>();
+
     }
 
     private static void addRegisteredCoursesByCode(List<RegisteredCourse> undergradCourses, Set<RegisteredCourse> conditionCourse, String code) {

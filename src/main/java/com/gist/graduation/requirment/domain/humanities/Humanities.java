@@ -7,6 +7,7 @@ import com.gist.graduation.utils.HumanitiesListParser;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 
 public class Humanities extends RequirementStatusBaseEntity {
 
@@ -83,6 +84,7 @@ public class Humanities extends RequirementStatusBaseEntity {
         return takenCourses.stream()
                 .mapToInt(TakenCourse::getCredit)
                 .sum();
+//        inputUserTakenCoursesList
     }
 
 

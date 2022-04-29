@@ -111,7 +111,6 @@ public class HumanitiesExceptionConstants {
                             .collect(Collectors.toList())
             );
         }
-    }
 
 
 }

@@ -61,6 +61,14 @@ class CourseListPrinterTest {
     }
 
     @Test
+    void humanitiesWithoutGSCTest() {
+        courseListPrinter.printTakenCourseCollectionPretty(CourseListParser.getHumanitiesWithoutGSC()
+                .stream()
+                .sorted((a, b) -> a.getCourseCode().compareTo(b.getCourseCode()))
+                .collect(Collectors.toList()));
+    }
+
+    @Test
     void GSCTest() {
         List<String> gscCode = List.of("GS25", "GS26", "GS27", "GS28", "GS29", "GS35");
         courseListPrinter.printTakenCourseCollectionPretty(CourseListParser.getHumanitiesCoursesList()

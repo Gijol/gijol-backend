@@ -62,11 +62,55 @@ public class HumanitiesExceptionConstants {
 
         private final TakenCourse takenCourse;
 
-
+        public static void removeGSCCourses(List<TakenCourse> registeredCourses) {
+            registeredCourses.removeAll(getGSCCoursesList());
+        }
+        public static List<TakenCourse> getGSCCoursesList(){
+            return Arrays.stream(values())
+                    .map(s -> s.takenCourse)
+                    .collect(Collectors.toList());
+        }
     }
 
-    public static class AmbiguousHumanities {
+    @RequiredArgsConstructor
+    public enum HUSAmbiguousHumanities {
+        GS2620(new TakenCourse("철학의 근본 문제들", "GS2620", "3")),
+        GS2661(new TakenCourse("논리와 비판적 사고", "GS2661", "3")),
+        GS2661_1(new TakenCourse("논리학 입문", "GS2661", "3")),
+        GS3631(new TakenCourse("마음과 컴퓨터", "GS3631", "3")),
+        GS3632(new TakenCourse("의사결정 이론과 합리적 선택", "GS3632", "3")),
+        GS3632_1(new TakenCourse("합리적 판단과 선택", "GS3632", "3")),
+        GS3633(new TakenCourse("과학철학 특강", "GS3633", "3")),
+        GS3633_1(new TakenCourse("서양 현대 철학 강독", "GS3633", "3")),
+        GS3663(new TakenCourse("종교와 과학", "GS3663", "3")),
+        GS3831(new TakenCourse("과학기술학의 이해: 과학사회논쟁의 쟁점과 윤리", "GS3831", "3")),
+        GS3839(new TakenCourse("질병과 사회", "GS3839", "3")),
+        GS3861(new TakenCourse("신경과학과 법", "GS3861", "3"));
 
+        private final TakenCourse takenCourse;
+
+        public static void removeNotHUS(List<TakenCourse> registeredCourses) {
+            registeredCourses.removeAll(
+                    Arrays.stream(values())
+                    .map(s -> s.takenCourse)
+                    .collect(Collectors.toList())
+            );
+        }
+    }
+
+    @RequiredArgsConstructor
+    public enum PPEAmbiguousHumanities {
+        GS2814(new TakenCourse("유토피아 픽션과 테크놀로지", "GS2814", "3"));
+
+        private final TakenCourse takenCourse;
+
+        public static void removeNotPPE(List<TakenCourse> registeredCourses) {
+            registeredCourses.removeAll(
+                    Arrays.stream(values())
+                            .map(s -> s.takenCourse)
+                            .collect(Collectors.toList())
+            );
+        }
     }
 
 

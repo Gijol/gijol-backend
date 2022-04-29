@@ -1,6 +1,7 @@
 package com.gist.graduation.utils;
 
 import com.gist.graduation.user.taken_course.CourseType;
+import com.gist.graduation.user.taken_course.TakenCourse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -76,6 +77,16 @@ public class CourseListPrinter {
         }
     }
 
+    public void printByCode(List<RegisteredCourse> registeredCourseList, String code){
+        Set<RegisteredCourse> conditionCourse = registeredCourseList.stream()
+                .filter(s -> s.getCode().contains(code))
+                .collect(Collectors.toSet());
+
+        for (RegisteredCourse registeredCourse : conditionCourse) {
+            printCoursePretty(registeredCourse);
+        }
+    }
+
     public void printCoursePretty(RegisteredCourse registeredCourse) {
         System.out.print("new TakenCourse(");
         System.out.printf("\"%s\", ", registeredCourse.getName());
@@ -90,7 +101,15 @@ public class CourseListPrinter {
             System.out.printf("\"%s\", ", course.getCode());
             System.out.printf("\"%s\"),\n", course.getCredit());
         }
+    }
 
+    public void printTakenCourseCollectionPretty(Collection<TakenCourse> takenCourses) {
+        for (TakenCourse course : takenCourses) {
+            System.out.print("new TakenCourse(");
+            System.out.printf("\"%s\", ", course.getCourseName());
+            System.out.printf("\"%s\", ", course.getCourseCode());
+            System.out.printf("\"%s\"),\n", course.getCredit());
+        }
     }
 
 

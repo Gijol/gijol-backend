@@ -1,6 +1,7 @@
-package com.gist.graduation.requirment.domain;
+package com.gist.graduation.requirment.domain.science;
 
 
+import com.gist.graduation.requirment.domain.RequirementStatusBaseEntity;
 import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,7 +10,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Document
-public class BasicScience extends RequirementStatusBaseEntity {
+public class ScienceBasic extends RequirementStatusBaseEntity {
 
     public static final int SCIENCE_AND_EXPERIMENT_PAIR = 2;
 
@@ -18,7 +19,7 @@ public class BasicScience extends RequirementStatusBaseEntity {
             checkMathFrom2018(inputUserTakenCoursesList);
         }
 
-        if (getMessage().isEmpty()) {
+        if (this.getMessages().isEmpty()) {
             isSatisfied();
         }
 
@@ -51,11 +52,11 @@ public class BasicScience extends RequirementStatusBaseEntity {
                 .collect(Collectors.toList());
 
         if (userTakenMathCourses.stream().noneMatch(calculus::contains)) {
-            getMessage().add(String.format("%s 중 한 과목을 수강해야 합니다.", calculus));
+            this.getMessages().add(String.format("%s 중 한 과목을 수강해야 합니다.", calculus));
         }
 
         if (userTakenMathCourses.stream().noneMatch(coreMath::contains)) {
-            getMessage().add(String.format("%s 중 한 과목을 수강해야 합니다.", coreMath));
+            this.getMessages().add(String.format("%s 중 한 과목을 수강해야 합니다.", coreMath));
         }
 
         getUserTakenCoursesList().addAll(userTakenMathCourses);
@@ -91,9 +92,6 @@ public class BasicScience extends RequirementStatusBaseEntity {
         TakenCourse biologyExperiment = new TakenCourse("일반생물학 실험", "GS1311", "1");
 
         TakenCourse computerProgramming = new TakenCourse("컴퓨터 프로그래밍", "GS1401", "3");
-
-
-
     }
 
     private List<TakenCourse> checkEachScience(Map<String, Object> scienceMap, UserTakenCoursesList inputUserTakenCourse, List<TakenCourse> science, TakenCourse scienceExperiment) {

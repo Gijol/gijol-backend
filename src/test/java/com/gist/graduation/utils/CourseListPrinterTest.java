@@ -78,5 +78,37 @@ class CourseListPrinterTest {
                 .collect(Collectors.toList()));
     }
 
+    @Test
+    void ETCTest() {
+        String artCode = "GS02";
+        String sportCode = "GS01";
+        courseListPrinter.printByCode(courseList, artCode);
+        courseListPrinter.printByCode(courseList, sportCode);
+    }
+
+    @Test
+    void colloquiumTest() {
+        String name = "콜로퀴움";
+        courseListPrinter.printClassByCreditAndName(courseList, name, 0);
+    }
+
+    @Test
+    void researchTest() {
+        String name = "연구";
+//        courseListPrinter.printClassByCreditAndName(courseList, name, 3);
+
+        courseListPrinter.printByCode(courseList, "910");
+    }
+
+    @Test
+    void freshmanMandatoryTest() {
+        String freshMan = "새내기";
+        String findMajorCourse = "전공탐색";
+        courseListPrinter.printClassByCreditAndName(courseList, freshMan, 1);
+        courseListPrinter.printClassByCreditAndName(courseList, "세미나", 1);
+        courseListPrinter.printClassByCreditAndName(courseList, findMajorCourse, 1);
+    }
+
+
 
 }

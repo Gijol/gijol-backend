@@ -4,14 +4,12 @@ import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import lombok.Getter;
 import lombok.ToString;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @ToString
-@Document
 public class RequirementStatusBaseEntity {
 
     private final UserTakenCoursesList userTakenCoursesList;
@@ -20,7 +18,7 @@ public class RequirementStatusBaseEntity {
 
     private Integer maxCredits;
 
-    private Boolean satisfied;  
+    private Boolean satisfied;
 
     private final List<String> messages;
 
@@ -49,7 +47,7 @@ public class RequirementStatusBaseEntity {
         this.userTakenCoursesList.getTakenCourses().add(course);
     }
 
-    public void addMessage(String message){
+    public void addMessage(String message) {
         this.messages.add(message);
     }
 }

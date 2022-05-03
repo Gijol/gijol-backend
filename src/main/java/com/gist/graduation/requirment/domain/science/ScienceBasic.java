@@ -4,12 +4,10 @@ package com.gist.graduation.requirment.domain.science;
 import com.gist.graduation.requirment.domain.RequirementStatusBaseEntity;
 import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Document
 public class ScienceBasic extends RequirementStatusBaseEntity {
 
     public static final int SCIENCE_AND_EXPERIMENT_PAIR = 2;

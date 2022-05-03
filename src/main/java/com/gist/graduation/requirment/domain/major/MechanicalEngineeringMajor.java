@@ -66,13 +66,13 @@ public enum MechanicalEngineeringMajor {
         List<TakenCourse> solidMechanics = List.of(MC2101, MC2101_1);
         List<TakenCourse> fluidMechanics = List.of(MC2102, MC2102_1);
 
-        if (userTakenMandatoryCourses.containsAll(thermodynamics)){
+        if (userTakenMandatoryCourses.containsAll(thermodynamics)) {
             userTakenMandatoryCourses.remove(MC2100);
         }
-        if (userTakenMandatoryCourses.containsAll(solidMechanics)){
+        if (userTakenMandatoryCourses.containsAll(solidMechanics)) {
             userTakenMandatoryCourses.remove(MC2101);
         }
-        if (userTakenMandatoryCourses.containsAll(fluidMechanics)){
+        if (userTakenMandatoryCourses.containsAll(fluidMechanics)) {
             userTakenMandatoryCourses.remove(MC2102);
         }
     }

@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /*
-* this includes GIST 콜로퀴움, 신입생 세미나 and GIST 전공탐색
-* */
+ * this includes GIST 콜로퀴움, 신입생 세미나 and GIST 전공탐색
+ * */
 public class OthersEtc {
 
     private static final TakenCourse COLLOQUIUM = new TakenCourse("GIST대학 콜로퀴움", "UC9331", "0");
@@ -44,7 +44,7 @@ public class OthersEtc {
     private static void checkCollquium(EtcMandatory etcMandatory, List<TakenCourse> colloquiumList) {
         int colloquiumCondition = 2;
         if (colloquiumList.size() < colloquiumCondition) {
-            etcMandatory.addMessage(String.format("%s과목를 %d회 수강해야 합니다.", COLLOQUIUM.getCourseName(), colloquiumCondition-colloquiumList.size()));
+            etcMandatory.addMessage(String.format("%s과목를 %d회 수강해야 합니다.", COLLOQUIUM.getCourseName(), colloquiumCondition - colloquiumList.size()));
         }
     }
 

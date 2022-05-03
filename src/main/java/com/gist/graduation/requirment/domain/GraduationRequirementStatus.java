@@ -8,7 +8,6 @@ import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
-import org.springframework.stereotype.Component;
 
 @Getter
 @ToString

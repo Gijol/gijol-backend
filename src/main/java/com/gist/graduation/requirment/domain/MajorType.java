@@ -18,22 +18,22 @@ public enum MajorType {
     private final TriConsumer<UserTakenCoursesList, Major, Integer> checkMajorMandatory;
     private final Integer totalCredits;
 
-    public void checkMajorStatus(UserTakenCoursesList inputUserTakenCoursesList, Major major, Integer studentId){
+    public void checkMajorStatus(UserTakenCoursesList inputUserTakenCoursesList, Major major, Integer studentId) {
         checkMajorMandatory.accept(inputUserTakenCoursesList, major, studentId);
         addCredits(major);
     }
 
-    private void addCredits(Major major){
+    private void addCredits(Major major) {
         Integer takenCredits = major.getUserTakenCoursesList().sumCreditOfCourses();
         major.addCredit(takenCredits);
 
         if (takenCredits < totalCredits) {
-            if (major.getMessages().isEmpty()){
-                major.addMessage(String.format("전공과목을 %d학점을 더 들어야 합니다.", (totalCredits-takenCredits)));
+            if (major.getMessages().isEmpty()) {
+                major.addMessage(String.format("전공과목을 %d학점을 더 들어야 합니다.", (totalCredits - takenCredits)));
                 return;
             }
 
-            major.addMessage(String.format("전공필수 과목을 포함해 %d학점을 더 들어야 합니다.", (totalCredits-takenCredits)));
+            major.addMessage(String.format("전공필수 과목을 포함해 %d학점을 더 들어야 합니다.", (totalCredits - takenCredits)));
         }
     }
 }

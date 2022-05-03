@@ -2,6 +2,7 @@ package com.gist.graduation.requirment.application;
 
 import com.gist.graduation.requirment.domain.GraduationRequirementStatus;
 import com.gist.graduation.requirment.domain.MajorType;
+import com.gist.graduation.requirment.dto.GradeToCheckRequest;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import com.gist.graduation.utils.UserTakenCousrseParser;
 import org.springframework.core.io.ClassPathResource;
@@ -14,12 +15,12 @@ import java.io.IOException;
 @Service
 public class GraduationRequirementStatusService {
 
-    public GraduationRequirementStatus checkGrade(MultipartFile file, MajorType majorType) throws IOException {
-        UserTakenCoursesList userTakenCoursesList = UserTakenCousrseParser.parseUserTakenCousrse(file.getResource().getFile());
-        Integer studentId = UserTakenCousrseParser.getStudentId(file.getResource().getFile());
+    public GraduationRequirementStatus checkGraduationCondition(GradeToCheckRequest request) throws IOException {
+        File file = request.getMultipartFile().getResource().getFile();
+        UserTakenCoursesList userTakenCoursesList = UserTakenCousrseParser.parseUserTakenCousrse(file);
+        Integer studentId = UserTakenCousrseParser.getStudentId(file);
         GraduationRequirementStatus graduationRequirementStatus = new GraduationRequirementStatus();
-        graduationRequirementStatus.checkGraduationRequirements(studentId, userTakenCoursesList, majorType);
-
+        graduationRequirementStatus.checkGraduationRequirements(studentId, userTakenCoursesList, request.getMajorType());
         return graduationRequirementStatus;
 
     }

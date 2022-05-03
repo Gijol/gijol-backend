@@ -18,7 +18,7 @@ public class GraduationRequirementStatusController {
     private final GraduationRequirementStatusService graduationRequirementStatusService;
 
     @PostMapping("")
-    public ResponseEntity<GraduationRequirementStatus> checkGraduation(@RequestBody GradeToCheckRequest request) throws IOException {
+    public ResponseEntity<GraduationRequirementStatus> checkGraduation(GradeToCheckRequest request) throws IOException {
         GraduationRequirementStatus graduationRequirementStatus = graduationRequirementStatusService.checkGraduationCondition(request);
         return ResponseEntity.ok().body(graduationRequirementStatus);
 

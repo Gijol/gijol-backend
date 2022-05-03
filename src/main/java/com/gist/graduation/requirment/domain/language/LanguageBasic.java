@@ -1,5 +1,6 @@
-package com.gist.graduation.requirment.domain;
+package com.gist.graduation.requirment.domain.language;
 
+import com.gist.graduation.requirment.domain.RequirementStatusBaseEntity;
 import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import org.springframework.data.mongodb.core.mapping.Document;

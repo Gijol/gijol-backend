@@ -25,8 +25,8 @@ public class ArtAndSport {
                 .collect(Collectors.toList());
         checkSportMandatoryNumber(etcMandatory, sportTakenCourses, studentId);
 
-        inputUserTakenCoursesListTakenCourses.addAll(artTakenCourses);
-        inputUserTakenCoursesListTakenCourses.addAll(sportTakenCourses);
+        etcMandatory.getUserTakenCoursesList().addAll(artTakenCourses);
+        etcMandatory.getUserTakenCoursesList().addAll(sportTakenCourses);
     }
 
     private static void checkSportMandatoryNumber(EtcMandatory etcMandatory, List<TakenCourse> takenCourses, int studentId) {

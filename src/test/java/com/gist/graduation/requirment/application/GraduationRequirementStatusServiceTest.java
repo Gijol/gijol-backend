@@ -1,14 +1,12 @@
 package com.gist.graduation.requirment.application;
 
 import com.gist.graduation.requirment.domain.GraduationRequirementStatus;
-import com.gist.graduation.requirment.domain.MajorType;
+import com.gist.graduation.requirment.domain.major.MajorType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class GraduationRequirementStatusServiceTest {
 

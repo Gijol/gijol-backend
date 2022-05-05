@@ -1,7 +1,7 @@
 package com.gist.graduation.requirment.application;
 
 import com.gist.graduation.requirment.domain.GraduationRequirementStatus;
-import com.gist.graduation.requirment.domain.MajorType;
+import com.gist.graduation.requirment.domain.major.MajorType;
 import com.gist.graduation.requirment.dto.GradeToCheckRequest;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import com.gist.graduation.utils.UserTakenCousrseParser;

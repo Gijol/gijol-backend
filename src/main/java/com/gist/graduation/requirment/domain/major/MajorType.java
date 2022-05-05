@@ -1,8 +1,7 @@
-package com.gist.graduation.requirment.domain;
+package com.gist.graduation.requirment.domain.major;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.gist.graduation.exception.ApplicationException;
-import com.gist.graduation.requirment.domain.major.*;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.TriConsumer;

@@ -1,6 +1,7 @@
 package com.gist.graduation.requirment.domain;
 
 import com.gist.graduation.requirment.domain.major.Major;
+import com.gist.graduation.requirment.domain.major.MajorType;
 import com.gist.graduation.requirment.domain.science.ScienceBasic;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import com.gist.graduation.utils.UserTakenCousrseParser;

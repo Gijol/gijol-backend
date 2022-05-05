@@ -25,8 +25,8 @@ public class Research {
                 .collect(Collectors.toList());
         checkExist(etcMandatory, researchTwoCourses, RESEARCH_II_CODE);
 
-        inputUserTakenCoursesListTakenCourses.addAll(researchOneCourses);
-        inputUserTakenCoursesListTakenCourses.addAll(researchTwoCourses);
+        etcMandatory.getUserTakenCoursesList().addAll(researchOneCourses);
+        etcMandatory.getUserTakenCoursesList().addAll(researchTwoCourses);
     }
 
     private static void checkExist(EtcMandatory etcMandatory, List<TakenCourse> takenCourses, String code) {

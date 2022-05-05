@@ -7,9 +7,10 @@ import com.gist.graduation.utils.HumanitiesListParser;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 
 public class Humanities extends RequirementStatusBaseEntity {
+
+    public static final Integer HUMANITIES_MIN_CREDIT = 24;
 
     public void checkRequirementByStudentId(Integer studentId, UserTakenCoursesList inputUserTakenCoursesList) {
         if (studentId >= 18) {
@@ -23,6 +24,7 @@ public class Humanities extends RequirementStatusBaseEntity {
         }
 
         addCredit(this.getUserTakenCoursesList().sumCreditOfCourses());
+        setMinConditionCredits(HUMANITIES_MIN_CREDIT);
     }
 
     private void checkMandatoryHumanities(UserTakenCoursesList inputUserTakenCoursesList) {
@@ -70,8 +72,7 @@ public class Humanities extends RequirementStatusBaseEntity {
                 .collect(Collectors.toList());
         this.getUserTakenCoursesList().addAll(userTakenHumanitiesCourses);
 
-        int humanitiesMinimunCredit = 24;
-        int humanitiesMinimumCondition = humanitiesMinimunCredit - this.getUserTakenCoursesList().sumCreditOfCourses();
+        int humanitiesMinimumCondition = HUMANITIES_MIN_CREDIT - this.getUserTakenCoursesList().sumCreditOfCourses();
 
         if (humanitiesMinimumCondition > 0) {
             addMessage(String.format("인문사회 과목을 %d학점 더 들어야 합니다.", (humanitiesMinimumCondition)));

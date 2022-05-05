@@ -1,18 +1,12 @@
 package com.gist.graduation.utils;
 
-import com.gist.graduation.user.taken_course.TakenCourse;
-import com.mongodb.lang.Nullable;
 import lombok.Getter;
 import lombok.ToString;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Getter
 @ToString
-@Document
 public class RegisteredCourse {
     private final String index;
     private final int year;
@@ -21,7 +15,6 @@ public class RegisteredCourse {
     private final String name;
     private final String code;
     private final int credit;
-    @Nullable
     private String liberalArtType = null;
 
     public RegisteredCourse(String index, int year, String semester, String type, String name, String code, int credit) {
@@ -34,7 +27,7 @@ public class RegisteredCourse {
         this.credit = credit;
     }
 
-    public void setLiberalArtType(@Nullable String liberalArtType) {
+    public void setLiberalArtType(String liberalArtType) {
         this.liberalArtType = liberalArtType;
     }
 
@@ -50,7 +43,6 @@ public class RegisteredCourse {
     public int hashCode() {
         return Objects.hash(name, code, credit);
     }
-
 
 
 }

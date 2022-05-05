@@ -1,6 +1,5 @@
 package com.gist.graduation.utils;
 
-import com.gist.graduation.user.taken_course.CourseType;
 import com.gist.graduation.user.taken_course.TakenCourse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -35,7 +34,7 @@ public class CourseListPrinter {
         }
     }
 
-    public void printCalculusClass(List<RegisteredCourse> registeredCourseList){
+    public void printCalculusClass(List<RegisteredCourse> registeredCourseList) {
         Set<RegisteredCourse> writingConditionCourse = registeredCourseList.stream()
                 .filter(s -> s.getName().contains("미적분"))
                 .filter(s -> s.getCredit() == 3)
@@ -45,7 +44,7 @@ public class CourseListPrinter {
         }
     }
 
-    public void printClassByCreditAndName(List<RegisteredCourse> registeredCourseList, String name, int credit){
+    public void printClassByCreditAndName(List<RegisteredCourse> registeredCourseList, String name, int credit) {
         Set<RegisteredCourse> conditionCourse = registeredCourseList.stream()
                 .filter(s -> s.getName().contains(name))
                 .filter(s -> s.getCredit() == credit)
@@ -55,7 +54,7 @@ public class CourseListPrinter {
         }
     }
 
-    public void printClassByCreditAndNameAndCode(List<RegisteredCourse> registeredCourseList, String name, int credit, String code){
+    public void printClassByCreditAndNameAndCode(List<RegisteredCourse> registeredCourseList, String name, int credit, String code) {
         Set<RegisteredCourse> conditionCourse = registeredCourseList.stream()
                 .filter(s -> s.getName().contains(name))
                 .filter(s -> s.getCredit() == credit)
@@ -66,7 +65,7 @@ public class CourseListPrinter {
         }
     }
 
-    public void printMandatoryMajorClass(List<RegisteredCourse> registeredCourseList, String code){
+    public void printMandatoryMajorClass(List<RegisteredCourse> registeredCourseList, String code) {
         Set<RegisteredCourse> conditionCourse = registeredCourseList.stream()
                 .filter(s -> s.getCode().contains(code))
                 .filter(s -> s.getType().equals("필수"))
@@ -77,7 +76,7 @@ public class CourseListPrinter {
         }
     }
 
-    public void printByCode(List<RegisteredCourse> registeredCourseList, String code){
+    public void printByCode(List<RegisteredCourse> registeredCourseList, String code) {
         Set<RegisteredCourse> conditionCourse = registeredCourseList.stream()
                 .filter(s -> s.getCode().contains(code))
                 .collect(Collectors.toSet());

@@ -65,7 +65,8 @@ public class HumanitiesExceptionConstants {
         public static void removeGSCCourses(List<TakenCourse> registeredCourses) {
             registeredCourses.removeAll(getGSCCoursesList());
         }
-        public static List<TakenCourse> getGSCCoursesList(){
+
+        public static List<TakenCourse> getGSCCoursesList() {
             return Arrays.stream(values())
                     .map(s -> s.takenCourse)
                     .collect(Collectors.toList());
@@ -92,8 +93,8 @@ public class HumanitiesExceptionConstants {
         public static void removeNotHUS(List<TakenCourse> registeredCourses) {
             registeredCourses.removeAll(
                     Arrays.stream(values())
-                    .map(s -> s.takenCourse)
-                    .collect(Collectors.toList())
+                            .map(s -> s.takenCourse)
+                            .collect(Collectors.toList())
             );
         }
     }

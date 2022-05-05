@@ -1,6 +1,5 @@
 package com.gist.graduation.requirment.domain.major;
 
-import com.gist.graduation.requirment.domain.Major;
 import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +13,7 @@ import static com.gist.graduation.requirment.domain.constants.MajorMandatoryCons
 public enum ChemistryMajor {
 
     FROM2018(List.of(18), List.of(CH3102, CH3103, CH3104, CH3105, CH3106)),
-    FROM2019(List.of(19, 20, 21),  List.of(CH2101, CH2102, CH2103, CH2104, CH2105, CH3106, CH3107));
+    FROM2019(List.of(19, 20, 21), List.of(CH2101, CH2102, CH2103, CH2104, CH2105, CH3106, CH3107));
 
     private final List<Integer> studentId;
     private final List<TakenCourse> mandatoryCourses;

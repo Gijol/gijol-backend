@@ -25,8 +25,8 @@ public class ArtAndSport {
                 .collect(Collectors.toList());
         checkSportMandatoryNumber(etcMandatory, sportTakenCourses, studentId);
 
-        inputUserTakenCoursesListTakenCourses.addAll(artTakenCourses);
-        inputUserTakenCoursesListTakenCourses.addAll(sportTakenCourses);
+        etcMandatory.getUserTakenCoursesList().addAll(artTakenCourses);
+        etcMandatory.getUserTakenCoursesList().addAll(sportTakenCourses);
     }
 
     private static void checkSportMandatoryNumber(EtcMandatory etcMandatory, List<TakenCourse> takenCourses, int studentId) {
@@ -35,11 +35,11 @@ public class ArtAndSport {
 
         int courseCount = takenCourses.size();
         if (studentId < 20 && courseCount < fourMandatory) {
-            etcMandatory.addMessage(String.format("체육 과목(%s)을 %d개 더 들어야합니다.", SPORT_CODE, fourMandatory-courseCount));
+            etcMandatory.addMessage(String.format("체육 과목(%s)을 %d개 더 들어야합니다.", SPORT_CODE, fourMandatory - courseCount));
         }
 
         if (studentId >= 20 && courseCount < twoMandatory) {
-            etcMandatory.addMessage(String.format("체육 과목(%s)을 %d개 더 들어야합니다.", SPORT_CODE, twoMandatory-courseCount));
+            etcMandatory.addMessage(String.format("체육 과목(%s)을 %d개 더 들어야합니다.", SPORT_CODE, twoMandatory - courseCount));
         }
     }
 
@@ -49,11 +49,11 @@ public class ArtAndSport {
 
         int courseCount = takenCourses.size();
         if (studentId < 20 && courseCount < fourMandatory) {
-            etcMandatory.addMessage(String.format("예능 과목(%s)을 %d개 더 들어야합니다.", ART_CODE, fourMandatory-courseCount));
+            etcMandatory.addMessage(String.format("예능 과목(%s)을 %d개 더 들어야합니다.", ART_CODE, fourMandatory - courseCount));
         }
 
         if (studentId >= 20 && courseCount < twoMandatory) {
-            etcMandatory.addMessage(String.format("예능 과목(%s)을 %d개 더 들어야합니다.", ART_CODE, twoMandatory-courseCount));
+            etcMandatory.addMessage(String.format("예능 과목(%s)을 %d개 더 들어야합니다.", ART_CODE, twoMandatory - courseCount));
         }
     }
 }

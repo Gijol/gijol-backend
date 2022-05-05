@@ -3,14 +3,12 @@ package com.gist.graduation.user.taken_course;
 import com.gist.graduation.utils.RegisteredCourse;
 import lombok.Getter;
 import lombok.ToString;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Document
 @ToString
 @Getter
 public class TakenCourse {

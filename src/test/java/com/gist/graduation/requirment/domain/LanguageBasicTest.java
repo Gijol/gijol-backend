@@ -1,5 +1,6 @@
 package com.gist.graduation.requirment.domain;
 
+import com.gist.graduation.requirment.domain.language.LanguageBasic;
 import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import com.gist.graduation.utils.UserTakenCousrseParser;

@@ -4,23 +4,22 @@ import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import lombok.Getter;
 import lombok.ToString;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @ToString
-@Document
 public class RequirementStatusBaseEntity {
 
     private final UserTakenCoursesList userTakenCoursesList;
 
     private Integer totalCredits;
 
-    private Integer maxCredits;
+    private Integer minConditionCredits;
+    private Integer maxConditionCredits;
 
-    private Boolean satisfied;  
+    private Boolean satisfied;
 
     private final List<String> messages;
 
@@ -28,7 +27,8 @@ public class RequirementStatusBaseEntity {
     public RequirementStatusBaseEntity() {
         this.userTakenCoursesList = new UserTakenCoursesList(new ArrayList<>());
         this.totalCredits = 0;
-        this.maxCredits = 0;
+        this.minConditionCredits = 0;
+        this.maxConditionCredits = 0;
         this.satisfied = false;
         this.messages = new ArrayList<>();
     }
@@ -37,8 +37,18 @@ public class RequirementStatusBaseEntity {
         this.totalCredits += credit;
     }
 
-    public void setMaxCredits(Integer maxCredits) {
-        this.maxCredits = maxCredits;
+    public void setMinConditionCredits(Integer minConditionCredits){
+        this.minConditionCredits = minConditionCredits;
+    }
+    public void setMaxConditionCredits(Integer maxConditionCredits) {
+        this.maxConditionCredits = maxConditionCredits;
+    }
+
+    public String getConditionCredts(){
+        if (this.maxConditionCredits != 0 ){
+            return String.format("%d~%d", this.minConditionCredits, this.maxConditionCredits);
+        }
+        return this.minConditionCredits.toString();
     }
 
     public void isSatisfied() {
@@ -49,7 +59,7 @@ public class RequirementStatusBaseEntity {
         this.userTakenCoursesList.getTakenCourses().add(course);
     }
 
-    public void addMessage(String message){
+    public void addMessage(String message) {
         this.messages.add(message);
     }
 }

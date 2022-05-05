@@ -1,6 +1,5 @@
 package com.gist.graduation.requirment.domain.major;
 
-import com.gist.graduation.requirment.domain.Major;
 import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import lombok.RequiredArgsConstructor;

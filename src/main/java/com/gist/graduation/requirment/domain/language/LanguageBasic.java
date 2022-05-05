@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class LanguageBasic extends RequirementStatusBaseEntity {
+    public static final int LANGUAGE_BASIC_MIN_CREDIT = 7;
 
     public void checkRequirementByStudentId(Integer studentId, UserTakenCoursesList inputUserTakenCoursesList) {
         if (studentId >= 18) {
@@ -21,6 +22,7 @@ public class LanguageBasic extends RequirementStatusBaseEntity {
         }
 
         addCredit(this.getUserTakenCoursesList().sumCreditOfCourses());
+        setMinConditionCredits(LANGUAGE_BASIC_MIN_CREDIT);
     }
 
     private void checkEnlgishFrom2018(UserTakenCoursesList inputUserTakenCoursesList) {

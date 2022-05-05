@@ -28,6 +28,7 @@ public enum MajorType {
     private void addCredits(Major major) {
         Integer takenCredits = major.getUserTakenCoursesList().sumCreditOfCourses();
         major.addCredit(takenCredits);
+        major.setMinConditionCredits(this.totalCredits);
 
         if (takenCredits < totalCredits) {
             if (major.getMessages().isEmpty()) {

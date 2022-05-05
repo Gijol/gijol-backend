@@ -50,13 +50,13 @@ public class GraduationRequirementStatus {
     }
 
 
-    public List<TakenCourse> getExceptOtherUncheckedClasses(){
+    public List<TakenCourse> listOfExceptOtherUncheckedClasses(){
         List<TakenCourse> userTakenCourses = new ArrayList<>();
         userTakenCourses.addAll(this.languageBasic.getUserTakenCoursesList().getTakenCourses());
         userTakenCourses.addAll(this.scienceBasic.getUserTakenCoursesList().getTakenCourses());
         userTakenCourses.addAll(this.major.getUserTakenCoursesList().getTakenCourses());
         userTakenCourses.addAll(this.humanities.getUserTakenCoursesList().getTakenCourses());
-        userTakenCourses.addAll(this.otherUncheckedClass.getUserTakenCoursesList().getTakenCourses());
+        userTakenCourses.addAll(this.etcMandatory.getUserTakenCoursesList().getTakenCourses());
         return userTakenCourses;
     }
 }

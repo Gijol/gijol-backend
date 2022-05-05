@@ -6,6 +6,7 @@ import com.gist.graduation.requirment.domain.MajorType;
 import com.gist.graduation.requirment.dto.GradeToCheckRequest;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,10 +28,9 @@ public class TestController {
     }
 
     @PostMapping("/upload")
-    public String formUploadTest(@ModelAttribute GradeToCheckRequest request, Model model) throws IOException {
+    public ResponseEntity<GraduationRequirementStatus> formUploadTest(@ModelAttribute GradeToCheckRequest request, Model model) throws IOException {
         GraduationRequirementStatus graduationRequirementStatus = graduationRequirementStatusService.checkGraduationCondition(request);
-        model.addAttribute("result", graduationRequirementStatus);
-        return "result";
+        return ResponseEntity.ok().body(graduationRequirementStatus);
     }
 
     @GetMapping("/empty")

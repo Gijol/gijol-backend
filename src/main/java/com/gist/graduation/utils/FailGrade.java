@@ -6,7 +6,7 @@ public enum FailGrade {
 
     public static boolean isFail(String grade) {
         for (FailGrade failGrade : FailGrade.values()) {
-            if (failGrade.toString().equals(grade)) {
+            if (failGrade.name().equals(grade)) {
                 return true;
             }
         }

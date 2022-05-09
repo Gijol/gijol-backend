@@ -25,7 +25,6 @@ public class GraduationRequirementStatusService {
         GraduationRequirementStatus graduationRequirementStatus = new GraduationRequirementStatus();
         graduationRequirementStatus.checkGraduationRequirements(studentId, userTakenCoursesList, request.getMajorType());
         return graduationRequirementStatus;
-
     }
 
     private File multiPartToFile(MultipartFile multipartFile) throws IOException {

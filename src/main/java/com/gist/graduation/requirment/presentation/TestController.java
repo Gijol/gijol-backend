@@ -30,6 +30,7 @@ public class TestController {
     public ResponseEntity<GraduationRequirementStatus> formUploadTest(@ModelAttribute GradeToCheckRequest request, Model model) throws IOException {
         GraduationRequirementStatus graduationRequirementStatus = graduationRequirementStatusService.checkGraduationCondition(request);
         return ResponseEntity.ok().body(graduationRequirementStatus);
+
     }
 
     @GetMapping("/empty")

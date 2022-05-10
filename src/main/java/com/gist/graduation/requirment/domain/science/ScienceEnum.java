@@ -29,6 +29,15 @@ public enum ScienceEnum {
         BIOLOGY_BLOCK.courseList.add(BIOLOGY_EXPERIMENT);
     }
 
+    public static void checkScienceBasicCourses(ScienceBasic scienceBasic, UserTakenCoursesList userTakenCoursesList) {
+        for (ScienceEnum scienceEnum : values()) {
+            List<TakenCourse> takenCourses = userTakenCoursesList.getTakenCourses().stream()
+                    .filter(scienceEnum.courseList::contains)
+                    .collect(Collectors.toList());
+            scienceBasic.getUserTakenCoursesList().addAll(takenCourses);
+        }
+    }
+
     public static ScienceVerifier ofScienceVerifier(UserTakenCoursesList userTakenCoursesList) {
         ScienceBlock physicsBlock = new ScienceBlock();
         ScienceBlock chemistryBlock = new ScienceBlock();

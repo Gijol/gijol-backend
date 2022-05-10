@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test;
 
 class ScienceEnumTest extends UserConditionTest {
 
-    private ScienceVerifier scienceVerifier;
-
     @Test
     void test() {
         ScienceVerifier scienceVerifier = ScienceEnum.ofScienceVerifier(takenCourses);
@@ -17,7 +15,7 @@ class ScienceEnumTest extends UserConditionTest {
     void checkTwoBlock() {
         ScienceVerifier scienceVerifier = ScienceEnum.ofScienceVerifier(takenCourses);
         ScienceBasic scienceBasic = new ScienceBasic();
-        scienceVerifier.checkTwoBlock(scienceBasic);
+        scienceBasic.checkRequirementByStudentId(20, takenCourses);
         System.out.println(scienceBasic);
     }
 

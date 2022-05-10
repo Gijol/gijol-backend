@@ -27,10 +27,22 @@ public class ScienceVerifier {
         return new ScienceVerifier(physicsBlock, chemistryBlock, biologyBlock);
     }
 
-    public void checkTwoBlock(ScienceBasic scienceBasic) {
+    public void checkThreeBlock(ScienceBasic scienceBasic) {
+        findNotTakenCourseInHalfStatus(getHalfStatusBlock());
+        List<String> typeList = getAllBlocks().stream()
+                .filter(s -> s.getStatus().equals(EMPTY))
+                .map(s -> s.getType()).collect(Collectors.toList());
+        this.recommendedCourses.addAll(typeList);
+        this.recommendedCourses.addAll(typeList.stream().map(s -> s + EXPERIMENT).collect(Collectors.toList()));
+        this.recommendedCourses.forEach(s -> scienceBasic.addMessage(String.format("%s를(을) 수강해야 합니다.", s)));
+    }
+
+    public void checkTwoBlock(ScienceBasic scienceBasic, boolean tookComputer) {
+
+
         int size = this.getCounts();
-        System.out.println(size);
         if (size >= 5) return;
+        if (!tookComputer) scienceBasic.addMessage("컴퓨터 프로그래밍과목을 수강해야 합니다.");
 
         switch (size) {
             case 4:
@@ -102,8 +114,12 @@ public class ScienceVerifier {
                 .collect(Collectors.toList());
     }
 
-    private Integer getCounts() {
-        return physicsBlock.getSize() + chemistryBlock.getSize() + biologyBlock.getSize();
+    private int getCounts() {
+        int count = physicsBlock.getSize() + chemistryBlock.getSize() + biologyBlock.getSize();
+        if (biologyBlock.getUserTakenCoursesList().getTakenCourses().stream().filter(s -> !s.getCourseName().contains("실험")).count() > 1) {
+            count--;
+        }
+        return count;
     }
 
     private long getStatusCount(Status status) {

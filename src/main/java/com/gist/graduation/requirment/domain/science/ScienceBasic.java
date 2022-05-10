@@ -17,6 +17,7 @@ public class ScienceBasic extends RequirementStatusBaseEntity {
     public void checkRequirementByStudentId(Integer studentId, UserTakenCoursesList inputUserTakenCoursesList) {
         if (studentId >= 18) {
             checkMathFrom2018(inputUserTakenCoursesList);
+            checkScienceFrom2018(inputUserTakenCoursesList);
         }
 
         if (this.getMessages().isEmpty()) {
@@ -63,21 +64,22 @@ public class ScienceBasic extends RequirementStatusBaseEntity {
     }
 
     private void checkScienceFrom2018(UserTakenCoursesList userTakenCoursesList) {
-        checkComputerProgramming(userTakenCoursesList);
+        boolean tookComputer = checkComputerProgramming(userTakenCoursesList);
+        ScienceEnum.checkScienceBasicCourses(this, userTakenCoursesList);
+
         ScienceVerifier scienceVerifier = ScienceEnum.ofScienceVerifier(userTakenCoursesList);
+        scienceVerifier.checkTwoBlock(this, tookComputer);
 
-        if (this.getUserTakenCoursesList().contains(COMPUTER_PROGRAMMING)) {
-            scienceVerifier.checkTwoBlock(this);
-            return;
+        if (!tookComputer) {
+            scienceVerifier.checkThreeBlock(this);
         }
-
     }
 
-    private void checkComputerProgramming(UserTakenCoursesList userTakenCoursesList) {
+    private boolean checkComputerProgramming(UserTakenCoursesList userTakenCoursesList) {
         if (userTakenCoursesList.contains(COMPUTER_PROGRAMMING)) {
             this.getUserTakenCoursesList().getTakenCourses().add(COMPUTER_PROGRAMMING);
+            return true;
         }
+        return false;
     }
-
-
 }

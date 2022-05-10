@@ -29,7 +29,7 @@ public enum ScienceEnum {
         BIOLOGY_BLOCK.courseList.add(BIOLOGY_EXPERIMENT);
     }
 
-    public static ScienceVerifier ofScienceVerifier(UserTakenCoursesList userTakenCoursesList){
+    public static ScienceVerifier ofScienceVerifier(UserTakenCoursesList userTakenCoursesList) {
         ScienceBlock physicsBlock = new ScienceBlock();
         ScienceBlock chemistryBlock = new ScienceBlock();
         ScienceBlock biologyBlock = new ScienceBlock();
@@ -40,16 +40,16 @@ public enum ScienceEnum {
                     .filter(scienceEnum.courseList::contains)
                     .collect(Collectors.toList());
 
-            if (i==0) {
-                physicsBlock = new ScienceBlock(takenCourses, ofStatus(takenCourses));
+            if (i == 0) {
+                physicsBlock = new ScienceBlock(takenCourses, ofStatus(takenCourses), "물리");
             }
 
-            if (i==1) {
-                chemistryBlock = new ScienceBlock(takenCourses, ofStatus(takenCourses));
+            if (i == 1) {
+                chemistryBlock = new ScienceBlock(takenCourses, ofStatus(takenCourses), "화학");
             }
 
-            if (i==2) {
-                biologyBlock = new ScienceBlock(takenCourses, ofStatus(takenCourses));
+            if (i == 2) {
+                biologyBlock = new ScienceBlock(takenCourses, ofStatus(takenCourses), "생명");
             }
             i++;
         }
@@ -60,14 +60,14 @@ public enum ScienceEnum {
     public enum Status {
         FULL,
         HALF,
-        EMPTY;
+        EMPTY
     }
 
-    public static Status ofStatus(List<TakenCourse> takenCourses){
+    public static Status ofStatus(List<TakenCourse> takenCourses) {
         if (takenCourses.size() >= 2) {
             return Status.FULL;
         }
-        if (takenCourses.size() == 1){
+        if (takenCourses.size() == 1) {
             return Status.HALF;
         }
         return Status.EMPTY;

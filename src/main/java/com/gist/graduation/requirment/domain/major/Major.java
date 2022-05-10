@@ -1,6 +1,5 @@
 package com.gist.graduation.requirment.domain.major;
 
-import com.gist.graduation.requirment.domain.MajorType;
 import com.gist.graduation.requirment.domain.RequirementStatusBaseEntity;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 

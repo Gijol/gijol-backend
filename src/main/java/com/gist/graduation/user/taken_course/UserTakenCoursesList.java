@@ -30,7 +30,7 @@ public class UserTakenCoursesList {
         return !takenCourses.contains(takenCourse);
     }
 
-    public boolean isEmpty() {
+    public boolean checkEmpty() {
         return this.takenCourses.isEmpty();
     }
 

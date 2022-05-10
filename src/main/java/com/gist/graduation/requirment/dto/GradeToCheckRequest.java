@@ -1,10 +1,7 @@
 package com.gist.graduation.requirment.dto;
 
-import com.gist.graduation.requirment.domain.MajorType;
-import lombok.AllArgsConstructor;
+import com.gist.graduation.requirment.domain.major.MajorType;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
 @Data

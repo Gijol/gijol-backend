@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class LanguageBasic extends RequirementStatusBaseEntity {
-    public static final int LANGUAGE_BASIC_MIN_CREDIT = 7;
+    private static final int LANGUAGE_BASIC_MIN_CREDIT = 7;
 
     public void checkRequirementByStudentId(Integer studentId, UserTakenCoursesList inputUserTakenCoursesList) {
         if (studentId >= 18) {

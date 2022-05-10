@@ -5,16 +5,19 @@ import com.gist.graduation.requirment.domain.RequirementStatusBaseEntity;
 import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
-public class ScienceBasic extends RequirementStatusBaseEntity {
+import static com.gist.graduation.requirment.domain.constants.ScienceBasicConstant.Science.COMPUTER_PROGRAMMING;
 
-    public static final int SCIENCE_AND_EXPERIMENT_PAIR = 2;
+public class ScienceBasic extends RequirementStatusBaseEntity {
 
     public void checkRequirementByStudentId(Integer studentId, UserTakenCoursesList inputUserTakenCoursesList) {
         if (studentId >= 18) {
             checkMathFrom2018(inputUserTakenCoursesList);
+            checkScienceFrom2018(inputUserTakenCoursesList);
         }
 
         if (this.getMessages().isEmpty()) {
@@ -60,25 +63,23 @@ public class ScienceBasic extends RequirementStatusBaseEntity {
         getUserTakenCoursesList().addAll(userTakenMathCourses);
     }
 
-    private void checkScienceFrom2018() {
+    private void checkScienceFrom2018(UserTakenCoursesList userTakenCoursesList) {
+        boolean tookComputer = checkComputerProgramming(userTakenCoursesList);
+        ScienceEnum.checkScienceBasicCourses(this, userTakenCoursesList);
 
-        List<TakenCourse> checkedCourse = new ArrayList<>();
-        Map<String, Boolean> scienceMap = new TreeMap<>();
+        ScienceVerifier scienceVerifier = ScienceEnum.ofScienceVerifier(userTakenCoursesList);
+        scienceVerifier.checkTwoBlock(this, tookComputer);
 
-
-    }
-
-    private List<TakenCourse> checkEachScience(Map<String, Object> scienceMap, UserTakenCoursesList inputUserTakenCourse, List<TakenCourse> science, TakenCourse scienceExperiment) {
-        List<TakenCourse> scienceCourses = inputUserTakenCourse.getTakenCourses()
-                .stream()
-                .filter(s -> science.contains(s) || scienceExperiment.equals(s))
-                .collect(Collectors.toList());
-
-        if (scienceCourses.size() != SCIENCE_AND_EXPERIMENT_PAIR) {
-//            hello.getMessage()
+        if (!tookComputer) {
+            scienceVerifier.checkThreeBlock(this);
         }
-        return new ArrayList<>();
     }
 
-
+    private boolean checkComputerProgramming(UserTakenCoursesList userTakenCoursesList) {
+        if (userTakenCoursesList.contains(COMPUTER_PROGRAMMING)) {
+            this.getUserTakenCoursesList().getTakenCourses().add(COMPUTER_PROGRAMMING);
+            return true;
+        }
+        return false;
+    }
 }

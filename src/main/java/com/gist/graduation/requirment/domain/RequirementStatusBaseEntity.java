@@ -44,7 +44,7 @@ public class RequirementStatusBaseEntity {
         this.maxConditionCredits = maxConditionCredits;
     }
 
-    public String getConditionCredts(){
+    public String stringOfConditionCredits(){
         if (this.maxConditionCredits != 0 ){
             return String.format("%d~%d", this.minConditionCredits, this.maxConditionCredits);
         }

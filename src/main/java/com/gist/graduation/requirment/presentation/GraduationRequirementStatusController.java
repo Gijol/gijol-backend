@@ -2,7 +2,7 @@ package com.gist.graduation.requirment.presentation;
 
 import com.gist.graduation.requirment.application.GraduationRequirementStatusService;
 import com.gist.graduation.requirment.domain.GraduationRequirementStatus;
-import com.gist.graduation.requirment.domain.MajorType;
+import com.gist.graduation.requirment.domain.major.MajorType;
 import com.gist.graduation.requirment.dto.GradeToCheckRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -32,15 +32,4 @@ class MajorTest {
         System.out.println(major.getUserTakenCoursesList().toString());
         System.out.println(major.getTotalCredits());
     }
-
-    @Test
-    @DisplayName("승규 성적표 테스트")
-    void physicsTest() throws IOException {
-        Major major = new Major();
-        ClassPathResource gradeResource = new ClassPathResource("/test-grade/승규_성적.xls");
-        takenCourses = UserTakenCousrseParser.parseUserTakenCousrse(gradeResource.getFile());
-        studentId = UserTakenCousrseParser.getStudentId(gradeResource.getFile());
-        major.checkRequirementByStudentId(studentId, takenCourses, MajorType.PS);
-        System.out.println(major);
-    }
 }

@@ -16,12 +16,10 @@ class MajorTest {
 
     private UserTakenCoursesList takenCourses;
     private Integer studentId;
-    private UserTakenCousrseParser userTakenCousrseParser;
 
     @BeforeEach
     void setup() throws IOException {
         ClassPathResource gradeResource = new ClassPathResource("test-grade/grade_report.xls");
-        UserTakenCousrseParser userTakenCousrseParser = new UserTakenCousrseParser();
         File file = gradeResource.getFile();
         takenCourses = UserTakenCousrseParser.parseUserTakenCousrse(file);
         studentId = UserTakenCousrseParser.getStudentId(file);
@@ -39,16 +37,10 @@ class MajorTest {
     @DisplayName("승규 성적표 테스트")
     void physicsTest() throws IOException {
         Major major = new Major();
-        getFileData("/test-grade/승규_성적.xls");
+        ClassPathResource gradeResource = new ClassPathResource("/test-grade/승규_성적.xls");
+        takenCourses = UserTakenCousrseParser.parseUserTakenCousrse(gradeResource.getFile());
+        studentId = UserTakenCousrseParser.getStudentId(gradeResource.getFile());
         major.checkRequirementByStudentId(studentId, takenCourses, MajorType.PS);
         System.out.println(major);
-
-    }
-
-    private void getFileData(String path) throws IOException {
-        ClassPathResource gradeResource = new ClassPathResource(path);
-        File file = gradeResource.getFile();
-        takenCourses = UserTakenCousrseParser.parseUserTakenCousrse(file);
-        studentId = UserTakenCousrseParser.getStudentId(file);
     }
 }

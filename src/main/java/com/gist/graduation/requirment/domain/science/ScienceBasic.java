@@ -8,6 +8,8 @@ import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.gist.graduation.requirment.domain.constants.ScienceBasicConstant.Science.COMPUTER_PROGRAMMING;
+
 public class ScienceBasic extends RequirementStatusBaseEntity {
 
     public static final int SCIENCE_AND_EXPERIMENT_PAIR = 2;
@@ -60,15 +62,22 @@ public class ScienceBasic extends RequirementStatusBaseEntity {
         getUserTakenCoursesList().addAll(userTakenMathCourses);
     }
 
-    private void checkScienceFrom2018() {
+    private void checkScienceFrom2018(UserTakenCoursesList userTakenCoursesList) {
+        checkComputerProgramming(userTakenCoursesList);
 
-        List<TakenCourse> checkedCourse = new ArrayList<>();
-        Map<String, Boolean> scienceMap = new TreeMap<>();
-
+        if (this.getUserTakenCoursesList().contains(COMPUTER_PROGRAMMING)){
+            return;
+        }
 
     }
 
-    private List<TakenCourse> checkEachScience(Map<String, Object> scienceMap, UserTakenCoursesList inputUserTakenCourse, List<TakenCourse> science, TakenCourse scienceExperiment) {
+    private void checkComputerProgramming(UserTakenCoursesList userTakenCoursesList){
+        if(userTakenCoursesList.contains(COMPUTER_PROGRAMMING)){
+            this.getUserTakenCoursesList().getTakenCourses().add(COMPUTER_PROGRAMMING);
+        }
+    }
+
+    private List<TakenCourse> notTakeComputerCheckEachScience(UserTakenCoursesList inputUserTakenCourse, List<TakenCourse> science, TakenCourse scienceExperiment) {
         List<TakenCourse> scienceCourses = inputUserTakenCourse.getTakenCourses()
                 .stream()
                 .filter(s -> science.contains(s) || scienceExperiment.equals(s))

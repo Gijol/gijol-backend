@@ -1,5 +1,6 @@
 package com.gist.graduation.utils;
 
+import com.gist.graduation.printer.CourseListPrinter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +22,7 @@ public class MajorCoursesListPrinterTest {
     void setup() throws IOException {
         courseListParser = new CourseListParser();
         courseListPrinter = new CourseListPrinter();
-        courseList = courseListParser.getCourseList();
+        courseList = CourseListParser.getCourseList();
     }
 
     @Test

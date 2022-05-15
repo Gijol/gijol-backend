@@ -2,6 +2,7 @@ package com.gist.graduation.requirment.domain.science;
 
 
 import com.gist.graduation.requirment.domain.RequirementStatusBaseEntity;
+import com.gist.graduation.requirment.domain.major.MajorType;
 import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 
@@ -14,7 +15,8 @@ import static com.gist.graduation.requirment.domain.constants.ScienceBasicConsta
 
 public class ScienceBasic extends RequirementStatusBaseEntity {
 
-    public void checkRequirementByStudentId(Integer studentId, UserTakenCoursesList inputUserTakenCoursesList) {
+    @Override
+    public void checkRequirementByStudentId(Integer studentId, UserTakenCoursesList inputUserTakenCoursesList, MajorType majorType) {
         if (studentId >= 18) {
             checkMathFrom2018(inputUserTakenCoursesList);
             checkScienceFrom2018(inputUserTakenCoursesList);

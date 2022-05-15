@@ -1,6 +1,7 @@
 package com.gist.graduation.requirment.domain.humanities;
 
 import com.gist.graduation.requirment.domain.RequirementStatusBaseEntity;
+import com.gist.graduation.requirment.domain.major.MajorType;
 import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import com.gist.graduation.utils.HumanitiesListParser;
@@ -12,7 +13,8 @@ public class Humanities extends RequirementStatusBaseEntity {
 
     public static final Integer HUMANITIES_MIN_CREDIT = 24;
 
-    public void checkRequirementByStudentId(Integer studentId, UserTakenCoursesList inputUserTakenCoursesList) {
+    @Override
+    public void checkRequirementByStudentId(Integer studentId, UserTakenCoursesList inputUserTakenCoursesList, MajorType majorType) {
         if (studentId >= 18) {
             checkMandatoryHumanities(inputUserTakenCoursesList);
             checkOtherHumanitiesCredit(inputUserTakenCoursesList);

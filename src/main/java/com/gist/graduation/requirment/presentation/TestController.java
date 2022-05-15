@@ -34,7 +34,7 @@ public class TestController {
     }
 
     @GetMapping("/empty")
-    public String formEmptyTest(Model model) throws IOException {
+    public String formEmptyTest(Model model) {
         GraduationRequirementStatus graduationRequirementStatus = new GraduationRequirementStatus();
         graduationRequirementStatus.checkGraduationRequirements(20, new UserTakenCoursesList(), MajorType.EC);
         model.addAttribute("result", graduationRequirementStatus);

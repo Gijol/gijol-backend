@@ -1,16 +1,13 @@
-package com.gist.graduation.utils;
+package com.gist.graduation.printer;
 
 import com.gist.graduation.user.taken_course.TakenCourse;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import com.gist.graduation.utils.RegisteredCourse;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Component
-@RequiredArgsConstructor
 public class CourseListPrinter {
 
     public void printCoreEnglishCourses(List<RegisteredCourse> registeredCourseList) {

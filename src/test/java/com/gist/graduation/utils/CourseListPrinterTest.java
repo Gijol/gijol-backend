@@ -1,10 +1,9 @@
 package com.gist.graduation.utils;
 
+import com.gist.graduation.printer.CourseListPrinter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,10 +14,10 @@ class CourseListPrinterTest {
     private List<RegisteredCourse> courseList;
 
     @BeforeEach
-    void setup() throws IOException {
+    void setup() {
         courseListParser = new CourseListParser();
         courseListPrinter = new CourseListPrinter();
-        courseList = courseListParser.getCourseList();
+        courseList = CourseListParser.getCourseList();
     }
 
     @Test
@@ -95,8 +94,6 @@ class CourseListPrinterTest {
     @Test
     void researchTest() {
         String name = "연구";
-//        courseListPrinter.printClassByCreditAndName(courseList, name, 3);
-
         courseListPrinter.printByCode(courseList, "910");
     }
 
@@ -109,6 +106,9 @@ class CourseListPrinterTest {
         courseListPrinter.printClassByCreditAndName(courseList, findMajorCourse, 1);
     }
 
-
+    @Test
+    void mathPrinter() {
+        courseListPrinter.printClassByCreditAndName(courseList, "미분", 3);
+    }
 
 }

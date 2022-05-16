@@ -13,8 +13,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @ToString
@@ -41,39 +41,33 @@ public class GraduationRequirementStatus {
         this.otherUncheckedClass = new OtherUncheckedClass();
     }
 
-    public GraduationRequirementStatus checkGraduationRequirements(Integer studentId, UserTakenCoursesList userTakenCoursesList, MajorType majorType) {
+    public void checkGraduationRequirements(Integer studentId, UserTakenCoursesList userTakenCoursesList, MajorType majorType) {
         setTotalCredits(userTakenCoursesList);
         isSatisfied();
-        languageBasic.checkRequirementByStudentId(studentId, userTakenCoursesList);
-        scienceBasic.checkRequirementByStudentId(studentId, userTakenCoursesList);
-        major.checkRequirementByStudentId(studentId, userTakenCoursesList, majorType);
-        humanities.checkRequirementByStudentId(studentId, userTakenCoursesList);
-        etcMandatory.checkRequirementByStudentId(studentId, userTakenCoursesList);
+
+        values().forEach(s -> s.checkRequirementByStudentId(studentId, userTakenCoursesList, majorType));
         otherUncheckedClass.checkRequirementByStudentId(studentId, userTakenCoursesList, this);
-        return this;
     }
 
-
-    public List<TakenCourse> listOfExceptOtherUncheckedClasses(){
-        List<TakenCourse> userTakenCourses = new ArrayList<>();
-        userTakenCourses.addAll(this.languageBasic.getUserTakenCoursesList().getTakenCourses());
-        userTakenCourses.addAll(this.scienceBasic.getUserTakenCoursesList().getTakenCourses());
-        userTakenCourses.addAll(this.major.getUserTakenCoursesList().getTakenCourses());
-        userTakenCourses.addAll(this.humanities.getUserTakenCoursesList().getTakenCourses());
-        userTakenCourses.addAll(this.etcMandatory.getUserTakenCoursesList().getTakenCourses());
-        return userTakenCourses;
+    public List<TakenCourse> listOfExceptOtherUncheckedClasses() {
+        return values().stream()
+                .flatMap(s -> s.getUserTakenCoursesList().getTakenCourses().stream()).collect(Collectors.toList());
     }
 
     private void setTotalCredits(UserTakenCoursesList userTakenCoursesList) {
         this.totalCredits = userTakenCoursesList.sumCreditOfCourses();
     }
 
-    private void isSatisfied(){
+    private void isSatisfied() {
         this.satisfied = languageBasic.getSatisfied() && scienceBasic.getSatisfied() && major.getSatisfied() && humanities.getSatisfied()
                 && etcMandatory.getSatisfied() && totalCredits >= TOTAL_CREDIT_CONDITION;
 
         if (totalCredits < TOTAL_CREDIT_CONDITION) {
             otherUncheckedClass.addMessage(String.format("전체 학점이 %d학점을 넘어야 합니다.", TOTAL_CREDIT_CONDITION));
         }
+    }
+
+    private List<RequirementStatusBaseEntity> values() {
+        return List.of(this.languageBasic, this.scienceBasic, this.major, this.humanities, this.etcMandatory);
     }
 }

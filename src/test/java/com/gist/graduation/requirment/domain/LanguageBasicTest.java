@@ -1,6 +1,7 @@
 package com.gist.graduation.requirment.domain;
 
 import com.gist.graduation.requirment.domain.language.LanguageBasic;
+import com.gist.graduation.requirment.domain.major.MajorType;
 import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import com.gist.graduation.utils.UserTakenCousrseParser;
@@ -31,7 +32,7 @@ class LanguageBasicTest {
     @Test
     void checkRequirementByStudentId() {
         LanguageBasic languageBasic = new LanguageBasic();
-        languageBasic.checkRequirementByStudentId(studentId, takenCourses);
+        languageBasic.checkRequirementByStudentId(studentId, takenCourses, MajorType.EC);
         System.out.println(languageBasic.getMessages());
         System.out.println(studentId + " satisfied : " + languageBasic.getSatisfied());
         assertThat(languageBasic.getSatisfied()).isTrue();
@@ -41,7 +42,7 @@ class LanguageBasicTest {
     void checkRequirementFailDueToWritingByStudentId() {
         LanguageBasic languageBasic = new LanguageBasic();
         takenCourses.getTakenCourses().remove(new TakenCourse("글쓰기의 기초: 학술적 글쓰기", "GS1512", "3"));
-        languageBasic.checkRequirementByStudentId(studentId, takenCourses);
+        languageBasic.checkRequirementByStudentId(studentId, takenCourses, MajorType.EC);
         System.out.println(languageBasic.getMessages());
         System.out.println(studentId + " satisfied : " + languageBasic.getSatisfied());
         assertThat(languageBasic.getSatisfied()).isFalse();
@@ -51,7 +52,7 @@ class LanguageBasicTest {
     void checkRequirementFailDueToEnglishTwoByStudentId() {
         LanguageBasic languageBasic = new LanguageBasic();
         takenCourses.getTakenCourses().remove(new TakenCourse("영어 II : 이공계 글쓰기 입문", "GS2652", "2"));
-        languageBasic.checkRequirementByStudentId(studentId, takenCourses);
+        languageBasic.checkRequirementByStudentId(studentId, takenCourses, MajorType.EC);
         System.out.println(languageBasic.getMessages());
         System.out.println(studentId + " satisfied : " + languageBasic.getSatisfied());
         assertThat(languageBasic.getSatisfied()).isFalse();

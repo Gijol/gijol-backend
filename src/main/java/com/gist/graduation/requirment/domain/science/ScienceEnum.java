@@ -36,6 +36,13 @@ public enum ScienceEnum {
                     .collect(Collectors.toList());
             scienceBasic.getUserTakenCoursesList().addAll(takenCourses);
         }
+        addSoftwareBasic(scienceBasic, userTakenCoursesList);
+    }
+
+    private static void addSoftwareBasic(ScienceBasic scienceBasic, UserTakenCoursesList userTakenCoursesList) {
+        if (userTakenCoursesList.contains(SOFTWARE_BASIC_AND_CODING)) {
+            scienceBasic.addCourse(SOFTWARE_BASIC_AND_CODING);
+        }
     }
 
     public static ScienceVerifier ofScienceVerifier(UserTakenCoursesList userTakenCoursesList) {

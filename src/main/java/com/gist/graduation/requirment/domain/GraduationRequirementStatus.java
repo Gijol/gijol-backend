@@ -13,7 +13,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,7 +49,7 @@ public class GraduationRequirementStatus {
         otherUncheckedClass.checkRequirementByStudentId(studentId, userTakenCoursesList, this);
     }
 
-    public List<TakenCourse> listOfExceptOtherUncheckedClasses(){
+    public List<TakenCourse> listOfExceptOtherUncheckedClasses() {
         return values().stream()
                 .flatMap(s -> s.getUserTakenCoursesList().getTakenCourses().stream()).collect(Collectors.toList());
     }
@@ -59,7 +58,7 @@ public class GraduationRequirementStatus {
         this.totalCredits = userTakenCoursesList.sumCreditOfCourses();
     }
 
-    private void isSatisfied(){
+    private void isSatisfied() {
         this.satisfied = languageBasic.getSatisfied() && scienceBasic.getSatisfied() && major.getSatisfied() && humanities.getSatisfied()
                 && etcMandatory.getSatisfied() && totalCredits >= TOTAL_CREDIT_CONDITION;
 
@@ -68,7 +67,7 @@ public class GraduationRequirementStatus {
         }
     }
 
-    private List<RequirementStatusBaseEntity> values(){
+    private List<RequirementStatusBaseEntity> values() {
         return List.of(this.languageBasic, this.scienceBasic, this.major, this.humanities, this.etcMandatory);
     }
 }

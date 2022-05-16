@@ -1,5 +1,6 @@
 package com.gist.graduation.requirment.domain.humanities;
 
+import com.gist.graduation.requirment.domain.major.MajorType;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import com.gist.graduation.utils.UserTakenCousrseParser;
 import org.junit.jupiter.api.Test;
@@ -12,14 +13,14 @@ class HumanitiesTest {
     @Test
     void checkRequirementByStudentId() {
         Humanities humanities = new Humanities();
-        humanities.checkRequirementByStudentId(21, getUserTakenCourses("test-grade/grade_report.xls"));
+        humanities.checkRequirementByStudentId(21, getUserTakenCourses("test-grade/grade_report.xls"), MajorType.EC);
         System.out.println(humanities);
     }
 
     @Test
     void checkother2() {
         Humanities humanities = new Humanities();
-        humanities.checkRequirementByStudentId(21, getUserTakenCourses("/test-grade/승규_성적.xls"));
+        humanities.checkRequirementByStudentId(21, getUserTakenCourses("/test-grade/승규_성적.xls"), MajorType.EC);
         System.out.println(humanities);
     }
 

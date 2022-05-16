@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.gist.graduation.requirment.domain.constants.ScienceBasicConstant.Science.SOFTWARE_BASIC_AND_CODING;
 import static com.gist.graduation.requirment.domain.science.ScienceEnum.Status.*;
 
 @Getter
@@ -35,6 +36,13 @@ public class ScienceVerifier {
         this.recommendedCourses.addAll(typeList);
         this.recommendedCourses.addAll(typeList.stream().map(s -> s + EXPERIMENT).collect(Collectors.toList()));
         this.recommendedCourses.forEach(s -> scienceBasic.addMessage(String.format("%s를(을) 수강해야 합니다.", s)));
+        checkSoftwareBasic(scienceBasic);
+    }
+
+    private void checkSoftwareBasic(ScienceBasic scienceBasic) {
+        if (scienceBasic.getUserTakenCoursesList().contains(SOFTWARE_BASIC_AND_CODING)) {
+            scienceBasic.addMessage(String.format("%s를(을) 수강해야 합니다.", SOFTWARE_BASIC_AND_CODING));
+        }
     }
 
     public void checkTwoBlock(ScienceBasic scienceBasic, boolean tookComputer) {

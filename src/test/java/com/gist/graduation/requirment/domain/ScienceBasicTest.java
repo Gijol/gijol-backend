@@ -28,7 +28,7 @@ class ScienceBasicTest {
     @Test
     void checkRequirementByStudentId() {
         ScienceBasic scienceBasic = new ScienceBasic();
-        scienceBasic.checkRequirementByStudentId(studentId, takenCourses);
+        scienceBasic.checkRequirementByStudentId(studentId, takenCourses, MajorType.EC);
         System.out.println(scienceBasic);
     }
 

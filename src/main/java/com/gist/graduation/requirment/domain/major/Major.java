@@ -5,6 +5,7 @@ import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 
 public class Major extends RequirementStatusBaseEntity {
 
+    @Override
     public void checkRequirementByStudentId(Integer studentId, UserTakenCoursesList inputUserTakenCoursesList, MajorType majorType) {
         majorType.checkMajorStatus(inputUserTakenCoursesList, this, studentId);
 

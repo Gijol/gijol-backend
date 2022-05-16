@@ -25,7 +25,7 @@ public class EtcMandatory extends RequirementStatusBaseEntity {
         addCredit(this.getUserTakenCoursesList().sumCreditOfCourses());
     }
 
-    private void setCredits(Integer studentId){
+    private void setCredits(Integer studentId) {
         if (studentId >= 21) {
             this.setMinConditionCredits(MIN_CREDIT_FROM_2021);
             return;

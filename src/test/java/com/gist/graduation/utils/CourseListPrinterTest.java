@@ -111,4 +111,9 @@ class CourseListPrinterTest {
         courseListPrinter.printClassByCreditAndName(courseList, "미분", 3);
     }
 
+    @Test
+    void softwareBasicPrinter() {
+        courseListPrinter.printClassByCreditAndName(courseList, "소프트웨어", 2);
+    }
+
 }

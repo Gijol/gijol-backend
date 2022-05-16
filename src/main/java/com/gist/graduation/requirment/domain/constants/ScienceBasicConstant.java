@@ -55,5 +55,7 @@ public class ScienceBasicConstant {
         public static final TakenCourse BIOLOGY_EXPERIMENT = new TakenCourse("일반생물학 실험", "GS1311", "1");
 
         public static final TakenCourse COMPUTER_PROGRAMMING = new TakenCourse("컴퓨터 프로그래밍", "GS1401", "3");
+
+        public static final TakenCourse SOFTWARE_BASIC_AND_CODING = new TakenCourse("소프트웨어 기초와 코딩", "GS1490", "2");
     }
 }

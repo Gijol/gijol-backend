@@ -41,7 +41,7 @@ public enum EECSMajor {
         userTakenCoursesList.addAll(usertakenMandatoryCourses);
 
         if (usertakenMandatoryCourses.isEmpty()) {
-            major.addMessage(String.format("%s 중 하나를 수강해야 합니다.", mandatoryCourses));
+            major.addMessage(String.format("%s 혹은 %s 수강해야 합니다.", mandatoryCourses.get(0),mandatoryCourses.get(1)));
         }
     }
 

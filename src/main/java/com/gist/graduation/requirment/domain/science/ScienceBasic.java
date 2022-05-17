@@ -7,6 +7,7 @@ import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.gist.graduation.requirment.domain.constants.ScienceBasicConstant.Math.CALCULUS;
@@ -30,7 +31,6 @@ public class ScienceBasic extends RequirementStatusBaseEntity {
         }
 
         addCredit(this.getUserTakenCoursesList().sumCreditOfCourses());
-
     }
 
     private void checkMathFrom2018(UserTakenCoursesList inputUserTakenCoursesList) {
@@ -64,13 +64,17 @@ public class ScienceBasic extends RequirementStatusBaseEntity {
     }
 
     private boolean checkComputerProgramming(UserTakenCoursesList userTakenCoursesList) {
-        if (userTakenCoursesList.contains(COMPUTER_PROGRAMMING)) {
-            this.getUserTakenCoursesList().getTakenCourses().add(COMPUTER_PROGRAMMING);
+        Optional<TakenCourse> computerProgramming = userTakenCoursesList.getTakenCourses().stream()
+                .filter(s -> s.equals(COMPUTER_PROGRAMMING))
+                .findAny();
+
+        if (computerProgramming.isPresent()) {
+            this.getUserTakenCoursesList().getTakenCourses().add(computerProgramming.get());
             setMinConditionCredits(MIN_CONDITION_CREDITS_WITH_COMPUTER_PROGRAMMING);
             return true;
         }
+
         setMinConditionCredits(MIN_CONDITION_CREDITS);
         return false;
     }
-
 }

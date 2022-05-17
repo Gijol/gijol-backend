@@ -16,6 +16,7 @@ public enum MajorType {
     PS(PhysicsMajor::checkverified, 36),
     CH(ChemistryMajor::checkverified, 36);
 
+    public static final int MAJOR_MAXIMUM_CREDITS = 42;
     private final TriConsumer<UserTakenCoursesList, Major, Integer> checkMajorMandatory;
     private final Integer totalCredits;
 
@@ -26,7 +27,7 @@ public enum MajorType {
 
     private void addCredits(Major major) {
         Integer takenCredits = major.getUserTakenCoursesList().sumCreditOfCourses();
-        major.addCredit(takenCredits);
+        major.addCredit(Math.min(MAJOR_MAXIMUM_CREDITS, takenCredits));
         major.setMinConditionCredits(this.totalCredits);
 
         if (takenCredits < totalCredits) {

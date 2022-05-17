@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 public class Humanities extends RequirementStatusBaseEntity {
 
     public static final Integer HUMANITIES_MIN_CREDIT = 24;
+    public static final int MAXINUM_CREDITS = 36;
 
     @Override
     public void checkRequirementByStudentId(Integer studentId, UserTakenCoursesList inputUserTakenCoursesList, MajorType majorType) {
@@ -25,7 +26,7 @@ public class Humanities extends RequirementStatusBaseEntity {
             isSatisfied();
         }
 
-        addCredit(this.getUserTakenCoursesList().sumCreditOfCourses());
+        addCredit(Math.min(this.getUserTakenCoursesList().sumCreditOfCourses(), MAXINUM_CREDITS));
         setMinConditionCredits(HUMANITIES_MIN_CREDIT);
     }
 

@@ -2,7 +2,6 @@ package com.gist.graduation.user.taken_course;
 
 import com.gist.graduation.utils.RegisteredCourse;
 import lombok.Getter;
-import lombok.ToString;
 
 import java.util.List;
 import java.util.Objects;
@@ -50,14 +49,6 @@ public class TakenCourse {
     @Override
     public String toString() {
         return String.format("%s(%s)", this.courseName, this.courseCode);
-    }
-
-    public String toRecommendationFormat() {
-        return String.format("%s(%s)를 수강해야 합니다", this.courseName, this.courseCode);
-    }
-
-    public String courseNameAndCode() {
-        return this.courseName + " " + this.courseCode;
     }
 
     public static TakenCourse of(RegisteredCourse registeredCourse) {

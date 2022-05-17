@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.gist.graduation.requirment.domain.constants.ScienceBasicConstant.Science.*;
+import static com.gist.graduation.requirment.domain.constants.ScienceBasicConstants.Science.*;
 
 @AllArgsConstructor
 @ToString

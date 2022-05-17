@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.gist.graduation.requirment.domain.constants.ScienceBasicConstant.Math.CALCULUS;
-import static com.gist.graduation.requirment.domain.constants.ScienceBasicConstant.Math.CORE_MATH;
-import static com.gist.graduation.requirment.domain.constants.ScienceBasicConstant.Science.COMPUTER_PROGRAMMING;
+import static com.gist.graduation.requirment.domain.constants.ScienceBasicConstants.Math.CALCULUS;
+import static com.gist.graduation.requirment.domain.constants.ScienceBasicConstants.Math.CORE_MATH;
+import static com.gist.graduation.requirment.domain.constants.ScienceBasicConstants.Science.COMPUTER_PROGRAMMING;
 
 public class ScienceBasic extends RequirementStatusBaseEntity {
 

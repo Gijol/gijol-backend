@@ -2,7 +2,6 @@ package com.gist.graduation.user.taken_course;
 
 import com.gist.graduation.utils.RegisteredCourse;
 import lombok.Getter;
-import lombok.ToString;
 
 import java.util.List;
 import java.util.Objects;

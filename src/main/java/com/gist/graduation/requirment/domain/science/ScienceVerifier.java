@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.gist.graduation.requirment.domain.constants.ScienceBasicConstant.Science.SOFTWARE_BASIC_AND_CODING;
+import static com.gist.graduation.requirment.domain.constants.ScienceBasicConstants.Science.SOFTWARE_BASIC_AND_CODING;
 import static com.gist.graduation.requirment.domain.science.ScienceEnum.Status.*;
 
 @Getter

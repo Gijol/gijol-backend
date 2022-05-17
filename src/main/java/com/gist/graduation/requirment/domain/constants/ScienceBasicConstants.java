@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ScienceBasicConstant {
+public class ScienceBasicConstants {
 
     public static class Math {
         public static final List<TakenCourse> CALCULUS = Arrays.asList(

@@ -12,21 +12,20 @@ import java.util.stream.Collectors;
 public class Humanities extends RequirementStatusBaseEntity {
 
     public static final Integer HUMANITIES_MIN_CREDIT = 24;
-    public static final int MAXINUM_CREDITS = 36;
+    public static final int MAXIMUM_CREDITS = 36;
 
     @Override
     public void checkRequirementByStudentId(Integer studentId, UserTakenCoursesList inputUserTakenCoursesList, MajorType majorType) {
         if (studentId >= 18) {
             checkMandatoryHumanities(inputUserTakenCoursesList);
             checkOtherHumanitiesCredit(inputUserTakenCoursesList);
-
         }
 
         if (this.getMessages().isEmpty()) {
             isSatisfied();
         }
 
-        addCredit(Math.min(this.getUserTakenCoursesList().sumCreditOfCourses(), MAXINUM_CREDITS));
+        addCredit(Math.min(this.getUserTakenCoursesList().sumCreditOfCourses(), MAXIMUM_CREDITS));
         setMinConditionCredits(HUMANITIES_MIN_CREDIT);
     }
 
@@ -80,7 +79,6 @@ public class Humanities extends RequirementStatusBaseEntity {
         if (humanitiesMinimumCondition > 0) {
             addMessage(String.format("인문사회 과목을 %d학점 더 들어야 합니다.", (humanitiesMinimumCondition)));
         }
-
     }
 
 
@@ -88,7 +86,6 @@ public class Humanities extends RequirementStatusBaseEntity {
         return takenCourses.stream()
                 .mapToInt(TakenCourse::getCredit)
                 .sum();
-//        inputUserTakenCoursesList
     }
 
 

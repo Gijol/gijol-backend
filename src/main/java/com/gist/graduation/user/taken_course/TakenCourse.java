@@ -9,7 +9,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@ToString
 @Getter
 public class TakenCourse {
 
@@ -46,6 +45,15 @@ public class TakenCourse {
     @Override
     public int hashCode() {
         return Objects.hash(courseName, courseCode, credit);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s(%s)", this.courseName, this.courseCode);
+    }
+
+    public String toRecommendationFormat() {
+        return String.format("%s(%s)를 수강해야 합니다", this.courseName, this.courseCode);
     }
 
     public String courseNameAndCode() {

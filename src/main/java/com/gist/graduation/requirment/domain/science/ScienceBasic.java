@@ -15,6 +15,9 @@ import static com.gist.graduation.requirment.domain.constants.ScienceBasicConsta
 
 public class ScienceBasic extends RequirementStatusBaseEntity {
 
+    public static final int MIN_CONDITION_CREDITS_WITH_COMPUTER_PROGRAMMING = 17;
+    public static final int MIN_CONDITION_CREDITS = 18;
+
     @Override
     public void checkRequirementByStudentId(Integer studentId, UserTakenCoursesList inputUserTakenCoursesList, MajorType majorType) {
         if (studentId >= 18) {
@@ -27,6 +30,7 @@ public class ScienceBasic extends RequirementStatusBaseEntity {
         }
 
         addCredit(this.getUserTakenCoursesList().sumCreditOfCourses());
+
     }
 
     private void checkMathFrom2018(UserTakenCoursesList inputUserTakenCoursesList) {
@@ -62,8 +66,11 @@ public class ScienceBasic extends RequirementStatusBaseEntity {
     private boolean checkComputerProgramming(UserTakenCoursesList userTakenCoursesList) {
         if (userTakenCoursesList.contains(COMPUTER_PROGRAMMING)) {
             this.getUserTakenCoursesList().getTakenCourses().add(COMPUTER_PROGRAMMING);
+            setMinConditionCredits(MIN_CONDITION_CREDITS_WITH_COMPUTER_PROGRAMMING);
             return true;
         }
+        setMinConditionCredits(MIN_CONDITION_CREDITS);
         return false;
     }
+
 }

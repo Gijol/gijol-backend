@@ -52,14 +52,6 @@ public class TakenCourse {
         return String.format("%s(%s)", this.courseName, this.courseCode);
     }
 
-    public String toRecommendationFormat() {
-        return String.format("%s(%s)를 수강해야 합니다", this.courseName, this.courseCode);
-    }
-
-    public String courseNameAndCode() {
-        return this.courseName + " " + this.courseCode;
-    }
-
     public static TakenCourse of(RegisteredCourse registeredCourse) {
         return new TakenCourse(registeredCourse.getName(), registeredCourse.getCode(), String.valueOf(registeredCourse.getCredit()));
     }

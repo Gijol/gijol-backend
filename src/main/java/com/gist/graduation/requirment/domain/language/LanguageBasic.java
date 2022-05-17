@@ -41,11 +41,11 @@ public class LanguageBasic extends RequirementStatusBaseEntity {
         );
 
         if (userTakenCoursesList.notExist(english1) && userTakenCoursesList.notExist(englishPresentation)) {
-            this.getMessages().add(String.format("%s 또는 %s을 수강해야 합니다.", english1.courseNameAndCode(), englishPresentation.courseNameAndCode()));
+            this.getMessages().add(String.format("%s 또는 %s을 수강해야 합니다.", english1, englishPresentation));
         }
 
         if (inputUserTakenCoursesList.notExist(english2)) {
-            this.getMessages().add(String.format("%s를 수강해야 합니다.", english2.courseNameAndCode()));
+            this.getMessages().add(String.format("%s를 수강해야 합니다.", english2));
         }
 
     }

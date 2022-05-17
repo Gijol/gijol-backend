@@ -13,7 +13,7 @@ public class EtcMandatory extends RequirementStatusBaseEntity {
     public void checkRequirementByStudentId(Integer studentId, UserTakenCoursesList inputUserTakenCoursesList, MajorType majorType) {
         if (studentId >= 18) {
             ArtAndSport.checkArtAndSport(this, studentId, inputUserTakenCoursesList);
-            Research.checkResearch(this, inputUserTakenCoursesList);
+            Research.checkResearch(this, inputUserTakenCoursesList, majorType);
             OthersEtc.checkOtherETC(this, studentId, inputUserTakenCoursesList);
         }
 

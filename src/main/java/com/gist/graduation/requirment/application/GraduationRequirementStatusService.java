@@ -39,9 +39,7 @@ public class GraduationRequirementStatusService {
         Integer studentId = UserTakenCousrseParser.getStudentId(file);
         GraduationRequirementStatus graduationRequirementStatus = new GraduationRequirementStatus();
         graduationRequirementStatus.checkGraduationRequirements(studentId, userTakenCoursesList, majorType);
-
         return graduationRequirementStatus;
-
     }
 
     public GraduationRequirementStatus test(MajorType majorType) throws IOException {
@@ -50,9 +48,7 @@ public class GraduationRequirementStatusService {
         Integer studentId = UserTakenCousrseParser.getStudentId(gradeResource.getFile());
         GraduationRequirementStatus graduationRequirementStatus = new GraduationRequirementStatus();
         graduationRequirementStatus.checkGraduationRequirements(studentId, userTakenCoursesList, majorType);
-
         return graduationRequirementStatus;
-
     }
 
 }

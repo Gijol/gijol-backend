@@ -24,7 +24,7 @@ public class CourseListParser {
     public static final int CODE_CELL_NUMBER = 4;
     public static final int COURSE_NAME_CELL_NUMBER = 5;
     public static final int COURSE_TYPE_CELL_NUMBER = 6;
-    public static final int LIBERART_TYPE_CELL_NUMBER = 7;
+    public static final int LIBERAL_ART_TYPE_CELL_NUMBER = 7;
     public static final int CREDIT_CELL_NUMBER = 11;
     public static File file;
 
@@ -126,8 +126,8 @@ public class CourseListParser {
             String creditString = row.getCell(CREDIT_CELL_NUMBER).getStringCellValue();
             creditString = creditString.substring(creditString.length() - 1);
             RegisteredCourse registeredCourse = new RegisteredCourse(indexString, Integer.parseInt(yearString), semesterString, courseType, courseName, courseCode, Integer.parseInt(creditString));
-            if (row.getCell(LIBERART_TYPE_CELL_NUMBER) != null) {
-                registeredCourse.setLiberalArtType(row.getCell(LIBERART_TYPE_CELL_NUMBER).getStringCellValue());
+            if (row.getCell(LIBERAL_ART_TYPE_CELL_NUMBER) != null) {
+                registeredCourse.setLiberalArtType(row.getCell(LIBERAL_ART_TYPE_CELL_NUMBER).getStringCellValue());
             }
             registeredCourses.add(registeredCourse);
         }

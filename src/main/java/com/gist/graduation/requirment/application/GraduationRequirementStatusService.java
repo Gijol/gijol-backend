@@ -5,6 +5,7 @@ import com.gist.graduation.requirment.domain.major.MajorType;
 import com.gist.graduation.requirment.dto.GradeToCheckRequest;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import com.gist.graduation.utils.UserTakenCousrseParser;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
@@ -16,14 +17,18 @@ import java.io.InputStream;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class GraduationRequirementStatusService {
+
 
     public GraduationRequirementStatus checkGraduationCondition(GradeToCheckRequest request) throws IOException {
         File file = multiPartToFile(request.getMultipartFile());
         UserTakenCoursesList userTakenCoursesList = UserTakenCousrseParser.parseUserTakenCousrse(file);
+        log.info(userTakenCoursesList.toString());
         Integer studentId = UserTakenCousrseParser.getStudentId(file);
         GraduationRequirementStatus graduationRequirementStatus = new GraduationRequirementStatus();
         graduationRequirementStatus.checkGraduationRequirements(studentId, userTakenCoursesList, request.getMajorType());
+        log.info(graduationRequirementStatus.toString());
         return graduationRequirementStatus;
     }
 
@@ -39,9 +44,7 @@ public class GraduationRequirementStatusService {
         Integer studentId = UserTakenCousrseParser.getStudentId(file);
         GraduationRequirementStatus graduationRequirementStatus = new GraduationRequirementStatus();
         graduationRequirementStatus.checkGraduationRequirements(studentId, userTakenCoursesList, majorType);
-
         return graduationRequirementStatus;
-
     }
 
     public GraduationRequirementStatus test(MajorType majorType) throws IOException {
@@ -50,9 +53,7 @@ public class GraduationRequirementStatusService {
         Integer studentId = UserTakenCousrseParser.getStudentId(gradeResource.getFile());
         GraduationRequirementStatus graduationRequirementStatus = new GraduationRequirementStatus();
         graduationRequirementStatus.checkGraduationRequirements(studentId, userTakenCoursesList, majorType);
-
         return graduationRequirementStatus;
-
     }
 
 }

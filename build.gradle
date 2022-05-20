@@ -22,6 +22,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation "io.springfox:springfox-boot-starter:3.0.0"
+    implementation( group: 'ca.pjer', name: 'logback-awslogs-appender', version: '1.4.0')
     implementation 'commons-io:commons-io:2.11.0'
     implementation 'org.apache.poi:poi:3.9'
     compileOnly 'org.projectlombok:lombok'
@@ -31,4 +32,13 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+task copyPrivate(type: Copy) {
+    copy {
+        from './gijol-privates'
+        include "*.yml"
+        include "*.xml"
+        into 'src/main/resources/privates'
+    }
 }

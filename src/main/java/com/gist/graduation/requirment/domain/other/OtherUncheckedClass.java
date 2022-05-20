@@ -25,7 +25,7 @@ public class OtherUncheckedClass extends RequirementStatusBaseEntity {
             isSatisfied();
         }
 
-        setMinConditionCredits(TOTAL_CREDITS-graduationRequirementStatus.getTotalCredits());
+        setMinConditionCredits(TOTAL_CREDITS - graduationRequirementStatus.getTotalCredits());
         addCredit(this.getUserTakenCoursesList().sumCreditOfCourses());
     }
 }

@@ -21,12 +21,10 @@ public class GraduationRequirementStatusController {
     public ResponseEntity<GraduationRequirementStatus> checkGraduation(GradeToCheckRequest request) throws IOException {
         GraduationRequirementStatus graduationRequirementStatus = graduationRequirementStatusService.checkGraduationCondition(request);
         return ResponseEntity.ok().body(graduationRequirementStatus);
-
     }
 
     @GetMapping("/test")
     public GraduationRequirementStatus test() throws IOException {
         return graduationRequirementStatusService.test(MajorType.EC);
     }
-
 }

@@ -1,0 +1,4 @@
+[submodule "gijol-privates"]
+	path = gijol-privates
+	url = https://github.com/Gijol/gijol-privates.git
+	branch = main

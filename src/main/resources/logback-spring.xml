@@ -6,6 +6,7 @@
     <property name="ERROR_LOG_FILE_NAME" value="error"/>
     <property name="LOG_PATTERN" value="%-5level %d{yy-MM-dd HH:mm:ss} [%logger{0}:%line] - %msg%n"/>
 
+    <springProfile name="local">
         <include resource="log-appender/console-appender.xml" />
         <logger name="com.gist.graduation" level="INFO" additivity="false">
             <appender-ref ref="CONSOLE"/>
@@ -13,4 +14,15 @@
         <root level="WARN">
             <appender-ref ref="CONSOLE"/>
         </root>
+    </springProfile>
+
+    <springProfile name="dev,prod">
+        <include resource="log-appender/file-info-appender.xml"/>
+        <include resource="log-appender/file-error-appender.xml"/>
+        <root level="INFO">
+            <appender-ref ref="FILE-INFO"/>
+            <appender-ref ref="FILE-ERROR"/>
+        </root>
+    </springProfile>
+
 </configuration>

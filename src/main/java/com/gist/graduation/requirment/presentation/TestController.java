@@ -6,6 +6,7 @@ import com.gist.graduation.requirment.domain.major.MajorType;
 import com.gist.graduation.requirment.dto.GradeToCheckRequest;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.io.IOException;
 
 @Controller
+@Profile("local")
 @RequiredArgsConstructor
 public class TestController {
 

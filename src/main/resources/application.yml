@@ -1,0 +1,14 @@
+spring:
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
+---
+
+spring:
+  profiles:
+    active: local
+
+
+

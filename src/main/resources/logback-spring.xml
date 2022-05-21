@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <include resource="log-appender/console-appender.xml"/>
-    <include resource="log-appender/cloudwatch-appender.xml"/>
-    <logger name="com.gist.graduation" level="INFO" additivity="false">
-        <appender-ref ref="CONSOLE"/>
-    </logger>
-    <root level="WARN">
-        <appender-ref ref="CONSOLE"/>
-    </root>
+    <property name="LOG_PATH" value="logs"/>
+    <property name="BACKUP_PATH" value="backup"/>
+    <property name="INFO_LOG_FILE_NAME" value="info"/>
+    <property name="ERROR_LOG_FILE_NAME" value="error"/>
+    <property name="LOG_PATTERN" value="%-5level %d{yy-MM-dd HH:mm:ss} [%logger{0}:%line] - %msg%n"/>
+    <springProfile name="local">
+        <include resource="log-appender/console-appender.xml" />
+        <logger name="com.gist.graduation" level="INFO" additivity="false">
+            <appender-ref ref="CONSOLE"/>
+        </logger>
+        <root level="WARN">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+    <springProfile name="dev,prod">
+        <include resource="log-appender/file-info-appender.xml"/>
+        <include resource="log-appender/file-error-appender.xml"/>
+        <root level="INFO">
+            <appender-ref ref="FILE-INFO"/>
+            <appender-ref ref="FILE-ERROR"/>
+        </root>
+    </springProfile>
 </configuration>

@@ -64,7 +64,6 @@ public class Humanities extends RequirementStatusBaseEntity {
         if (ppeMinimumCondition > 0) {
             addMessage(String.format("PPE 과목을 %d학점 더 들어야 합니다.", (ppeMinimumCondition)));
         }
-        System.out.println(userTakenPPECourses);
 
         this.getUserTakenCoursesList().addAll(
                 userTakenPPECourses

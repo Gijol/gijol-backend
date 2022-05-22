@@ -16,16 +16,15 @@ public class HumanitiesListParser {
 
     public static List<TakenCourse> getHUSCoursesList() {
         List<TakenCourse> HUSCoursesList = getHumanitiesCoursesList().stream()
-                .filter(s -> HUS_COURSE_CODE_LIST.stream().anyMatch(t -> s.getCourseCode().charAt(0) == t.toString().charAt(0) && s.getCourseCode().charAt(1) == t.toString().charAt(1)))
+                .filter(s -> HUS_COURSE_CODE_LIST.stream().anyMatch(t -> s.getCourseCode().substring(2, 4).equals(t.toString())))
                 .collect(Collectors.toList());
-
         HumanitiesExceptionConstants.HUSAmbiguousHumanities.removeNotHUS(HUSCoursesList);
         return HUSCoursesList;
     }
 
     public static List<TakenCourse> getPPECoursesList() {
         List<TakenCourse> PPECoursesList = getHumanitiesCoursesList().stream()
-                .filter(s -> PPE_COURSE_CODE_LIST.stream().anyMatch(t -> s.getCourseCode().charAt(0) == t.toString().charAt(0) && s.getCourseCode().charAt(1) == t.toString().charAt(1)))
+                .filter(s -> PPE_COURSE_CODE_LIST.stream().anyMatch(t -> s.getCourseCode().substring(2, 4).equals(t.toString())))
                 .collect(Collectors.toList());
         HumanitiesExceptionConstants.PPEAmbiguousHumanities.removeNotPPE(PPECoursesList);
         return PPECoursesList;
@@ -57,7 +56,7 @@ public class HumanitiesListParser {
     private static void addHumanitiesCode(List<String> humanitiesCodeList) {
         for (int i = 2; i <= 4; i++) {
             for (int j = 5; j <= 9; j++) {
-                Integer num = 10 * i + j;
+                int num = 10 * i + j;
                 humanitiesCodeList.add(("GS" + num));
             }
         }

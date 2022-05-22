@@ -47,13 +47,4 @@ public class GraduationRequirementStatusService {
         return graduationRequirementStatus;
     }
 
-    public GraduationRequirementStatus test(MajorType majorType) throws IOException {
-        ClassPathResource gradeResource = new ClassPathResource("test-grade/grade_report.xls");
-        UserTakenCoursesList userTakenCoursesList = UserTakenCousrseParser.parseUserTakenCourse(gradeResource.getFile());
-        Integer studentId = UserTakenCousrseParser.getStudentId(gradeResource.getFile());
-        GraduationRequirementStatus graduationRequirementStatus = new GraduationRequirementStatus();
-        graduationRequirementStatus.checkGraduationRequirements(studentId, userTakenCoursesList, majorType);
-        return graduationRequirementStatus;
-    }
-
 }

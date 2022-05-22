@@ -29,7 +29,7 @@ public class CourseListParser {
     public static File file;
 
     static {
-        ClassPathResource undergraduateResource = new ClassPathResource("/course-information/course_information_undergraduate_from2018.xls");
+        ClassPathResource undergraduateResource = new ClassPathResource("/course-information/course_information_undergraduate.xls");
         try {
             InputStream inputStream = undergraduateResource.getInputStream();
             file = File.createTempFile(UUID.randomUUID().toString(), ".xlsx");

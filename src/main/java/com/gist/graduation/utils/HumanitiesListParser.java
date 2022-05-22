@@ -1,6 +1,8 @@
 package com.gist.graduation.utils;
 
 import com.gist.graduation.requirment.domain.constants.HumanitiesExceptionConstants;
+import com.gist.graduation.requirment.domain.constants.HumanitiesExceptionConstants.HUSAmbiguousHumanities;
+import com.gist.graduation.requirment.domain.constants.HumanitiesExceptionConstants.PPEAmbiguousHumanities;
 import com.gist.graduation.user.taken_course.TakenCourse;
 
 import java.util.ArrayList;
@@ -11,14 +13,15 @@ import java.util.stream.Collectors;
 
 public class HumanitiesListParser {
 
-    private static final List<Integer> HUS_COURSE_CODE_LIST = List.of(25, 26, 28, 35, 36, 38, 39);
-    private static final List<Integer> PPE_COURSE_CODE_LIST = List.of(26, 27, 28, 36, 37, 38, 47);
+    private static final List<Integer> HUS_COURSE_CODE_LIST = List.of(25, 26, 35, 36, 38, 39);
+    private static final List<Integer> PPE_COURSE_CODE_LIST = List.of(27, 28, 37, 47);
 
     public static List<TakenCourse> getHUSCoursesList() {
         List<TakenCourse> HUSCoursesList = getHumanitiesCoursesList().stream()
                 .filter(s -> HUS_COURSE_CODE_LIST.stream().anyMatch(t -> s.getCourseCode().substring(2, 4).equals(t.toString())))
                 .collect(Collectors.toList());
-        HumanitiesExceptionConstants.HUSAmbiguousHumanities.removeNotHUS(HUSCoursesList);
+        HUSAmbiguousHumanities.removeNotHUS(HUSCoursesList);
+        PPEAmbiguousHumanities.addHus(HUSCoursesList);
         return HUSCoursesList;
     }
 
@@ -26,7 +29,8 @@ public class HumanitiesListParser {
         List<TakenCourse> PPECoursesList = getHumanitiesCoursesList().stream()
                 .filter(s -> PPE_COURSE_CODE_LIST.stream().anyMatch(t -> s.getCourseCode().substring(2, 4).equals(t.toString())))
                 .collect(Collectors.toList());
-        HumanitiesExceptionConstants.PPEAmbiguousHumanities.removeNotPPE(PPECoursesList);
+        PPEAmbiguousHumanities.removeNotPPE(PPECoursesList);
+        HUSAmbiguousHumanities.addPPE(PPECoursesList);
         return PPECoursesList;
     }
 

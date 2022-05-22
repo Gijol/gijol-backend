@@ -1,5 +1,5 @@
 #!/bin/bash
-PROJECT_NAME=gijol
+PROJECT_NAME=graduation
 PROFILE=dev
 
 echo "> now ing app pid find!"

@@ -4,7 +4,9 @@ import com.gist.graduation.requirment.application.GraduationRequirementStatusSer
 import com.gist.graduation.requirment.domain.GraduationRequirementStatus;
 import com.gist.graduation.requirment.domain.major.MajorType;
 import com.gist.graduation.requirment.dto.GradeToCheckRequest;
+import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
+import com.gist.graduation.utils.HumanitiesListParser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +15,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @Profile("local")
@@ -24,7 +29,7 @@ public class TestController {
     private final GraduationRequirementStatusService graduationRequirementStatusService;
 
     @GetMapping("/upload")
-    public String formTest(@ModelAttribute GradeToCheckRequest request){
+    public String formTest(@ModelAttribute GradeToCheckRequest request) {
         return "upload";
     }
 
@@ -41,5 +46,15 @@ public class TestController {
         graduationRequirementStatus.checkGraduationRequirements(20, new UserTakenCoursesList(), MajorType.EC);
         model.addAttribute("result", graduationRequirementStatus);
         return "result";
+    }
+
+    @GetMapping("/humanities")
+    @ResponseBody
+    public List<TakenCourse> getHumanities() {
+        List<TakenCourse> ppeCoursesList = HumanitiesListParser.getPPECoursesList();
+        List<TakenCourse> husCoursesList = HumanitiesListParser.getHUSCoursesList();
+        List<TakenCourse> collect = ppeCoursesList.stream().filter(husCoursesList::contains).sorted((a, b) -> b.getCourseName().compareTo(a.getCourseName())).collect(Collectors.toList());
+        System.out.println(collect.size());
+        return collect;
     }
 }

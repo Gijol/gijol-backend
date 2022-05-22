@@ -37,36 +37,37 @@ public class Humanities extends RequirementStatusBaseEntity {
 
     private void checkHUSMandatory(UserTakenCoursesList inputUserTakenCoursesList) {
         List<TakenCourse> husCoursesList = HumanitiesListParser.getHUSCoursesList();
-        List<TakenCourse> userTakneHUSCourses = inputUserTakenCoursesList.getTakenCourses().stream()
+        List<TakenCourse> userTakenHUSCourses = inputUserTakenCoursesList.getTakenCourses().stream()
                 .filter(husCoursesList::contains)
                 .collect(Collectors.toList());
-        userTakneHUSCourses.forEach(s -> s.setHumanitiesType(CourseType.HUS));
+        userTakenHUSCourses.forEach(s -> s.setHumanitiesType(CourseType.HUS));
 
 
-        int husMinimumCondition = 6 - getSumofCredits(userTakneHUSCourses);
+        int husMinimumCondition = 6 - getSumofCredits(userTakenHUSCourses);
         if (husMinimumCondition > 0) {
             addMessage(String.format("HUS 과목을 %d학점 더 들어야 합니다.", (husMinimumCondition)));
         }
 
         this.getUserTakenCoursesList().addAll(
-                userTakneHUSCourses
+                userTakenHUSCourses
         );
     }
 
     private void checkPPEMandatory(UserTakenCoursesList inputUserTakenCoursesList) {
         List<TakenCourse> PPECoursesList = HumanitiesListParser.getPPECoursesList();
-        List<TakenCourse> userTaknePPECourses = inputUserTakenCoursesList.getTakenCourses().stream()
+        List<TakenCourse> userTakenPPECourses = inputUserTakenCoursesList.getTakenCourses().stream()
                 .filter(PPECoursesList::contains)
                 .collect(Collectors.toList());
-        userTaknePPECourses.forEach(s -> s.setHumanitiesType(CourseType.PPE));
+        userTakenPPECourses.forEach(s -> s.setHumanitiesType(CourseType.PPE));
 
-        int ppeMinimumCondition = 6 - getSumofCredits(userTaknePPECourses);
+        int ppeMinimumCondition = 6 - getSumofCredits(userTakenPPECourses);
         if (ppeMinimumCondition > 0) {
             addMessage(String.format("PPE 과목을 %d학점 더 들어야 합니다.", (ppeMinimumCondition)));
         }
+        System.out.println(userTakenPPECourses);
 
         this.getUserTakenCoursesList().addAll(
-                userTaknePPECourses
+                userTakenPPECourses
         );
     }
 

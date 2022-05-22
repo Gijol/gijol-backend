@@ -27,7 +27,7 @@ swagger:
 
 
 request:
-  origins: http://localhost:3000,https://dev.gijol.im
+  origins: http://localhost:3000,http://localhost:3001,https://dev.gijol.im
 
 
 ---

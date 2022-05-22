@@ -1,11 +1,13 @@
 package com.gist.graduation.utils;
 
+import com.gist.graduation.exception.ApplicationException;
 import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.springframework.http.HttpStatus;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,32 +23,36 @@ public class UserTakenCousrseParser {
     public static final int CREDIT_CELL_NUM = 4;
     public static final int GRADE_CELL_NUM = 5;
 
-    public static UserTakenCoursesList parseUserTakenCousrse(File file) throws IOException {
-        Workbook workbook = new HSSFWorkbook(new FileInputStream(file));
-        Sheet sheet = workbook.getSheetAt(0);
+    public static UserTakenCoursesList parseUserTakenCourse(File file) {
+        try {
+            Workbook workbook = new HSSFWorkbook(new FileInputStream(file));
+            Sheet sheet = workbook.getSheetAt(0);
 
-        List<TakenCourse> courseArray = new ArrayList<>();
-        String year = "";
-        String semester = "";
-        for (Row row : sheet) {
-            if (isDividedByYear(row)) {
-                String stringCellValue = row.getCell(3).getStringCellValue();
-                stringCellValue = stringCellValue.substring(1, stringCellValue.length() - 1);
-                year = stringCellValue.split("/")[0];
-                semester = stringCellValue.split("/")[1];
-                continue;
-            }
+            List<TakenCourse> courseArray = new ArrayList<>();
+            String year = "";
+            String semester = "";
+            for (Row row : sheet) {
+                if (isDividedByYear(row)) {
+                    String stringCellValue = row.getCell(3).getStringCellValue();
+                    stringCellValue = stringCellValue.substring(1, stringCellValue.length() - 1);
+                    year = stringCellValue.split("/")[0];
+                    semester = stringCellValue.split("/")[1];
+                    continue;
+                }
 
-            if (notExistCodeRow(row)) {
-                continue;
-            }
-            if (endOfCode(row)) {
-                break;
-            }
+                if (notExistCodeRow(row)) {
+                    continue;
+                }
+                if (endOfCode(row)) {
+                    break;
+                }
 
-            addTakenCourse(courseArray, year, semester, row);
+                addTakenCourse(courseArray, year, semester, row);
+            }
+            return new UserTakenCoursesList(courseArray);
+        } catch (Exception e) {
+            throw new ApplicationException("파싱 오류입니다.", HttpStatus.UNSUPPORTED_MEDIA_TYPE);
         }
-        return new UserTakenCoursesList(courseArray);
     }
 
     public static Integer getStudentId(File file) throws IOException {
@@ -55,6 +61,9 @@ public class UserTakenCousrseParser {
         // row 1 and cell 0 is filled with student id in grade.
         String studentId = sheet.getRow(1).getCell(0).getStringCellValue().strip();
         studentId = studentId.substring(studentId.length() - 6, studentId.length() - 4);
+        if (Integer.parseInt(studentId) < 18) {
+            throw new ApplicationException("지원하지 않는 학번입니다.", HttpStatus.METHOD_NOT_ALLOWED);
+        }
         return Integer.valueOf(studentId);
     }
 

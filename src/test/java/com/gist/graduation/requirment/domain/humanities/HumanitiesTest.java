@@ -27,7 +27,7 @@ class HumanitiesTest {
     private UserTakenCoursesList getUserTakenCourses(String path) {
         ClassPathResource classPathResource = new ClassPathResource(path);
         try {
-            return UserTakenCousrseParser.parseUserTakenCousrse(classPathResource.getFile());
+            return UserTakenCousrseParser.parseUserTakenCourse(classPathResource.getFile());
         } catch (IOException e) {
             e.printStackTrace();
         }

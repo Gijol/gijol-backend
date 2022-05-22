@@ -23,32 +23,36 @@ public class UserTakenCousrseParser {
     public static final int CREDIT_CELL_NUM = 4;
     public static final int GRADE_CELL_NUM = 5;
 
-    public static UserTakenCoursesList parseUserTakenCousrse(File file) throws IOException {
-        Workbook workbook = new HSSFWorkbook(new FileInputStream(file));
-        Sheet sheet = workbook.getSheetAt(0);
+    public static UserTakenCoursesList parseUserTakenCousrse(File file){
+        try {
+            Workbook workbook = new HSSFWorkbook(new FileInputStream(file));
+            Sheet sheet = workbook.getSheetAt(0);
 
-        List<TakenCourse> courseArray = new ArrayList<>();
-        String year = "";
-        String semester = "";
-        for (Row row : sheet) {
-            if (isDividedByYear(row)) {
-                String stringCellValue = row.getCell(3).getStringCellValue();
-                stringCellValue = stringCellValue.substring(1, stringCellValue.length() - 1);
-                year = stringCellValue.split("/")[0];
-                semester = stringCellValue.split("/")[1];
-                continue;
-            }
+            List<TakenCourse> courseArray = new ArrayList<>();
+            String year = "";
+            String semester = "";
+            for (Row row : sheet) {
+                if (isDividedByYear(row)) {
+                    String stringCellValue = row.getCell(3).getStringCellValue();
+                    stringCellValue = stringCellValue.substring(1, stringCellValue.length() - 1);
+                    year = stringCellValue.split("/")[0];
+                    semester = stringCellValue.split("/")[1];
+                    continue;
+                }
 
-            if (notExistCodeRow(row)) {
-                continue;
-            }
-            if (endOfCode(row)) {
-                break;
-            }
+                if (notExistCodeRow(row)) {
+                    continue;
+                }
+                if (endOfCode(row)) {
+                    break;
+                }
 
-            addTakenCourse(courseArray, year, semester, row);
+                addTakenCourse(courseArray, year, semester, row);
+            }
+            return new UserTakenCoursesList(courseArray);
+        } catch (Exception e) {
+            throw new ApplicationException("파싱 오류입니다.", HttpStatus.UNSUPPORTED_MEDIA_TYPE);
         }
-        return new UserTakenCoursesList(courseArray);
     }
 
     public static Integer getStudentId(File file) throws IOException {

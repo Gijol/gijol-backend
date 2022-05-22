@@ -16,7 +16,7 @@ public class HumanitiesListParser {
 
     public static List<TakenCourse> getHUSCoursesList() {
         List<TakenCourse> HUSCoursesList = getHumanitiesCoursesList().stream()
-                .filter(s -> HUS_COURSE_CODE_LIST.stream().anyMatch(t -> s.getCourseCode().contains(t.toString())))
+                .filter(s -> HUS_COURSE_CODE_LIST.stream().anyMatch(t -> s.getCourseCode().charAt(0) == t.toString().charAt(0) && s.getCourseCode().charAt(1) == t.toString().charAt(1)))
                 .collect(Collectors.toList());
 
         HumanitiesExceptionConstants.HUSAmbiguousHumanities.removeNotHUS(HUSCoursesList);
@@ -25,9 +25,8 @@ public class HumanitiesListParser {
 
     public static List<TakenCourse> getPPECoursesList() {
         List<TakenCourse> PPECoursesList = getHumanitiesCoursesList().stream()
-                .filter(s -> PPE_COURSE_CODE_LIST.stream().anyMatch(t -> s.getCourseCode().contains(t.toString())))
+                .filter(s -> PPE_COURSE_CODE_LIST.stream().anyMatch(t -> s.getCourseCode().charAt(0) == t.toString().charAt(0) && s.getCourseCode().charAt(1) == t.toString().charAt(1)))
                 .collect(Collectors.toList());
-
         HumanitiesExceptionConstants.PPEAmbiguousHumanities.removeNotPPE(PPECoursesList);
         return PPECoursesList;
     }
@@ -63,6 +62,4 @@ public class HumanitiesListParser {
             }
         }
     }
-
-
 }

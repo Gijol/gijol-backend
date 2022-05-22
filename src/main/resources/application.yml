@@ -1,14 +1,30 @@
 spring:
+  profiles:
+    active: local
+
   mvc:
     hiddenmethod:
       filter:
         enabled: true
 
+swagger:
+  host: localhost:8080
+  protocol: http
+
+request:
+  origins: http://localhost:3000,https://dev.gijol.im
+
 ---
 
 spring:
-  profiles:
-    active: local
+  config:
+    activate:
+      on-profile: dev
+
+swagger:
+  host: dev.gijol.im
+  protocol: https
 
 
-
+request:
+  origins: http://localhost:3000,https://dev.gijol.im

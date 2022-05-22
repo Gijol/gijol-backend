@@ -40,9 +40,9 @@ public enum ScienceEnum {
     }
 
     private static void addSoftwareBasic(ScienceBasic scienceBasic, UserTakenCoursesList userTakenCoursesList) {
-        if (userTakenCoursesList.contains(SOFTWARE_BASIC_AND_CODING)) {
-            scienceBasic.addCourse(SOFTWARE_BASIC_AND_CODING);
-        }
+        userTakenCoursesList.getTakenCourses().forEach(s -> {
+            if (s.equals(SOFTWARE_BASIC_AND_CODING)) scienceBasic.getUserTakenCoursesList().getTakenCourses().add(s);
+        });
     }
 
     public static ScienceVerifier ofScienceVerifier(UserTakenCoursesList userTakenCoursesList) {

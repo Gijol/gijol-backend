@@ -1,15 +1,14 @@
 spring:
-  data:
-    mongodb:
-      authentication-database: admin
-      username: rootuser
-      password: rootpass
-      database: course
-      port: 27017
-      host: localhost
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
 
-# for query logging
-logging:
-  level:
-    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+---
+
+spring:
+  profiles:
+    active: local
+
+
 

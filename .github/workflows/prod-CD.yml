@@ -2,7 +2,7 @@ name: CD
 
 on:
   push:
-    branches: [ develop ]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -19,7 +19,7 @@ jobs:
         uses: appleboy/scp-action@master
         with:
           username: ubuntu
-          host: ${{ secrets.DEV_HOST }}
+          host: ${{ secrets.PROD_HOST }}
           key: ${{ secrets.PRIVATE_KEY }}
           source: "./build/libs/*.jar"
           target: "/home/ubuntu/deploy"
@@ -29,9 +29,9 @@ jobs:
         uses: appleboy/scp-action@master
         with:
           username: ubuntu
-          host: ${{ secrets.DEV_HOST }}
+          host: ${{ secrets.PROD_HOST }}
           key: ${{ secrets.PRIVATE_KEY }}
-          source: "deploy/dev-deploy.sh"
+          source: "deploy/prod-deploy.sh"
           target: "/home/ubuntu/deploy"
           strip_components: 1
 
@@ -39,10 +39,10 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           username: ubuntu
-          host: ${{ secrets.DEV_HOST }}
+          host: ${{ secrets.PROD_HOST }}
           key: ${{ secrets.PRIVATE_KEY }}
           script_stop: true
           script: |
             cd /home/ubuntu/deploy
-            chmod u+x dev-deploy.sh
+            chmod u+x prod-deploy.sh
             ./dev-deploy.sh

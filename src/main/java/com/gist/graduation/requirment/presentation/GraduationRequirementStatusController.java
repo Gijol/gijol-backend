@@ -28,7 +28,7 @@ public class GraduationRequirementStatusController {
     }
 
     @PostMapping("/feedback")
-    public ResponseEntity<Void> getFeedback(@RequestBody FeedbackRequest request){
+    public ResponseEntity<Void> feedbackOnServices(@RequestBody FeedbackRequest request){
         log.info("[feedback] " +request.getMessage());
         return ResponseEntity.created(URI.create("")).build();
     }

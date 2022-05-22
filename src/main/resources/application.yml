@@ -22,9 +22,25 @@ spring:
       on-profile: dev
 
 swagger:
-  host: dev.gijol.im
+  host: dev-api.gijol.im
   protocol: https
 
 
 request:
   origins: http://localhost:3000,https://dev.gijol.im
+
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+swagger:
+  host: api.gijol.im
+  protocol: https
+
+
+request:
+  origins: https://gijol.im,https://dev.gijol.im

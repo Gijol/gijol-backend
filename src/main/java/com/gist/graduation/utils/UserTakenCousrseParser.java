@@ -1,11 +1,13 @@
 package com.gist.graduation.utils;
 
+import com.gist.graduation.exception.ApplicationException;
 import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.springframework.http.HttpStatus;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -55,6 +57,9 @@ public class UserTakenCousrseParser {
         // row 1 and cell 0 is filled with student id in grade.
         String studentId = sheet.getRow(1).getCell(0).getStringCellValue().strip();
         studentId = studentId.substring(studentId.length() - 6, studentId.length() - 4);
+        if (Integer.parseInt(studentId) < 18) {
+            throw new ApplicationException("지원하지 않는 학번입니다.", HttpStatus.METHOD_NOT_ALLOWED);
+        }
         return Integer.valueOf(studentId);
     }
 

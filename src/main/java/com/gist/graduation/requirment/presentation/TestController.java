@@ -54,7 +54,6 @@ public class TestController {
         List<TakenCourse> ppeCoursesList = HumanitiesListParser.getPPECoursesList();
         List<TakenCourse> husCoursesList = HumanitiesListParser.getHUSCoursesList();
         List<TakenCourse> collect = ppeCoursesList.stream().filter(husCoursesList::contains).sorted((a, b) -> b.getCourseName().compareTo(a.getCourseName())).collect(Collectors.toList());
-        System.out.println(collect.size());
         return collect;
     }
 }

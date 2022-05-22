@@ -97,6 +97,16 @@ public class HumanitiesExceptionConstants {
                             .collect(Collectors.toList())
             );
         }
+
+        public static void addPPE(List<TakenCourse> registeredCourses) {
+            registeredCourses.addAll(
+                    Arrays.stream(values())
+                            .map(s -> s.takenCourse)
+                            .collect(Collectors.toList())
+            );
+        }
+
+
     }
 
     @RequiredArgsConstructor
@@ -107,6 +117,13 @@ public class HumanitiesExceptionConstants {
 
         public static void removeNotPPE(List<TakenCourse> registeredCourses) {
             registeredCourses.removeAll(
+                    Arrays.stream(values())
+                            .map(s -> s.takenCourse)
+                            .collect(Collectors.toList())
+            );
+        }
+        public static void addHus(List<TakenCourse> registeredCourses) {
+            registeredCourses.addAll(
                     Arrays.stream(values())
                             .map(s -> s.takenCourse)
                             .collect(Collectors.toList())

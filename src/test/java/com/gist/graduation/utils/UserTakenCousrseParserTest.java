@@ -14,7 +14,7 @@ class UserTakenCousrseParserTest {
     void UserTakenCourseParserTest() throws IOException {
         ClassPathResource gradeResource = new ClassPathResource("test-grade/grade_report.xls");
         UserTakenCousrseParser userTakenCousrseParser = new UserTakenCousrseParser();
-        UserTakenCoursesList takenCourses = userTakenCousrseParser.parseUserTakenCousrse(gradeResource.getFile());
+        UserTakenCoursesList takenCourses = UserTakenCousrseParser.parseUserTakenCourse(gradeResource.getFile());
         takenCourses.getTakenCourses().forEach(System.out::println);
     }
 
@@ -23,7 +23,7 @@ class UserTakenCousrseParserTest {
     public void getStdIdTest() throws IOException {
         ClassPathResource gradeResource = new ClassPathResource("test-grade/grade_report.xls");
         UserTakenCousrseParser userTakenCousrseParser = new UserTakenCousrseParser();
-        Integer studentId = userTakenCousrseParser.getStudentId(gradeResource.getFile());
+        Integer studentId = UserTakenCousrseParser.getStudentId(gradeResource.getFile());
         assertThat(studentId).isEqualTo(20);
     }
 

@@ -25,8 +25,8 @@ class LanguageBasicTest {
         ClassPathResource gradeResource = new ClassPathResource("test-grade/grade_report.xls");
         UserTakenCousrseParser userTakenCousrseParser = new UserTakenCousrseParser();
         File file = gradeResource.getFile();
-        takenCourses = userTakenCousrseParser.parseUserTakenCousrse(file);
-        studentId = userTakenCousrseParser.getStudentId(file);
+        takenCourses = UserTakenCousrseParser.parseUserTakenCourse(file);
+        studentId = UserTakenCousrseParser.getStudentId(file);
     }
 
     @Test

@@ -23,7 +23,7 @@ public class UserTakenCousrseParser {
     public static final int CREDIT_CELL_NUM = 4;
     public static final int GRADE_CELL_NUM = 5;
 
-    public static UserTakenCoursesList parseUserTakenCousrse(File file){
+    public static UserTakenCoursesList parseUserTakenCourse(File file) {
         try {
             Workbook workbook = new HSSFWorkbook(new FileInputStream(file));
             Sheet sheet = workbook.getSheetAt(0);

@@ -5,7 +5,6 @@ import com.gist.graduation.requirment.domain.major.MajorType;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import com.gist.graduation.utils.UserTakenCousrseParser;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
 
@@ -21,7 +20,7 @@ class MajorTest {
     void setup() throws IOException {
         ClassPathResource gradeResource = new ClassPathResource("test-grade/grade_report.xls");
         File file = gradeResource.getFile();
-        takenCourses = UserTakenCousrseParser.parseUserTakenCousrse(file);
+        takenCourses = UserTakenCousrseParser.parseUserTakenCourse(file);
         studentId = UserTakenCousrseParser.getStudentId(file);
     }
 

@@ -21,7 +21,7 @@ class ScienceBasicTest {
     void setup() throws IOException {
         ClassPathResource gradeResource = new ClassPathResource("test-grade/grade_report.xls");
         File file = gradeResource.getFile();
-        takenCourses = UserTakenCousrseParser.parseUserTakenCousrse(file);
+        takenCourses = UserTakenCousrseParser.parseUserTakenCourse(file);
         studentId = UserTakenCousrseParser.getStudentId(file);
     }
 

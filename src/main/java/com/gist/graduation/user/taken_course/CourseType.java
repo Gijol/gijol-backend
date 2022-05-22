@@ -1,8 +1,8 @@
 package com.gist.graduation.user.taken_course;
 
 public enum CourseType {
-    E,
-    M;
+    HUS,
+    PPE;
 
     public static CourseType stringOf(String type) {
         for (CourseType courseType : CourseType.values()) {
@@ -12,5 +12,6 @@ public enum CourseType {
         }
         return null;
     }
+
 
 }

@@ -2,6 +2,7 @@ package com.gist.graduation.requirment.domain.humanities;
 
 import com.gist.graduation.requirment.domain.RequirementStatusBaseEntity;
 import com.gist.graduation.requirment.domain.major.MajorType;
+import com.gist.graduation.user.taken_course.CourseType;
 import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import com.gist.graduation.utils.HumanitiesListParser;
@@ -39,6 +40,8 @@ public class Humanities extends RequirementStatusBaseEntity {
         List<TakenCourse> userTakneHUSCourses = inputUserTakenCoursesList.getTakenCourses().stream()
                 .filter(husCoursesList::contains)
                 .collect(Collectors.toList());
+        userTakneHUSCourses.forEach(s -> s.setHumanitiesType(CourseType.HUS));
+
 
         int husMinimumCondition = 6 - getSumofCredits(userTakneHUSCourses);
         if (husMinimumCondition > 0) {
@@ -55,6 +58,7 @@ public class Humanities extends RequirementStatusBaseEntity {
         List<TakenCourse> userTaknePPECourses = inputUserTakenCoursesList.getTakenCourses().stream()
                 .filter(PPECoursesList::contains)
                 .collect(Collectors.toList());
+        userTaknePPECourses.forEach(s -> s.setHumanitiesType(CourseType.PPE));
 
         int ppeMinimumCondition = 6 - getSumofCredits(userTaknePPECourses);
         if (ppeMinimumCondition > 0) {

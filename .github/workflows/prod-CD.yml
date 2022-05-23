@@ -45,4 +45,4 @@ jobs:
           script: |
             cd /home/ubuntu/deploy
             chmod u+x prod-deploy.sh
-            ./dev-deploy.sh
+            ./prod-deploy.sh

@@ -1,15 +1,46 @@
 spring:
-  data:
-    mongodb:
-      authentication-database: admin
-      username: rootuser
-      password: rootpass
-      database: course
-      port: 27017
-      host: localhost
+  profiles:
+    active: local
 
-# for query logging
-logging:
-  level:
-    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
 
+swagger:
+  host: localhost:8080
+  protocol: http
+
+request:
+  origins: http://localhost:3000,https://dev.gijol.im
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+swagger:
+  host: dev-api.gijol.im
+  protocol: https
+
+
+request:
+  origins: http://localhost:3000,http://localhost:3001,https://dev.gijol.im
+
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+swagger:
+  host: api.gijol.im
+  protocol: https
+
+
+request:
+  origins: https://gijol.im,https://dev.gijol.im

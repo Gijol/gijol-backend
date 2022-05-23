@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>결과</h2>
+    </div>
+    <div >
+        <div th:text="${result.getLanguageBasic()}"></div>
+        <br>
+        <div th:text="${result.getHumanities()}"></div>
+        <br>
+        <div th:text="${result.getMajor()}"></div>
+        <br>
+        <div th:text="${result.getScienceBasic()}"></div>
+        <br>
+        <div th:text="${result.getEtcMandatory()}"></div>
+    </div>
+
+</div>
+</body>
+</html>

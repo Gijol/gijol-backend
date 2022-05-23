@@ -1,0 +1,21 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+    <div class="container">
+        <div class="py-5 text-center">
+            <h2>파일 업로드</h2>
+        </div>
+        <form th:action method="post" enctype="multipart/form-data">
+            <ul>
+                <li>전공 <input type="text" name="majorType"></li>
+                <li>성적표<input type="file" name="multipartFile" ></li>
+            </ul>
+            <input type="submit"/>
+        </form>
+    </div>
+    </body>
+</html>

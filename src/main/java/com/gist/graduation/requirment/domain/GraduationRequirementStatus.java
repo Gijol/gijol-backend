@@ -5,6 +5,7 @@ import com.gist.graduation.requirment.domain.humanities.Humanities;
 import com.gist.graduation.requirment.domain.language.LanguageBasic;
 import com.gist.graduation.requirment.domain.major.Major;
 import com.gist.graduation.requirment.domain.major.MajorType;
+import com.gist.graduation.requirment.domain.other.EtcDuplication;
 import com.gist.graduation.requirment.domain.other.OtherUncheckedClass;
 import com.gist.graduation.requirment.domain.science.ScienceBasic;
 import com.gist.graduation.user.taken_course.TakenCourse;
@@ -42,6 +43,7 @@ public class GraduationRequirementStatus {
     }
 
     public void checkGraduationRequirements(Integer studentId, UserTakenCoursesList userTakenCoursesList, MajorType majorType) {
+        EtcDuplication.checkDuplicate(userTakenCoursesList);
         setTotalCredits(userTakenCoursesList);
         isSatisfied();
 

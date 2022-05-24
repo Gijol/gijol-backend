@@ -12,7 +12,7 @@ import static com.gist.graduation.requirment.domain.constants.MajorMandatoryCons
 @RequiredArgsConstructor
 public enum MechanicalEngineeringMajor {
 
-    FROM2018(List.of(18, 19, 20, 21, 22), List.of(MC2100, MC2100_1, MC2101, MC2101_1, MC2102, MC2102_1, MC2103, MC3106, MC3107));
+    FROM2021(List.of(18,19,20,21), List.of(MC2100, MC2100_1, MC2101, MC2101_1, MC2102, MC2102_1, MC2103, MC3106, MC3107));
 
     private final List<Integer> studentId;
     private final List<TakenCourse> mandatoryCourses;
@@ -57,23 +57,19 @@ public enum MechanicalEngineeringMajor {
         }
     }
 
-    private static void removeDuplication(List<TakenCourse> lackOfMandatoryClass) {
+    private static void removeDuplication(List<TakenCourse> userTakenMandatoryCourses) {
         List<TakenCourse> thermodynamics = List.of(MC2100, MC2100_1);
         List<TakenCourse> solidMechanics = List.of(MC2101, MC2101_1);
         List<TakenCourse> fluidMechanics = List.of(MC2102, MC2102_1);
 
-        removeDuplicate(lackOfMandatoryClass, thermodynamics, MC2100);
-        removeDuplicate(lackOfMandatoryClass, solidMechanics, MC2101);
-        removeDuplicate(lackOfMandatoryClass, fluidMechanics, MC2102);
-    }
-
-    private static void removeDuplicate(List<TakenCourse> userTakenMandatoryCourses, List<TakenCourse> duplicatedNameCourse, TakenCourse oldCourse) {
-        if (userTakenMandatoryCourses.stream().anyMatch(duplicatedNameCourse::contains)) {
-            if (userTakenMandatoryCourses.containsAll(duplicatedNameCourse)) {
-                userTakenMandatoryCourses.remove(oldCourse);
-                return;
-            }
-            userTakenMandatoryCourses.removeAll(duplicatedNameCourse);
+        if (userTakenMandatoryCourses.containsAll(thermodynamics)) {
+            userTakenMandatoryCourses.remove(MC2100);
+        }
+        if (userTakenMandatoryCourses.containsAll(solidMechanics)) {
+            userTakenMandatoryCourses.remove(MC2101);
+        }
+        if (userTakenMandatoryCourses.containsAll(fluidMechanics)) {
+            userTakenMandatoryCourses.remove(MC2102);
         }
     }
 

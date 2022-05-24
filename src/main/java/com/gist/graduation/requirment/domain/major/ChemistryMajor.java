@@ -12,7 +12,8 @@ import static com.gist.graduation.requirment.domain.constants.MajorMandatoryCons
 @RequiredArgsConstructor
 public enum ChemistryMajor {
 
-    FROM2018(List.of(18, 19, 20, 21, 22), List.of(CH2101, CH2102, CH2103, CH2104, CH2105, CH3106, CH3107));
+    FROM2018(List.of(18), List.of(CH3102, CH3103, CH3104, CH3105, CH3106)),
+    FROM2019(List.of(19, 20, 21), List.of(CH2101, CH2102, CH2103, CH2104, CH2105, CH3106, CH3107));
 
     private final List<Integer> studentId;
     private final List<TakenCourse> mandatoryCourses;
@@ -45,12 +46,8 @@ public enum ChemistryMajor {
 
     private static void checkException(List<TakenCourse> userTakenMandatoryCourses) {
         List<TakenCourse> physicalChemistryA = List.of(CH2102, CH3104);
-        List<TakenCourse> physicalChemistryB = List.of(GS2202, CH2104);
         if (userTakenMandatoryCourses.containsAll(physicalChemistryA)) {
             userTakenMandatoryCourses.remove(CH3104);
-        }
-        if (userTakenMandatoryCourses.containsAll(physicalChemistryB)) {
-            userTakenMandatoryCourses.remove(CH2102);
         }
     }
 

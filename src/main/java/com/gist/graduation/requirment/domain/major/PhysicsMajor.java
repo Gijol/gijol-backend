@@ -1,5 +1,6 @@
 package com.gist.graduation.requirment.domain.major;
 
+import com.gist.graduation.user.taken_course.CourseType;
 import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import lombok.RequiredArgsConstructor;
@@ -34,11 +35,12 @@ public enum PhysicsMajor {
         List<TakenCourse> mandatoryCourses = physicsMajor.mandatoryCourses;
         UserTakenCoursesList userTakenCoursesList = major.getUserTakenCoursesList();
 
-        userTakenCoursesList.addAll(inputUserTakenCourseList.getTakenCourses()
+        List<TakenCourse> userTakenMandatoryCourses = inputUserTakenCourseList.getTakenCourses()
                 .stream()
                 .filter(mandatoryCourses::contains)
-                .collect(Collectors.toList())
-        );
+                .collect(Collectors.toList());
+        userTakenMandatoryCourses.forEach(s -> s.setCourseType(CourseType.필수));
+        userTakenCoursesList.addAll(userTakenMandatoryCourses);
     }
 
     private static void addLackOfMandatoryCourses(UserTakenCoursesList inputUserTakenCourseList, Major major, PhysicsMajor physicsMajor) {

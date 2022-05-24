@@ -40,7 +40,7 @@ public class ScienceVerifier {
     }
 
     private void checkSoftwareBasic(ScienceBasic scienceBasic) {
-        if (scienceBasic.getUserTakenCoursesList().contains(SOFTWARE_BASIC_AND_CODING)) {
+        if (!scienceBasic.getUserTakenCoursesList().contains(SOFTWARE_BASIC_AND_CODING)) {
             scienceBasic.addMessage(String.format("%s를(을) 수강해야 합니다.", SOFTWARE_BASIC_AND_CODING));
         }
     }

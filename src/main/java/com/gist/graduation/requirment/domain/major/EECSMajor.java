@@ -1,5 +1,6 @@
 package com.gist.graduation.requirment.domain.major;
 
+import com.gist.graduation.user.taken_course.CourseType;
 import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import lombok.RequiredArgsConstructor;
@@ -33,14 +34,14 @@ public enum EECSMajor {
         List<TakenCourse> mandatoryCourses = eecsMajor.mandatoryCourses;
         UserTakenCoursesList userTakenCoursesList = major.getUserTakenCoursesList();
 
-        List<TakenCourse> usertakenMandatoryCourses = inputUserTakenCourseList.getTakenCourses()
+        List<TakenCourse> userTakenMandatoryCourses = inputUserTakenCourseList.getTakenCourses()
                 .stream()
                 .filter(mandatoryCourses::contains)
                 .collect(Collectors.toList());
+        userTakenMandatoryCourses.forEach(s -> s.setCourseType(CourseType.필수));
+        userTakenCoursesList.addAll(userTakenMandatoryCourses);
 
-        userTakenCoursesList.addAll(usertakenMandatoryCourses);
-
-        if (usertakenMandatoryCourses.isEmpty()) {
+        if (userTakenMandatoryCourses.isEmpty()) {
             major.addMessage(String.format("%s 혹은 %s 수강해야 합니다.", mandatoryCourses.get(0),mandatoryCourses.get(1)));
         }
     }

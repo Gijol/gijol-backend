@@ -1,11 +1,11 @@
-package com.gist.graduation.utils;
+package com.gist.graduation.printer;
 
-import com.gist.graduation.printer.TestCourseListPrinter;
+import com.gist.graduation.utils.CourseListParser;
+import com.gist.graduation.utils.RegisteredCourse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CourseListPrinterTest {
 
@@ -57,6 +57,7 @@ public class CourseListPrinterTest {
     @Test
     void softwareBasicPrinter() {
         testCourseListPrinter.printClassByCreditAndName(courseList, "소프트웨어", 2);
+        testCourseListPrinter.printClassByCreditAndName(courseList, "물리화학", 3);
     }
 
 }

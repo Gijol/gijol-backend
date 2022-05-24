@@ -1,6 +1,5 @@
 package com.gist.graduation.printer;
 
-import com.gist.graduation.utils.CourseListPrinterTest;
 import org.junit.jupiter.api.Test;
 
 public class EtcPrinter extends CourseListPrinterTest {

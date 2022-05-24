@@ -57,19 +57,23 @@ public enum MechanicalEngineeringMajor {
         }
     }
 
-    private static void removeDuplication(List<TakenCourse> userTakenMandatoryCourses) {
+    private static void removeDuplication(List<TakenCourse> lackOfMandatoryClass) {
         List<TakenCourse> thermodynamics = List.of(MC2100, MC2100_1);
         List<TakenCourse> solidMechanics = List.of(MC2101, MC2101_1);
         List<TakenCourse> fluidMechanics = List.of(MC2102, MC2102_1);
 
-        if (userTakenMandatoryCourses.containsAll(thermodynamics)) {
-            userTakenMandatoryCourses.remove(MC2100);
-        }
-        if (userTakenMandatoryCourses.containsAll(solidMechanics)) {
-            userTakenMandatoryCourses.remove(MC2101);
-        }
-        if (userTakenMandatoryCourses.containsAll(fluidMechanics)) {
-            userTakenMandatoryCourses.remove(MC2102);
+        removeDuplicate(lackOfMandatoryClass, thermodynamics, MC2100);
+        removeDuplicate(lackOfMandatoryClass, solidMechanics, MC2101);
+        removeDuplicate(lackOfMandatoryClass, fluidMechanics, MC2102);
+    }
+
+    private static void removeDuplicate(List<TakenCourse> userTakenMandatoryCourses, List<TakenCourse> duplicatedNameCourse, TakenCourse oldCourse) {
+        if (userTakenMandatoryCourses.stream().anyMatch(duplicatedNameCourse::contains)) {
+            if (userTakenMandatoryCourses.containsAll(duplicatedNameCourse)) {
+                userTakenMandatoryCourses.remove(oldCourse);
+                return;
+            }
+            userTakenMandatoryCourses.removeAll(duplicatedNameCourse);
         }
     }
 

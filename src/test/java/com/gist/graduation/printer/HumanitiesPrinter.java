@@ -1,7 +1,6 @@
 package com.gist.graduation.printer;
 
 import com.gist.graduation.utils.CourseListParser;
-import com.gist.graduation.utils.CourseListPrinterTest;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

@@ -12,7 +12,7 @@ import static com.gist.graduation.requirment.domain.constants.MajorMandatoryCons
 @RequiredArgsConstructor
 public enum MechanicalEngineeringMajor {
 
-    FROM2021(List.of(18,19,20,21), List.of(MC2100, MC2100_1, MC2101, MC2101_1, MC2102, MC2102_1, MC2103, MC3106, MC3107));
+    FROM2018(List.of(18, 19, 20, 21, 22), List.of(MC2100, MC2100_1, MC2101, MC2101_1, MC2102, MC2102_1, MC2103, MC3106, MC3107));
 
     private final List<Integer> studentId;
     private final List<TakenCourse> mandatoryCourses;

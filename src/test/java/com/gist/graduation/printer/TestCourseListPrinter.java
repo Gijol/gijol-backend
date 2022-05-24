@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class CourseListPrinter {
+public class TestCourseListPrinter {
 
     public void printCoreEnglishCourses(List<RegisteredCourse> registeredCourseList) {
         Set<RegisteredCourse> englishConditionCourse = registeredCourseList.stream()

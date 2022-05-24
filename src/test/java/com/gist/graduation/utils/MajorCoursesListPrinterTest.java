@@ -1,6 +1,6 @@
 package com.gist.graduation.utils;
 
-import com.gist.graduation.printer.CourseListPrinter;
+import com.gist.graduation.printer.TestCourseListPrinter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,39 +14,39 @@ import static com.gist.graduation.requirment.domain.constants.MajorMandatoryCons
 
 public class MajorCoursesListPrinterTest {
 
-    private CourseListPrinter courseListPrinter;
+    private TestCourseListPrinter testCourseListPrinter;
     private CourseListParser courseListParser;
     private List<RegisteredCourse> courseList;
 
     @BeforeEach
     void setup() throws IOException {
         courseListParser = new CourseListParser();
-        courseListPrinter = new CourseListPrinter();
+        testCourseListPrinter = new TestCourseListPrinter();
         courseList = CourseListParser.getCourseList();
     }
 
     @Test
     void physicsPrintTest() {
-        courseListPrinter.printByCode(courseList, "PS");
+        testCourseListPrinter.printByCode(courseList, "PS");
     }
 
     @Test
     void ChemistryPrintTest() {
-        courseListPrinter.printByCode(courseList, CH);
+        testCourseListPrinter.printByCode(courseList, CH);
     }
 
     @Test
     void EnvironmentPrintTest() {
-        courseListPrinter.printMandatoryMajorClass(courseList, EV);
+        testCourseListPrinter.printMandatoryMajorClass(courseList, EV);
     }
 
     @Test
     void materialSciencePrintTest() {
-        courseListPrinter.printMandatoryMajorClass(courseList, MA);
+        testCourseListPrinter.printMandatoryMajorClass(courseList, MA);
     }
 
     @Test
     void mechanicalEngineeringPrintTest() {
-        courseListPrinter.printMandatoryMajorClass(courseList, MC);
+        testCourseListPrinter.printMandatoryMajorClass(courseList, MC);
     }
 }

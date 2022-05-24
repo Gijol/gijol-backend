@@ -12,7 +12,7 @@ import static com.gist.graduation.requirment.domain.constants.MajorMandatoryCons
 @RequiredArgsConstructor
 public enum EnvironmentMajor {
 
-    FROM2018(List.of(18, 19, 20, 21), List.of(EV3101, EV3106, EV3111, EV4106, EV4107));
+    FROM2018(List.of(18, 19, 20, 21, 22), List.of(EV3101, EV3106, EV3111, EV4106, EV4107));
 
     private final List<Integer> studentId;
     private final List<TakenCourse> mandatoryCourses;

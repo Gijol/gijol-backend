@@ -12,9 +12,7 @@ import static com.gist.graduation.requirment.domain.constants.MajorMandatoryCons
 @RequiredArgsConstructor
 public enum BiologyMajor {
 
-    FROM2018(List.of(18), List.of(BS3101, BS3105, BS3111, BS3112, BS3113)),
-    FROM2019(List.of(19, 20), List.of(BS2101, BS2102, BS3101, BS3105, BS3111, BS3112, BS3113)),
-    FROM2021(List.of(21), List.of(BS2101, BS2102, BS2103, BS2104, BS3101, BS3105, BS3112));
+    FROM2021(List.of(18, 19, 20, 21, 22), List.of(BS2101, BS2102, BS2103, BS2103_1, BS2104, BS2104_1, BS3101, BS3105, BS3112));
 
 
     private final List<Integer> studentId;
@@ -53,10 +51,31 @@ public enum BiologyMajor {
                 .filter(inputUserTakenCourseList::notExist)
                 .collect(Collectors.toList());
 
+        removeDuplication(lackOfMandatoryCourses);
+
         for (TakenCourse lackOfMandatoryCourse : lackOfMandatoryCourses) {
             major.addMessage(String.format("%s를 수강해야 합니다.", lackOfMandatoryCourse.toString()));
         }
     }
+
+    private static void removeDuplication(List<TakenCourse> lackOfMandatoryCourses) {
+        List<TakenCourse> bioChemistry = List.of(BS2104, BS2104_1);
+        List<TakenCourse> bioExperiment = List.of(BS2103, BS2103_1);
+
+        removeEachDuplicate(lackOfMandatoryCourses, bioChemistry, BS2104);
+        removeEachDuplicate(lackOfMandatoryCourses, bioExperiment, BS2103);
+    }
+
+    private static void removeEachDuplicate(List<TakenCourse> userTakenMandatoryCourses, List<TakenCourse> duplicatedNameCourse, TakenCourse oldCourse) {
+        if (userTakenMandatoryCourses.stream().anyMatch(duplicatedNameCourse::contains)) {
+            if (userTakenMandatoryCourses.containsAll(duplicatedNameCourse)) {
+                userTakenMandatoryCourses.remove(oldCourse);
+                return;
+            }
+            userTakenMandatoryCourses.removeAll(duplicatedNameCourse);
+        }
+    }
+
 
     private static void checkElectiveCourses(UserTakenCoursesList inputUserTakenCourseList, Major major, BiologyMajor biologyMajor) {
         List<TakenCourse> mandatoryCourses = biologyMajor.mandatoryCourses;

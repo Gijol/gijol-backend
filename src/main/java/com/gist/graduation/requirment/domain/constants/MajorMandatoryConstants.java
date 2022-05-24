@@ -31,10 +31,11 @@ public class MajorMandatoryConstants {
         public static final TakenCourse CH2103 = new TakenCourse("유기화학Ⅰ", "CH2103", "3");
         public static final TakenCourse CH2104 = new TakenCourse("물리화학 B", "CH2104", "3");
         public static final TakenCourse CH2105 = new TakenCourse("화학합성실험", "CH2105", "3");
-        public static final TakenCourse CH3102 = new TakenCourse("화학합성실험", "CH3102", "3");
-        public static final TakenCourse CH3103 = new TakenCourse("고급화학실험", "CH3103", "3");
+        public static final TakenCourse GS2202 = new TakenCourse("물리화학 Ⅰ", "GS2202", "3");
+        //        public static final TakenCourse CH3102 = new TakenCourse("화학합성실험", "CH3102", "3"); 2018년 1학기까지 존재
+//        public static final TakenCourse CH3103 = new TakenCourse("고급화학실험", "CH3103", "3"); 18학사편람에 필수 과목임
         public static final TakenCourse CH3104 = new TakenCourse("물리화학 II", "CH3104", "3");
-        public static final TakenCourse CH3105 = new TakenCourse("유기화학 II", "CH3105", "3");
+        //        public static final TakenCourse CH3105 = new TakenCourse("유기화학 II", "CH3105", "3"); // 18학사편람에 필수 과목임
         public static final TakenCourse CH3106 = new TakenCourse("생화학 Ⅰ", "CH3106", "3");
         public static final TakenCourse CH3107 = new TakenCourse("무기화학", "CH3107", "3");
     }
@@ -68,13 +69,13 @@ public class MajorMandatoryConstants {
         public static final String BS = "BS";
         public static final TakenCourse BS2101 = new TakenCourse("유기화학 Ⅰ", "BS2101", "3");
         public static final TakenCourse BS2102 = new TakenCourse("분자생물학", "BS2102", "3");
-        public static final TakenCourse BS2103 = new TakenCourse("생화학·분자생물학 실험", "BS2103", "3");
-        public static final TakenCourse BS2104 = new TakenCourse("생화학 I", "BS2104", "3");
+        public static final TakenCourse BS2104 = new TakenCourse("생화학 I", "BS3113", "3");  // 2019까지 과목코드
+        public static final TakenCourse BS2104_1 = new TakenCourse("생화학 I", "BS2104", "3");
         public static final TakenCourse BS3101 = new TakenCourse("생화학 II", "BS3101", "3");
         public static final TakenCourse BS3105 = new TakenCourse("세포생물학", "BS3105", "3");
-        public static final TakenCourse BS3111 = new TakenCourse("생화학·분자생물학 실험", "BS3111", "3");
+        public static final TakenCourse BS2103 = new TakenCourse("생화학·분자생물학 실험", "BS3111", "3"); // 2019까지 과목코드
+        public static final TakenCourse BS2103_1 = new TakenCourse("생화학·분자생물학 실험", "BS2103", "3");
         public static final TakenCourse BS3112 = new TakenCourse("세포·발생생물학 실험", "BS3112", "3");
-        public static final TakenCourse BS3113 = new TakenCourse("생화학 I", "BS3113", "3");
     }
 
     public static class MechanicalEngineering {

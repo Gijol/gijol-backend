@@ -51,7 +51,7 @@ public class TakenCourse {
         return String.format("%s(%s)", this.courseName, this.courseCode);
     }
 
-    public void setHumanitiesType(CourseType type){
+    public void setCourseType(CourseType type){
         this.courseType = type;
     }
 

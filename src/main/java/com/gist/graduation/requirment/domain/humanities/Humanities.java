@@ -40,7 +40,7 @@ public class Humanities extends RequirementStatusBaseEntity {
         List<TakenCourse> userTakenHUSCourses = inputUserTakenCoursesList.getTakenCourses().stream()
                 .filter(husCoursesList::contains)
                 .collect(Collectors.toList());
-        userTakenHUSCourses.forEach(s -> s.setHumanitiesType(CourseType.HUS));
+        userTakenHUSCourses.forEach(s -> s.setCourseType(CourseType.HUS));
 
 
         int husMinimumCondition = 6 - getSumofCredits(userTakenHUSCourses);
@@ -58,7 +58,7 @@ public class Humanities extends RequirementStatusBaseEntity {
         List<TakenCourse> userTakenPPECourses = inputUserTakenCoursesList.getTakenCourses().stream()
                 .filter(PPECoursesList::contains)
                 .collect(Collectors.toList());
-        userTakenPPECourses.forEach(s -> s.setHumanitiesType(CourseType.PPE));
+        userTakenPPECourses.forEach(s -> s.setCourseType(CourseType.PPE));
 
         int ppeMinimumCondition = 6 - getSumofCredits(userTakenPPECourses);
         if (ppeMinimumCondition > 0) {

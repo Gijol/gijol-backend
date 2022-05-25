@@ -1,5 +1,6 @@
 package com.gist.graduation.requirment.domain.major;
 
+import com.gist.graduation.user.taken_course.CourseType;
 import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +40,7 @@ public enum BiologyMajor {
                 .stream()
                 .filter(mandatoryCourses::contains)
                 .collect(Collectors.toList());
-
+        userTakenMandatoryCourses.forEach(s -> s.setCourseType(CourseType.필수));
         userTakenCoursesList.addAll(userTakenMandatoryCourses);
     }
 

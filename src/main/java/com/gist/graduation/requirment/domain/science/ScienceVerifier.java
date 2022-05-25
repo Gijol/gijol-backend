@@ -37,6 +37,12 @@ public class ScienceVerifier {
         this.recommendedCourses.addAll(typeList);
         this.recommendedCourses.addAll(typeList.stream().map(s -> s + EXPERIMENT).collect(Collectors.toList()));
 
+        if(!scienceBasic.getMessages().isEmpty()) {
+            scienceBasic.addMessage("");
+            scienceBasic.addMessage("--------------------");
+            scienceBasic.addMessage("");
+        }
+
         if(!this.recommendedCourses.isEmpty()){
             scienceBasic.addMessage("");
             scienceBasic.addMessage("컴퓨터 프로그래밍 과목을 들으실 계획이 아닌 경우에는 다음과 같이 수강해야 합니다.");
@@ -59,8 +65,8 @@ public class ScienceVerifier {
         if (size >= 5) return;
 
         if (!tookComputer){
-            scienceBasic.addMessage("컴퓨터 프로그래밍 과목을 들으실 계획인 경우에는 다음과 같이 수강해야 합니다.(이 경우는 들어야 하는 최소학점이 17학점 입니다.)");
-            scienceBasic.addMessage("컴퓨터 프로그래밍과목을 수강해야 합니다.");
+            scienceBasic.addMessage("컴퓨터 프로그래밍 과목을 들으실 계획인 경우에는 다음과 같이 수강해야 합니다.");
+            scienceBasic.addMessage("컴퓨터 프로그래밍 과목을 수강해야 합니다.");
         }
         if (size == 4) {
             checkFourCourses(scienceBasic);

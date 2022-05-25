@@ -38,6 +38,7 @@ public class ScienceVerifier {
         this.recommendedCourses.addAll(typeList.stream().map(s -> s + EXPERIMENT).collect(Collectors.toList()));
 
         if(!this.recommendedCourses.isEmpty()){
+            scienceBasic.addMessage("");
             scienceBasic.addMessage("컴퓨터 프로그래밍 과목을 들으실 계획이 아닌 경우에는 다음과 같이 수강해야 합니다.");
             this.recommendedCourses.forEach(s -> scienceBasic.addMessage(String.format("%s를(을) 수강해야 합니다.", s)));
         }

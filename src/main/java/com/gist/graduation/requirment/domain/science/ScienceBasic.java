@@ -56,6 +56,11 @@ public class ScienceBasic extends RequirementStatusBaseEntity {
         ScienceEnum.checkScienceBasicCourses(this, userTakenCoursesList);
 
         ScienceVerifier scienceVerifier = ScienceEnum.ofScienceVerifier(userTakenCoursesList);
+
+        if(scienceVerifier.getCounts()<2){
+            this.addMessage("기초 과학 과목을 추천해주기에는 과목수가 너무 적어요! 본인의 관심에 맞는 과목을 수강해주세요 :)");
+            return;
+        }
         scienceVerifier.checkTwoBlock(this, tookComputer);
 
         if (!tookComputer) {

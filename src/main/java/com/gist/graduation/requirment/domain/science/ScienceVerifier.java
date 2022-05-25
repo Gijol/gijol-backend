@@ -29,17 +29,23 @@ public class ScienceVerifier {
     }
 
     public void checkThreeBlock(ScienceBasic scienceBasic) {
+        this.recommendedCourses.clear();
         findNotTakenCourseInHalfStatus(getHalfStatusBlock());
         List<String> typeList = getAllBlocks().stream()
                 .filter(s -> s.getStatus().equals(EMPTY))
                 .map(s -> s.getType()).collect(Collectors.toList());
         this.recommendedCourses.addAll(typeList);
         this.recommendedCourses.addAll(typeList.stream().map(s -> s + EXPERIMENT).collect(Collectors.toList()));
-        this.recommendedCourses.forEach(s -> scienceBasic.addMessage(String.format("%s를(을) 수강해야 합니다.", s)));
+
+        if(!this.recommendedCourses.isEmpty()){
+            scienceBasic.addMessage("컴퓨터 프로그래밍 과목을 들으실 계획이 아닌 경우에는 다음과 같이 수강해야 합니다.");
+            this.recommendedCourses.forEach(s -> scienceBasic.addMessage(String.format("%s를(을) 수강해야 합니다.", s)));
+        }
+
         checkSoftwareBasic(scienceBasic);
     }
 
-    private void checkSoftwareBasic(ScienceBasic scienceBasic) {
+    public void checkSoftwareBasic(ScienceBasic scienceBasic) {
         if (!scienceBasic.getUserTakenCoursesList().contains(SOFTWARE_BASIC_AND_CODING)) {
             scienceBasic.addMessage(String.format("%s를(을) 수강해야 합니다.", SOFTWARE_BASIC_AND_CODING));
         }
@@ -50,22 +56,21 @@ public class ScienceVerifier {
 
         int size = this.getCounts();
         if (size >= 5) return;
-        if (!tookComputer) scienceBasic.addMessage("컴퓨터 프로그래밍과목을 수강해야 합니다.");
 
-        switch (size) {
-            case 4:
-                checkFourCourses(scienceBasic);
-                break;
-            case 3:
-                checkThreeCourses(scienceBasic);
-                break;
-            case 2:
-                checkTwoCourses(scienceBasic);
-                break;
-            default:
-                scienceBasic.addMessage("추천해주기에는 과목수가 너무 적어요! 본인의 관심에 맞는 과목을 수강해주세요 :)");
-                break;
+        if (!tookComputer){
+            scienceBasic.addMessage("컴퓨터 프로그래밍 과목을 들으실 계획인 경우에는 다음과 같이 수강해야 합니다.(이 경우는 들어야 하는 최소학점이 17학점 입니다.)");
+            scienceBasic.addMessage("컴퓨터 프로그래밍과목을 수강해야 합니다.");
         }
+        if (size == 4) {
+            checkFourCourses(scienceBasic);
+        }
+        else if(size==3) {
+            checkThreeCourses(scienceBasic);
+        }
+        else if(size==2) {
+            checkTwoCourses(scienceBasic);
+        }
+
     }
 
     private void checkFourCourses(ScienceBasic scienceBasic) {
@@ -108,7 +113,7 @@ public class ScienceVerifier {
     private void findNotTakenCourseInHalfStatus(List<ScienceBlock> takenCoursesHalfStatus) {
         for (ScienceBlock scienceBlock : takenCoursesHalfStatus) {
             if (scienceBlock.getUserTakenCoursesList().getTakenCourses().stream()
-                    .anyMatch(s -> s.getCourseName().equals(EXPERIMENT)) && scienceBlock.getStatus().equals(HALF)) {
+                    .anyMatch(s -> s.getCourseName().contains(EXPERIMENT)) && scienceBlock.getStatus().equals(HALF)) {
                 this.getRecommendedCourses().add(scienceBlock.getType());
             } else {
                 this.getRecommendedCourses().add(scienceBlock.getType() + EXPERIMENT);
@@ -122,7 +127,7 @@ public class ScienceVerifier {
                 .collect(Collectors.toList());
     }
 
-    private int getCounts() {
+    public int getCounts() {
         int count = physicsBlock.getSize() + chemistryBlock.getSize() + biologyBlock.getSize();
         if (biologyBlock.getUserTakenCoursesList().getTakenCourses().stream().filter(s -> !s.getCourseName().contains("실험")).count() > 1) {
             count--;

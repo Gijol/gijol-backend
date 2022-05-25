@@ -39,6 +39,7 @@ public enum ScienceEnum {
         addSoftwareBasic(scienceBasic, userTakenCoursesList);
     }
 
+    // software basic and coding check and add
     private static void addSoftwareBasic(ScienceBasic scienceBasic, UserTakenCoursesList userTakenCoursesList) {
         userTakenCoursesList.getTakenCourses().forEach(s -> {
             if (s.equals(SOFTWARE_BASIC_AND_CODING)) scienceBasic.getUserTakenCoursesList().getTakenCourses().add(s);

@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.gist.graduation.requirment.domain.constants.MajorMandatoryConstants.Chemistry.*;
+import static com.gist.graduation.requirment.domain.etc.Research.RESEARCH_II_CODE;
+import static com.gist.graduation.requirment.domain.etc.Research.RESEARCH_I_CODE;
 
 @RequiredArgsConstructor
 public enum ChemistryMajor {
@@ -76,6 +78,7 @@ public enum ChemistryMajor {
                 .stream()
                 .filter(s -> !mandatoryCourses.contains(s))
                 .filter(s -> s.getCourseCode().contains(CH))
+                .filter(s -> !s.getCourseCode().contains(RESEARCH_I_CODE) && !s.getCourseCode().contains(RESEARCH_II_CODE))
                 .collect(Collectors.toList()));
     }
 }

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  * */
 public class OthersEtc {
 
-    private static final TakenCourse COLLOQUIUM = new TakenCourse("GIST대학 콜로퀴움", "UC9331", "0");
+    public static final TakenCourse COLLOQUIUM = new TakenCourse("GIST대학 콜로퀴움", "UC9331", "0");
     public static final List<TakenCourse> FRESHMAN = List.of(new TakenCourse("GIST 새내기", "GS1901", "1"), new TakenCourse("신입생 세미나", "GS9301", "1"));
     public static final TakenCourse FIND_MAJOR = new TakenCourse("GIST 전공탐색", "UC0902", "1");
 

@@ -4,6 +4,7 @@ import com.gist.graduation.exception.ApplicationException;
 import com.gist.graduation.requirment.domain.etc.OthersEtc;
 import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
+import com.gist.graduation.utils.filter.Duplication;
 import com.gist.graduation.utils.filter.FailGrade;
 import com.gist.graduation.utils.filter.Letter;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -92,7 +93,7 @@ public class UserTakenCousrseParser {
         TakenCourse takenCourse = new TakenCourse(Integer.parseInt(year), semester, row.getCell(TYPE_CELL_NUM).getStringCellValue(), courseName, courseCode, credit);
 
 
-        if (courseArray.contains(takenCourse) && Letter.isLetter(grade) && !takenCourse.equals(COLLOQUIUM)) {
+        if (courseArray.contains(takenCourse) && Letter.isLetter(grade) && !Duplication.canDuplicate(courseCode)) {
             courseArray.remove(takenCourse);
             courseArray.add(takenCourse);
             return;

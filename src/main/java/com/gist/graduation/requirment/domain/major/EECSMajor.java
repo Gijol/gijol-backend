@@ -1,5 +1,6 @@
 package com.gist.graduation.requirment.domain.major;
 
+import com.gist.graduation.requirment.domain.etc.Research;
 import com.gist.graduation.user.taken_course.CourseType;
 import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
@@ -9,6 +10,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.gist.graduation.requirment.domain.constants.MajorMandatoryConstants.EECS.*;
+import static com.gist.graduation.requirment.domain.etc.Research.RESEARCH_II_CODE;
+import static com.gist.graduation.requirment.domain.etc.Research.RESEARCH_I_CODE;
 
 @RequiredArgsConstructor
 public enum EECSMajor {
@@ -53,6 +56,7 @@ public enum EECSMajor {
                 .stream()
                 .filter(s -> !mandatoryCourses.contains(s))
                 .filter(s -> s.getCourseCode().contains(EC))
+                .filter(s -> !s.getCourseCode().contains(RESEARCH_I_CODE) && !s.getCourseCode().contains(RESEARCH_II_CODE))
                 .collect(Collectors.toList()));
     }
 }

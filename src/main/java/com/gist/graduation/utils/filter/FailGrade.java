@@ -1,4 +1,4 @@
-package com.gist.graduation.utils;
+package com.gist.graduation.utils.filter;
 
 public enum FailGrade {
     F,

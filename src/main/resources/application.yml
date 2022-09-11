@@ -7,6 +7,16 @@ spring:
       filter:
         enabled: true
 
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true
+
 swagger:
   host: localhost:8080
   protocol: http

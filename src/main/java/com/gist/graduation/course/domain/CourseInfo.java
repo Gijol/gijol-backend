@@ -15,10 +15,14 @@ public class CourseInfo {
     private String courseName;
     private int courseCredit;
 
-    public CourseInfo(String courseCode, String courseName, int courseCredit) {
+    public CourseInfo(String courseName, String courseCode, int courseCredit) {
         this.courseCode = courseCode;
         this.courseName = courseName;
         this.courseCredit = courseCredit;
+    }
+
+    public CourseInfo(String courseName, String courseCode, String courseCredit) {
+        this(courseName, courseCode, Integer.parseInt(courseCredit));
     }
 
     @Override
@@ -32,5 +36,10 @@ public class CourseInfo {
     @Override
     public int hashCode() {
         return Objects.hash(courseCode, courseName, courseCredit);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s(%s)", this.courseName, this.courseCode);
     }
 }

@@ -7,7 +7,6 @@ import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import com.gist.graduation.utils.UserTakenCousrseParser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,6 +30,7 @@ public class GraduationRequirementStatusService {
         log.info(graduationRequirementStatus.toString());
         return graduationRequirementStatus;
     }
+
 
     private File multiPartToFile(MultipartFile multipartFile) throws IOException {
         InputStream inputStream = multipartFile.getInputStream();

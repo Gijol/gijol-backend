@@ -1,21 +1,25 @@
 package com.gist.graduation.utils;
 
+import com.gist.graduation.course.domain.RawCourse;
+import com.gist.graduation.exception.ApplicationException;
 import com.gist.graduation.requirment.domain.constants.HumanitiesExceptionConstants;
 import com.gist.graduation.user.taken_course.TakenCourse;
-import org.apache.commons.io.FileUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+
+@Slf4j
 public class CourseListParser {
 
     public static final int INDEX = 0;
@@ -25,39 +29,26 @@ public class CourseListParser {
     public static final int COURSE_NAME_CELL_NUMBER = 5;
     public static final int COURSE_TYPE_CELL_NUMBER = 6;
     public static final int LIBERAL_ART_TYPE_CELL_NUMBER = 7;
+    public static final int PROFESSOR_NUMBER = 9;
     public static final int CREDIT_CELL_NUMBER = 11;
-    public static File file;
+    public static final int TIME_TABLE_NUMBER = 13;
+    public static final int LOCATION_NUMBER = 14;
+    public static final int PREREQUISITE_NUMBER = 17;
 
-    static {
-        ClassPathResource undergraduateResource = new ClassPathResource("/course-information/course_information_undergraduate.xls");
-        try {
-            InputStream inputStream = undergraduateResource.getInputStream();
-            file = File.createTempFile(UUID.randomUUID().toString(), ".xlsx");
-            FileUtils.copyToFile(inputStream, file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static List<RawCourse> parseToRawCourse(File file) {
+        Sheet sheet = convertFileToSheet(file);
+        return RawCourse.listOf(parseRegistrationCourse(sheet));
+    }
+
+    public static List<RegisteredCourse> getCourseList(File file) {
+        List<RegisteredCourse> undergradCourses = parseCourseExcelFileToRegistrationCourseWithoutDuplication(file);
+        return undergradCourses;
     }
 
     public static List<RegisteredCourse> getCourseList() {
-        try {
-            List<RegisteredCourse> undergradCourses = parseCourseExcelFile();
-            return undergradCourses;
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-        return new ArrayList<>();
-    }
-
-    public static Set<RegisteredCourse> getMajorCourseList(String code) throws IOException {
-        List<RegisteredCourse> undergradCourses = parseCourseExcelFile();
-
-        Set<RegisteredCourse> conditionCourse = undergradCourses.stream()
-                .filter(s -> s.getCode().contains(code))
-                .filter(s -> s.getType().equals("필수"))
-                .collect(Collectors.toSet());
-
-        return conditionCourse;
+        FileResourceUtils fileResourceUtils = new FileResourceUtils();
+        File file = fileResourceUtils.convertPathResourceToCourseListFileAtServer();
+        return getCourseList(file);
     }
 
     public static List<TakenCourse> getHumanitiesWithoutGSC() {
@@ -66,28 +57,23 @@ public class CourseListParser {
         return humanitiesCoursesList;
     }
 
-
     public static List<TakenCourse> getHumanitiesCoursesList() {
-        try {
-            List<RegisteredCourse> undergradCourses = parseCourseExcelFile();
-            List<String> humanitiesCodeList = new ArrayList<>();
-            addHumanitiesCode(humanitiesCodeList);
+        FileResourceUtils fileResourceUtils = new FileResourceUtils();
+        File file = fileResourceUtils.convertPathResourceToCourseListFileAtServer();
+        List<RegisteredCourse> undergradCourses = parseCourseExcelFileToRegistrationCourseWithoutDuplication(file);
+        List<String> humanitiesCodeList = new ArrayList<>();
+        addHumanitiesCode(humanitiesCodeList);
 
-            Set<RegisteredCourse> conditionCourse = new HashSet<>();
+        Set<RegisteredCourse> conditionCourse = new HashSet<>();
 
-            for (String code : humanitiesCodeList) {
-                addRegisteredCoursesByCode(undergradCourses, conditionCourse, code);
-            }
-
-            List<TakenCourse> conditionCourseList = TakenCourse.setToListOf(conditionCourse);
-            HumanitiesExceptionConstants.NotHumanities.removeHumanitiesException(conditionCourseList);
-
-            return conditionCourseList;
-        } catch (Exception e) {
-            System.out.println(e);
+        for (String code : humanitiesCodeList) {
+            addRegisteredCoursesByCode(undergradCourses, conditionCourse, code);
         }
-        return new ArrayList<>();
 
+        List<TakenCourse> conditionCourseList = TakenCourse.setToListOf(conditionCourse);
+        HumanitiesExceptionConstants.NotHumanities.removeHumanitiesException(conditionCourseList);
+
+        return conditionCourseList;
     }
 
     private static void addRegisteredCoursesByCode(List<RegisteredCourse> undergradCourses, Set<RegisteredCourse> conditionCourse, String code) {
@@ -105,33 +91,57 @@ public class CourseListParser {
         }
     }
 
-    private static List<RegisteredCourse> parseCourseExcelFile() throws IOException {
-        Workbook workbook = new HSSFWorkbook(new FileInputStream(file));
-        Sheet sheet = workbook.getSheetAt(0);
+    private static List<RegisteredCourse> parseCourseExcelFileToRegistrationCourseWithoutDuplication(File file) {
+        Sheet sheet = convertFileToSheet(file);
         removeDuplicate(sheet);
+        return parseRegistrationCourse(sheet);
+    }
 
+    private static List<RegisteredCourse> parseRegistrationCourse(Sheet sheet) {
         List<RegisteredCourse> registeredCourses = new ArrayList<>();
-
         for (Row row : sheet) {
             if (!row.getCell(INDEX).getStringCellValue().matches("[0-9]+")) {
                 continue;
             }
+            RegisteredCourse registeredCourse = parseRowToRegisteredCourse(row);
 
-            String indexString = row.getCell(INDEX).getStringCellValue();
-            String yearString = row.getCell(YEAR_CELL_NUMBER).getStringCellValue();
-            String semesterString = row.getCell(SEMESTER_CELL_NUMBER).getStringCellValue();
-            String courseCode = row.getCell(CODE_CELL_NUMBER).getStringCellValue().split("-")[0];
-            String courseName = row.getCell(COURSE_NAME_CELL_NUMBER).getStringCellValue();
-            String courseType = row.getCell(COURSE_TYPE_CELL_NUMBER).getStringCellValue();
-            String creditString = row.getCell(CREDIT_CELL_NUMBER).getStringCellValue();
-            creditString = creditString.substring(creditString.length() - 1);
-            RegisteredCourse registeredCourse = new RegisteredCourse(indexString, Integer.parseInt(yearString), semesterString, courseType, courseName, courseCode, Integer.parseInt(creditString));
             if (row.getCell(LIBERAL_ART_TYPE_CELL_NUMBER) != null) {
                 registeredCourse.setLiberalArtType(row.getCell(LIBERAL_ART_TYPE_CELL_NUMBER).getStringCellValue());
             }
             registeredCourses.add(registeredCourse);
         }
         return registeredCourses;
+    }
+
+    private static Sheet convertFileToSheet(File file) {
+        try {
+            Workbook workbook = new HSSFWorkbook(new FileInputStream(file));
+            Sheet sheet = workbook.getSheetAt(0);
+            return sheet;
+        } catch (Exception e) {
+            throw new ApplicationException("강의목록 파일 분석에 오류가 발생했습니다.");
+        }
+    }
+
+
+    private static RegisteredCourse parseRowToRegisteredCourse(Row row) {
+        String indexString = row.getCell(INDEX).getStringCellValue();
+        String yearString = row.getCell(YEAR_CELL_NUMBER).getStringCellValue();
+        String semesterString = row.getCell(SEMESTER_CELL_NUMBER).getStringCellValue();
+        String courseCode = row.getCell(CODE_CELL_NUMBER).getStringCellValue().split("-")[0];
+        String courseName = row.getCell(COURSE_NAME_CELL_NUMBER).getStringCellValue();
+        String courseType = row.getCell(COURSE_TYPE_CELL_NUMBER).getStringCellValue();
+        String professor = row.getCell(PROFESSOR_NUMBER).getStringCellValue();
+        String creditString = row.getCell(CREDIT_CELL_NUMBER).getStringCellValue();
+        creditString = creditString.substring(creditString.length() - 1);
+        String timeTable = row.getCell(TIME_TABLE_NUMBER).getStringCellValue();
+        String location = row.getCell(LOCATION_NUMBER).getStringCellValue();
+        String prerequisite = row.getCell(PREREQUISITE_NUMBER).getStringCellValue();
+
+        RegisteredCourse registeredCourse = new RegisteredCourse(indexString, Integer.parseInt(yearString), semesterString,
+                courseType, courseName, courseCode, Integer.parseInt(creditString),
+                professor, timeTable, location, prerequisite);
+        return registeredCourse;
     }
 
     private static void removeDuplicate(Sheet sheet) {

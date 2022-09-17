@@ -1,28 +1,40 @@
 package com.gist.graduation.requirment.domain.major;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.gist.graduation.course.domain.CourseInfo;
 import com.gist.graduation.exception.ApplicationException;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.util.TriConsumer;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 public enum MajorType {
-    EC(EECSMajor::checkverified, 36),
-    MA(MaterialScienceMajor::checkverified, 30),
-    MC(MechanicalEngineeringMajor::checkverified, 36),
-    EV(EnvironmentMajor::checkverified, 36),
-    BS(BiologyMajor::checkverified, 36),
-    PS(PhysicsMajor::checkverified, 36),
-    CH(ChemistryMajor::checkverified, 36);
+    EC(EECSMajor.values(), 36),
+    MA(MaterialScienceMajor.values(), 30),
+    MC(MechanicalEngineeringMajor.values(), 36),
+    EV(EnvironmentMajor.values(), 36),
+    BS(BiologyMajor.values(), 36),
+    PS(PhysicsMajor.values(), 36),
+    CH(ChemistryMajor.values(), 36);
 
     public static final int MAJOR_MAXIMUM_CREDITS = 42;
-    private final TriConsumer<UserTakenCoursesList, Major, Integer> checkMajorMandatory;
+    private final MajorInterface[] majorInterfaces;
     private final Integer totalCredits;
 
-    public void checkMajorStatus(UserTakenCoursesList inputUserTakenCoursesList, Major major, Integer studentId) {
-        checkMajorMandatory.accept(inputUserTakenCoursesList, major, studentId);
-        addCredits(major);
+    public void doCheck(UserTakenCoursesList inputUserTakenCoursesList, Major major, Integer studentId) {
+        for (MajorInterface majorInterface : this.majorInterfaces) {
+            if (majorInterface.contains(studentId)) {
+                List<CourseInfo> mandatoryCourses = majorInterface.getMandatoryCourses();
+
+                majorInterface.checkMandatoryCourses(inputUserTakenCoursesList, major, mandatoryCourses);
+                majorInterface.addLackOfMandatoryCourses(major, mandatoryCourses);
+                majorInterface.checkElectiveCourses(inputUserTakenCoursesList, major, mandatoryCourses, this.name());
+                addCredits(major);
+                return;
+            }
+        }
+        throw new IllegalArgumentException("확인할 수 없는 학번입니다.");
     }
 
     private void addCredits(Major major) {
@@ -41,7 +53,7 @@ public enum MajorType {
     }
 
     @JsonCreator
-    public static MajorType fromMajorType(String major){
+    public static MajorType fromMajorType(String major) {
         for (MajorType majorType : MajorType.values()) {
             if (majorType.name().equals(major)) {
                 return majorType;

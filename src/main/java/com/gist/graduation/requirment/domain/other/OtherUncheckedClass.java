@@ -17,7 +17,7 @@ public class OtherUncheckedClass extends RequirementStatusBaseEntity {
             List<TakenCourse> exceptOtherUncheckedClasses = graduationRequirementStatus.listOfExceptOtherUncheckedClasses();
 
             this.getUserTakenCoursesList().addAll(inputUserTakenCoursesList.getTakenCourses().stream()
-                            .filter(s -> !exceptOtherUncheckedClasses.contains(s))
+                    .filter(s -> !exceptOtherUncheckedClasses.contains(s))
                     .collect(Collectors.toList()));
         }
 
@@ -28,4 +28,5 @@ public class OtherUncheckedClass extends RequirementStatusBaseEntity {
         setMinConditionCredits(TOTAL_CREDITS - graduationRequirementStatus.getTotalCredits());
         addCredit(this.getUserTakenCoursesList().sumCreditOfCourses());
     }
+
 }

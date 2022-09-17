@@ -1,5 +1,6 @@
 package com.gist.graduation.user.taken_course;
 
+import com.gist.graduation.course.domain.CourseInfo;
 import com.gist.graduation.utils.RegisteredCourse;
 import lombok.Getter;
 
@@ -33,6 +34,15 @@ public class TakenCourse {
         this.credit = Integer.parseInt(credit);
     }
 
+    public boolean equalsCourseInfo(CourseInfo courseInfo) {
+        return this.courseCode.equals(courseInfo.getCourseCode());
+    }
+
+    public boolean belongsToCourseInfosAny(List<CourseInfo> courseInfos) {
+        return courseInfos.stream()
+                .anyMatch(this::equalsCourseInfo);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -51,8 +61,13 @@ public class TakenCourse {
         return String.format("%s(%s)", this.courseName, this.courseCode);
     }
 
-    public void setCourseType(CourseType type){
+    public void setCourseType(CourseType type) {
         this.courseType = type;
+    }
+
+    public TakenCourse setCourseTypeTo(CourseType type) {
+        this.courseType = type;
+        return this;
     }
 
     public static TakenCourse of(RegisteredCourse registeredCourse) {
@@ -64,4 +79,6 @@ public class TakenCourse {
                 .map(TakenCourse::of)
                 .collect(Collectors.toList());
     }
+
+
 }

@@ -12,7 +12,7 @@ class UserTakenCousrseParserTest {
 
     @Test
     void UserTakenCourseParserTest() throws IOException {
-        ClassPathResource gradeResource = new ClassPathResource("test-grade/grade_report.xls");
+        ClassPathResource gradeResource = new ClassPathResource("test-grade/승규_성적.xls");
         UserTakenCousrseParser userTakenCousrseParser = new UserTakenCousrseParser();
         UserTakenCoursesList takenCourses = UserTakenCousrseParser.parseUserTakenCourse(gradeResource.getFile());
         takenCourses.getTakenCourses().forEach(System.out::println);

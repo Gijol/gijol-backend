@@ -1,7 +1,6 @@
 package com.gist.graduation.requirment.domain.major;
 
-import com.gist.graduation.user.taken_course.CourseType;
-import com.gist.graduation.user.taken_course.TakenCourse;
+import com.gist.graduation.course.domain.CourseInfo;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import lombok.RequiredArgsConstructor;
 
@@ -9,76 +8,50 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.gist.graduation.requirment.domain.constants.MajorMandatoryConstants.Chemistry.*;
-import static com.gist.graduation.requirment.domain.etc.Research.RESEARCH_II_CODE;
-import static com.gist.graduation.requirment.domain.etc.Research.RESEARCH_I_CODE;
 
 @RequiredArgsConstructor
-public enum ChemistryMajor {
+public enum ChemistryMajor implements MajorInterface {
 
     FROM2018(List.of(18, 19, 20, 21, 22), List.of(CH2101, CH2102, CH2103, CH2104, CH2105, CH3106, CH3107));
 
     private final List<Integer> studentId;
-    private final List<TakenCourse> mandatoryCourses;
+    private final List<CourseInfo> mandatoryCourses;
 
 
-    public static void checkverified(UserTakenCoursesList inputUserTakenCourseList, Major major, Integer studentId) {
-        for (ChemistryMajor chemistryMajor : values()) {
-            if (chemistryMajor.studentId.contains(studentId)) {
-                checkMandatoryCourses(inputUserTakenCourseList, major, chemistryMajor);
-                addLackOfMandatoryCourses(inputUserTakenCourseList, major, chemistryMajor);
-                checkElectiveCourses(inputUserTakenCourseList, major, chemistryMajor);
-                return;
-            }
-        }
-        throw new IllegalArgumentException("확인할 수 없는 학번입니다.");
-    }
+    @Override
+    public void addLackOfMandatoryCourses(Major major, List<CourseInfo> mandatoryCourses) {
+        UserTakenCoursesList userTakenCourses = major.getUserTakenCoursesList();
 
-    private static void checkMandatoryCourses(UserTakenCoursesList inputUserTakenCourseList, Major major, ChemistryMajor chemistryMajor) {
-        List<TakenCourse> mandatoryCourses = chemistryMajor.mandatoryCourses;
-        UserTakenCoursesList userTakenCoursesList = major.getUserTakenCoursesList();
-
-        List<TakenCourse> userTakenMandatoryCourses = inputUserTakenCourseList.getTakenCourses()
-                .stream()
-                .filter(mandatoryCourses::contains)
-                .collect(Collectors.toList());
-        checkException(userTakenMandatoryCourses);
-        userTakenMandatoryCourses.forEach(s -> s.setCourseType(CourseType.필수));
-
-        userTakenCoursesList.addAll(userTakenMandatoryCourses);
-    }
-
-    private static void checkException(List<TakenCourse> userTakenMandatoryCourses) {
-        List<TakenCourse> physicalChemistryA = List.of(CH2102, CH3104);
-        List<TakenCourse> physicalChemistryB = List.of(GS2202, CH2104);
-        if (userTakenMandatoryCourses.containsAll(physicalChemistryA)) {
-            userTakenMandatoryCourses.remove(CH3104);
-        }
-        if (userTakenMandatoryCourses.containsAll(physicalChemistryB)) {
-            userTakenMandatoryCourses.remove(CH2102);
-        }
-    }
-
-    private static void addLackOfMandatoryCourses(UserTakenCoursesList inputUserTakenCourseList, Major major, ChemistryMajor chemistryMajor) {
-        List<TakenCourse> mandatoryCourses = chemistryMajor.mandatoryCourses;
-
-        List<TakenCourse> lackOfMandatoryCourses = mandatoryCourses
-                .stream()
-                .filter(inputUserTakenCourseList::notExist)
+        List<CourseInfo> lackOfMandatoryCourses = mandatoryCourses.stream()
+                .filter(userTakenCourses::notExist)
                 .collect(Collectors.toList());
 
-        for (TakenCourse lackOfMandatoryCourse : lackOfMandatoryCourses) {
+        checkException(lackOfMandatoryCourses);
+
+        for (CourseInfo lackOfMandatoryCourse : lackOfMandatoryCourses) {
             major.addMessage(String.format("%s를 수강해야 합니다.", lackOfMandatoryCourse.toString()));
         }
     }
 
-    private static void checkElectiveCourses(UserTakenCoursesList inputUserTakenCourseList, Major major, ChemistryMajor chemistryMajor) {
-        List<TakenCourse> mandatoryCourses = chemistryMajor.mandatoryCourses;
-
-        major.getUserTakenCoursesList().addAll(inputUserTakenCourseList.getTakenCourses()
-                .stream()
-                .filter(s -> !mandatoryCourses.contains(s))
-                .filter(s -> s.getCourseCode().contains(CH))
-                .filter(s -> !s.getCourseCode().contains(RESEARCH_I_CODE) && !s.getCourseCode().contains(RESEARCH_II_CODE))
-                .collect(Collectors.toList()));
+    private void checkException(List<CourseInfo> userTakenMandatoryCourses) {
+        List<CourseInfo> physicalChemistryA = List.of(CH2102, CH3104);
+        List<CourseInfo> physicalChemistryB = List.of(GS2202, CH2104);
+        if (userTakenMandatoryCourses.containsAll(physicalChemistryA)) {
+            userTakenMandatoryCourses.remove(CH3104);
+        }
+        if (userTakenMandatoryCourses.containsAll(physicalChemistryB)) {
+            userTakenMandatoryCourses.remove(GS2202);
+        }
     }
+
+    @Override
+    public List<CourseInfo> getMandatoryCourses() {
+        return this.mandatoryCourses;
+    }
+
+    @Override
+    public boolean contains(Integer studentId) {
+        return this.studentId.contains(studentId);
+    }
+
 }

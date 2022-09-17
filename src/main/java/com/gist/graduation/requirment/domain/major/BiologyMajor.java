@@ -1,7 +1,6 @@
 package com.gist.graduation.requirment.domain.major;
 
-import com.gist.graduation.user.taken_course.CourseType;
-import com.gist.graduation.user.taken_course.TakenCourse;
+import com.gist.graduation.course.domain.CourseInfo;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import lombok.RequiredArgsConstructor;
 
@@ -9,67 +8,41 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.gist.graduation.requirment.domain.constants.MajorMandatoryConstants.Biology.*;
-import static com.gist.graduation.requirment.domain.etc.Research.RESEARCH_II_CODE;
-import static com.gist.graduation.requirment.domain.etc.Research.RESEARCH_I_CODE;
 
 @RequiredArgsConstructor
-public enum BiologyMajor {
+public enum BiologyMajor implements MajorInterface {
 
     FROM2021(List.of(18, 19, 20, 21, 22), List.of(BS2101, BS2102, BS2103, BS2103_1, BS2104, BS2104_1, BS3101, BS3105, BS3112));
 
 
     private final List<Integer> studentId;
-    private final List<TakenCourse> mandatoryCourses;
+    private final List<CourseInfo> mandatoryCourses;
 
 
-    public static void checkverified(UserTakenCoursesList inputUserTakenCourseList, Major major, Integer studentId) {
-        for (BiologyMajor biologyMajor : values()) {
-            if (biologyMajor.studentId.contains(studentId)) {
-                checkMandatoryCourses(inputUserTakenCourseList, major, biologyMajor);
-                addLackOfMandatoryCourses(inputUserTakenCourseList, major, biologyMajor);
-                checkElectiveCourses(inputUserTakenCourseList, major, biologyMajor);
-                return;
-            }
-        }
-        throw new IllegalArgumentException("확인할 수 없는 학번입니다.");
-    }
+    @Override
+    public void addLackOfMandatoryCourses(Major major, List<CourseInfo> mandatoryCourses) {
+        UserTakenCoursesList userTakenCourses = major.getUserTakenCoursesList();
 
-    private static void checkMandatoryCourses(UserTakenCoursesList inputUserTakenCourseList, Major major, BiologyMajor biologyMajor) {
-        List<TakenCourse> mandatoryCourses = biologyMajor.mandatoryCourses;
-        UserTakenCoursesList userTakenCoursesList = major.getUserTakenCoursesList();
-
-        List<TakenCourse> userTakenMandatoryCourses = inputUserTakenCourseList.getTakenCourses()
-                .stream()
-                .filter(mandatoryCourses::contains)
-                .collect(Collectors.toList());
-        userTakenMandatoryCourses.forEach(s -> s.setCourseType(CourseType.필수));
-        userTakenCoursesList.addAll(userTakenMandatoryCourses);
-    }
-
-    private static void addLackOfMandatoryCourses(UserTakenCoursesList inputUserTakenCourseList, Major major, BiologyMajor biologyMajor) {
-        List<TakenCourse> mandatoryCourses = biologyMajor.mandatoryCourses;
-
-        List<TakenCourse> lackOfMandatoryCourses = mandatoryCourses
-                .stream()
-                .filter(inputUserTakenCourseList::notExist)
+        List<CourseInfo> lackOfMandatoryCourses = mandatoryCourses.stream()
+                .filter(userTakenCourses::notExist)
                 .collect(Collectors.toList());
 
         removeDuplication(lackOfMandatoryCourses);
 
-        for (TakenCourse lackOfMandatoryCourse : lackOfMandatoryCourses) {
+        for (CourseInfo lackOfMandatoryCourse : lackOfMandatoryCourses) {
             major.addMessage(String.format("%s를 수강해야 합니다.", lackOfMandatoryCourse.toString()));
         }
     }
 
-    private static void removeDuplication(List<TakenCourse> lackOfMandatoryCourses) {
-        List<TakenCourse> bioChemistry = List.of(BS2104, BS2104_1);
-        List<TakenCourse> bioExperiment = List.of(BS2103, BS2103_1);
+    private static void removeDuplication(List<CourseInfo> lackOfMandatoryCourses) {
+        List<CourseInfo> bioChemistry = List.of(BS2104, BS2104_1);
+        List<CourseInfo> bioExperiment = List.of(BS2103, BS2103_1);
 
         removeEachDuplicate(lackOfMandatoryCourses, bioChemistry, BS2104);
         removeEachDuplicate(lackOfMandatoryCourses, bioExperiment, BS2103);
     }
 
-    private static void removeEachDuplicate(List<TakenCourse> userTakenMandatoryCourses, List<TakenCourse> duplicatedNameCourse, TakenCourse oldCourse) {
+    private static void removeEachDuplicate(List<CourseInfo> userTakenMandatoryCourses, List<CourseInfo> duplicatedNameCourse, CourseInfo oldCourse) {
         if (userTakenMandatoryCourses.stream().anyMatch(duplicatedNameCourse::contains)) {
             if (userTakenMandatoryCourses.containsAll(duplicatedNameCourse)) {
                 userTakenMandatoryCourses.remove(oldCourse);
@@ -79,15 +52,13 @@ public enum BiologyMajor {
         }
     }
 
+    @Override
+    public List<CourseInfo> getMandatoryCourses() {
+        return this.mandatoryCourses;
+    }
 
-    private static void checkElectiveCourses(UserTakenCoursesList inputUserTakenCourseList, Major major, BiologyMajor biologyMajor) {
-        List<TakenCourse> mandatoryCourses = biologyMajor.mandatoryCourses;
-
-        major.getUserTakenCoursesList().addAll(inputUserTakenCourseList.getTakenCourses()
-                .stream()
-                .filter(s -> !mandatoryCourses.contains(s))
-                .filter(s -> s.getCourseCode().contains(BS))
-                .filter(s -> !s.getCourseCode().contains(RESEARCH_I_CODE) && !s.getCourseCode().contains(RESEARCH_II_CODE))
-                .collect(Collectors.toList()));
+    @Override
+    public boolean contains(Integer studentId) {
+        return this.studentId.contains(studentId);
     }
 }

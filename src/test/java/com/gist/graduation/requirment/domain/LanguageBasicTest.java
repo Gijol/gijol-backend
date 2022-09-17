@@ -6,6 +6,7 @@ import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import com.gist.graduation.utils.UserTakenCousrseParser;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
 
@@ -30,15 +31,16 @@ class LanguageBasicTest {
     }
 
     @Test
+    @DisplayName("샘플 성적표 확인")
     void checkRequirementByStudentId() {
         LanguageBasic languageBasic = new LanguageBasic();
         languageBasic.checkRequirementByStudentId(studentId, takenCourses, MajorType.EC);
         System.out.println(languageBasic.getMessages());
-        System.out.println(studentId + " satisfied : " + languageBasic.getSatisfied());
         assertThat(languageBasic.getSatisfied()).isTrue();
     }
 
     @Test
+    @DisplayName("글쓰기 미수강")
     void checkRequirementFailDueToWritingByStudentId() {
         LanguageBasic languageBasic = new LanguageBasic();
         takenCourses.getTakenCourses().remove(new TakenCourse("글쓰기의 기초: 학술적 글쓰기", "GS1512", "3"));

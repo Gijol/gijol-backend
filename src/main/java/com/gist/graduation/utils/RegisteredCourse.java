@@ -1,12 +1,10 @@
 package com.gist.graduation.utils;
 
 import lombok.Getter;
-import lombok.ToString;
 
 import java.util.Objects;
 
 @Getter
-@ToString
 public class RegisteredCourse {
     private final String index;
     private final int year;
@@ -16,8 +14,12 @@ public class RegisteredCourse {
     private final String code;
     private final int credit;
     private String liberalArtType = null;
+    private final String professor;
+    private final String time;
+    private final String room;
+    private final String prerequisite;
 
-    public RegisteredCourse(String index, int year, String semester, String type, String name, String code, int credit) {
+    public RegisteredCourse(String index, int year, String semester, String type, String name, String code, int credit, String professor, String time, String room, String prerequisite) {
         this.index = index;
         this.year = year;
         this.semester = semester;
@@ -25,7 +27,12 @@ public class RegisteredCourse {
         this.name = name;
         this.code = code;
         this.credit = credit;
+        this.professor = professor;
+        this.time = time;
+        this.room = room;
+        this.prerequisite = prerequisite;
     }
+
 
     public void setLiberalArtType(String liberalArtType) {
         this.liberalArtType = liberalArtType;

@@ -27,7 +27,7 @@ public class UserTakenCoursesList {
         return this.takenCourses.contains(takenCourse);
     }
 
-    public boolean contains(CourseInfo courseInfo){
+    public boolean contains(CourseInfo courseInfo) {
         return this.takenCourses.stream()
                 .anyMatch(s -> s.equalsCourseInfo(courseInfo));
     }
@@ -58,10 +58,6 @@ public class UserTakenCoursesList {
         return !this.contains(courseInfo);
     }
 
-    public boolean isEmpty() {
-        return this.takenCourses.isEmpty();
-    }
-
     public Integer sumCreditOfCourses() {
         return takenCourses.stream()
                 .mapToInt(TakenCourse::getCredit)
@@ -71,6 +67,7 @@ public class UserTakenCoursesList {
     public void add(TakenCourse inputTakenCourse) {
         this.takenCourses.add(inputTakenCourse);
     }
+
     public void addAll(List<TakenCourse> inputTakenCourses) {
         this.takenCourses.addAll(inputTakenCourses);
     }

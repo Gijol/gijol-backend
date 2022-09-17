@@ -4,7 +4,6 @@ import com.gist.graduation.course.domain.CourseInfo;
 import com.gist.graduation.utils.RegisteredCourse;
 import lombok.Getter;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -34,12 +33,13 @@ public class TakenCourse {
         this.courseCode = courseCode;
         this.credit = Integer.parseInt(credit);
     }
+
     public boolean equalsCourseInfo(CourseInfo courseInfo) {
         return this.courseCode.equals(courseInfo.getCourseCode());
     }
 
-    public boolean belongsToCourseInfosAny(List<CourseInfo> writingCourseList) {
-        return writingCourseList.stream()
+    public boolean belongsToCourseInfosAny(List<CourseInfo> courseInfos) {
+        return courseInfos.stream()
                 .anyMatch(this::equalsCourseInfo);
     }
 
@@ -61,8 +61,13 @@ public class TakenCourse {
         return String.format("%s(%s)", this.courseName, this.courseCode);
     }
 
-    public void setCourseType(CourseType type){
+    public void setCourseType(CourseType type) {
         this.courseType = type;
+    }
+
+    public TakenCourse setCourseTypeTo(CourseType type) {
+        this.courseType = type;
+        return this;
     }
 
     public static TakenCourse of(RegisteredCourse registeredCourse) {

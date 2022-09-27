@@ -1,9 +1,9 @@
 package com.gist.graduation.utils;
 
+import com.gist.graduation.course.domain.CourseInfo;
 import com.gist.graduation.requirment.domain.constants.HumanitiesExceptionConstants;
 import com.gist.graduation.requirment.domain.constants.HumanitiesExceptionConstants.HUSAmbiguousHumanities;
 import com.gist.graduation.requirment.domain.constants.HumanitiesExceptionConstants.PPEAmbiguousHumanities;
-import com.gist.graduation.user.taken_course.TakenCourse;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,8 +16,8 @@ public class HumanitiesListParser {
     private static final List<Integer> HUS_COURSE_CODE_LIST = List.of(25, 26, 35, 36, 38, 39);
     private static final List<Integer> PPE_COURSE_CODE_LIST = List.of(27, 28, 37, 47);
 
-    public static List<TakenCourse> getHUSCoursesList() {
-        List<TakenCourse> HUSCoursesList = getHumanitiesCoursesList().stream()
+    public static List<CourseInfo> getHUSCoursesList() {
+        List<CourseInfo> HUSCoursesList = getHumanitiesCoursesList().stream()
                 .filter(s -> HUS_COURSE_CODE_LIST.stream().anyMatch(t -> s.getCourseCode().substring(2, 4).equals(t.toString())))
                 .collect(Collectors.toList());
         HUSAmbiguousHumanities.removeNotHUS(HUSCoursesList);
@@ -25,8 +25,8 @@ public class HumanitiesListParser {
         return HUSCoursesList;
     }
 
-    public static List<TakenCourse> getPPECoursesList() {
-        List<TakenCourse> PPECoursesList = getHumanitiesCoursesList().stream()
+    public static List<CourseInfo> getPPECoursesList() {
+        List<CourseInfo> PPECoursesList = getHumanitiesCoursesList().stream()
                 .filter(s -> PPE_COURSE_CODE_LIST.stream().anyMatch(t -> s.getCourseCode().substring(2, 4).equals(t.toString())))
                 .collect(Collectors.toList());
         PPEAmbiguousHumanities.removeNotPPE(PPECoursesList);
@@ -34,7 +34,7 @@ public class HumanitiesListParser {
         return PPECoursesList;
     }
 
-    public static List<TakenCourse> getHumanitiesCoursesList() {
+    public static List<CourseInfo> getHumanitiesCoursesList() {
         List<RegisteredCourse> undergradCourses = CourseListParser.getCourseList();
         List<String> humanitiesCodeList = new ArrayList<>();
         addHumanitiesCode(humanitiesCodeList);
@@ -45,7 +45,7 @@ public class HumanitiesListParser {
             addRegisteredCoursesByCode(undergradCourses, conditionCourse, code);
         }
 
-        List<TakenCourse> conditionCourseList = TakenCourse.setToListOf(conditionCourse);
+        List<CourseInfo> conditionCourseList = CourseInfo.from(conditionCourse);
         HumanitiesExceptionConstants.NotHumanities.removeHumanitiesException(conditionCourseList);
 
         return conditionCourseList;

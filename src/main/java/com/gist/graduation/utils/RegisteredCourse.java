@@ -1,5 +1,6 @@
 package com.gist.graduation.utils;
 
+import com.gist.graduation.course.domain.CourseInfo;
 import lombok.Getter;
 
 import java.util.Objects;
@@ -52,4 +53,7 @@ public class RegisteredCourse {
     }
 
 
+    public CourseInfo toCourseInfo() {
+        return new CourseInfo(name, code, credit);
+    }
 }

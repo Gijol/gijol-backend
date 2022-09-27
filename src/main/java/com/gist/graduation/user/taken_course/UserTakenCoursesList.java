@@ -5,6 +5,7 @@ import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ToString
 public class UserTakenCoursesList {
@@ -72,5 +73,10 @@ public class UserTakenCoursesList {
         this.takenCourses.addAll(inputTakenCourses);
     }
 
+    public List<TakenCourse> findCoursesByType(CourseType courseType) {
+        return this.takenCourses.stream()
+                .filter(s -> s.getCourseType().equals(courseType))
+                .collect(Collectors.toList());
+    }
 
 }

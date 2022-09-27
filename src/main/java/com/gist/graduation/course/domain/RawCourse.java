@@ -58,7 +58,7 @@ public class RawCourse {
     }
 
 
-    public static List<RawCourse> listOf(List<RegisteredCourse> courses) {
+    public static List<RawCourse> from(List<RegisteredCourse> courses) {
         return courses.stream()
                 .map(RawCourse::of)
                 .collect(Collectors.toList());

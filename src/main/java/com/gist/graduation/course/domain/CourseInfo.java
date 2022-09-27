@@ -1,11 +1,15 @@
 package com.gist.graduation.course.domain;
 
+import com.gist.graduation.utils.RegisteredCourse;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -41,5 +45,11 @@ public class CourseInfo {
     @Override
     public String toString() {
         return String.format("%s(%s)", this.courseName, this.courseCode);
+    }
+
+    public static List<CourseInfo> from(Set<RegisteredCourse> registeredCourses) {
+        return registeredCourses.stream()
+                .map(RegisteredCourse::toCourseInfo)
+                .collect(Collectors.toList());
     }
 }

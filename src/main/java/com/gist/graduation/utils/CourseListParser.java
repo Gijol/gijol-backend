@@ -1,9 +1,9 @@
 package com.gist.graduation.utils;
 
+import com.gist.graduation.course.domain.CourseInfo;
 import com.gist.graduation.course.domain.RawCourse;
 import com.gist.graduation.exception.ApplicationException;
 import com.gist.graduation.requirment.domain.constants.HumanitiesExceptionConstants;
-import com.gist.graduation.user.taken_course.TakenCourse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -37,7 +37,7 @@ public class CourseListParser {
 
     public static List<RawCourse> parseToRawCourse(File file) {
         Sheet sheet = convertFileToSheet(file);
-        return RawCourse.listOf(parseRegistrationCourse(sheet));
+        return RawCourse.from(parseRegistrationCourse(sheet));
     }
 
     public static List<RegisteredCourse> getCourseList(File file) {
@@ -51,13 +51,13 @@ public class CourseListParser {
         return getCourseList(file);
     }
 
-    public static List<TakenCourse> getHumanitiesWithoutGSC() {
-        List<TakenCourse> humanitiesCoursesList = getHumanitiesCoursesList();
+    public static List<CourseInfo> getHumanitiesWithoutGSC() {
+        List<CourseInfo> humanitiesCoursesList = getHumanitiesCoursesList();
         HumanitiesExceptionConstants.GSC.removeGSCCourses(humanitiesCoursesList);
         return humanitiesCoursesList;
     }
 
-    public static List<TakenCourse> getHumanitiesCoursesList() {
+    public static List<CourseInfo> getHumanitiesCoursesList() {
         FileResourceUtils fileResourceUtils = new FileResourceUtils();
         File file = fileResourceUtils.convertPathResourceToCourseListFileAtServer();
         List<RegisteredCourse> undergradCourses = parseCourseExcelFileToRegistrationCourseWithoutDuplication(file);
@@ -70,7 +70,7 @@ public class CourseListParser {
             addRegisteredCoursesByCode(undergradCourses, conditionCourse, code);
         }
 
-        List<TakenCourse> conditionCourseList = TakenCourse.setToListOf(conditionCourse);
+        List<CourseInfo> conditionCourseList = CourseInfo.from(conditionCourse);
         HumanitiesExceptionConstants.NotHumanities.removeHumanitiesException(conditionCourseList);
 
         return conditionCourseList;
@@ -85,7 +85,7 @@ public class CourseListParser {
     private static void addHumanitiesCode(List<String> humanitiesCodeList) {
         for (int i = 2; i <= 4; i++) {
             for (int j = 5; j <= 9; j++) {
-                Integer num = 10 * i + j;
+                int num = 10 * i + j;
                 humanitiesCodeList.add(("GS" + num));
             }
         }

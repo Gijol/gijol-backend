@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @ToString
-public class RequirementStatusBaseEntity {
+public abstract class RequirementStatusBaseEntity {
 
     private final UserTakenCoursesList userTakenCoursesList;
 
@@ -31,9 +31,7 @@ public class RequirementStatusBaseEntity {
         this.messages = new ArrayList<>();
     }
 
-    public void checkRequirementByStudentId(Integer studentId, UserTakenCoursesList inputUserTakenCoursesList, MajorType majorType) {
-
-    }
+    public abstract void checkRequirementByStudentId(Integer studentId, UserTakenCoursesList inputUserTakenCoursesList, MajorType majorType);
 
     public void addCredit(Integer credit) {
         this.totalCredits += credit;

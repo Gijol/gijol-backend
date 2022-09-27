@@ -2,6 +2,7 @@ package com.gist.graduation.requirment.domain.other;
 
 import com.gist.graduation.requirment.domain.GraduationRequirementStatus;
 import com.gist.graduation.requirment.domain.RequirementStatusBaseEntity;
+import com.gist.graduation.requirment.domain.major.MajorType;
 import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 
@@ -29,4 +30,8 @@ public class OtherUncheckedClass extends RequirementStatusBaseEntity {
         addCredit(this.getUserTakenCoursesList().sumCreditOfCourses());
     }
 
+    @Override
+    public void checkRequirementByStudentId(Integer studentId, UserTakenCoursesList inputUserTakenCoursesList, MajorType majorType) {
+        throw new UnsupportedOperationException("지원하지 않는 메소드입니다.");
+    }
 }

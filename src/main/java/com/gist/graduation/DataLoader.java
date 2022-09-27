@@ -1,5 +1,6 @@
 package com.gist.graduation;
 
+import com.gist.graduation.course.application.CourseService;
 import com.gist.graduation.course.application.RawCourseService;
 import com.gist.graduation.utils.FileResourceUtils;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +18,12 @@ public class DataLoader implements CommandLineRunner {
     private final FileResourceUtils fileResourceUtils;
     private final RawCourseService rawCourseService;
 
+    private final CourseService courseService;
+
     @Override
     public void run(String... args) throws Exception {
         File file = fileResourceUtils.convertPathResourceToCourseListFileAtServer();
+        courseService.createCourses(file);
         rawCourseService.saveRawCourses(file);
     }
 }

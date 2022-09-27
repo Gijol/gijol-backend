@@ -70,7 +70,6 @@ public class ScienceBasicTest {
         userTakenCoursesList.addAll(courseInfoToTakenCourse(List.of(CALCULUS.get(0), CORE_MATH.get(3), GS1101, GS1201)));
         scienceBasic.checkRequirementByStudentId(20, userTakenCoursesList, MajorType.MC);
         System.out.println(scienceBasic);
-
     }
 
 }

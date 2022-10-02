@@ -21,7 +21,6 @@ import static com.gist.graduation.requirment.domain.constants.MajorMandatoryCons
 public class CourseTagPolicy {
     private static final List<String> MAJOR_COURSE_CODE = List.of(EC, MA, CH, PS, EV, BS, MC);
 
-
     public void tagAllCourses(List<Course> courses) {
         tagHUS(courses);
         tagPPE(courses);

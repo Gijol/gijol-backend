@@ -3,6 +3,7 @@ package com.gist.graduation.course.application;
 import com.gist.graduation.course.domain.Course;
 import com.gist.graduation.course.domain.CourseRepository;
 import com.gist.graduation.course.domain.RawCourse;
+import com.gist.graduation.course.domain.dto.CourseResponse;
 import com.gist.graduation.utils.CourseListParser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,8 @@ public class CourseService {
     }
 
     @Transactional(readOnly = true)
-    public List<Course> findAll() {
-        return courseRepository.findAll();
+    public List<CourseResponse> findAll() {
+        List<Course> courses = courseRepository.findAll();
+        return CourseResponse.listOf(courses);
     }
 }

@@ -1,4 +1,4 @@
-package com.gist.graduation.course.domain;
+package com.gist.graduation.course.domain.course;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,8 +1,8 @@
 package com.gist.graduation.course.domain.dto;
 
-import com.gist.graduation.course.domain.Course;
-import com.gist.graduation.course.domain.CourseTag;
-import com.gist.graduation.course.domain.CourseTagType;
+import com.gist.graduation.course.domain.course.Course;
+import com.gist.graduation.course.domain.tag.CourseTag;
+import com.gist.graduation.course.domain.tag.CourseTagType;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

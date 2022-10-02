@@ -1,5 +1,9 @@
-package com.gist.graduation.course.domain;
+package com.gist.graduation.course.domain.course;
 
+import com.gist.graduation.course.domain.CourseInfo;
+import com.gist.graduation.course.domain.rawcourse.RawCourse;
+import com.gist.graduation.course.domain.tag.CourseTag;
+import com.gist.graduation.course.domain.tag.CourseTags;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

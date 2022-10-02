@@ -1,7 +1,7 @@
 package com.gist.graduation.utils;
 
 import com.gist.graduation.course.domain.CourseInfo;
-import com.gist.graduation.course.domain.RawCourse;
+import com.gist.graduation.course.domain.rawcourse.RawCourse;
 import com.gist.graduation.exception.ApplicationException;
 import com.gist.graduation.requirment.domain.constants.HumanitiesExceptionConstants;
 import lombok.extern.slf4j.Slf4j;

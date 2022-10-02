@@ -1,9 +1,9 @@
 package com.gist.graduation.course.application;
 
-import com.gist.graduation.course.domain.Course;
 import com.gist.graduation.course.domain.CourseInfo;
-import com.gist.graduation.course.domain.CourseTag;
-import com.gist.graduation.course.domain.CourseTagType;
+import com.gist.graduation.course.domain.course.Course;
+import com.gist.graduation.course.domain.tag.CourseTag;
+import com.gist.graduation.course.domain.tag.CourseTagType;
 import com.gist.graduation.utils.HumanitiesListParser;
 import org.springframework.stereotype.Component;
 

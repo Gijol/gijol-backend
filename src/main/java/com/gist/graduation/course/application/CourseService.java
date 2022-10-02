@@ -1,9 +1,9 @@
 package com.gist.graduation.course.application;
 
-import com.gist.graduation.course.domain.Course;
-import com.gist.graduation.course.domain.CourseRepository;
-import com.gist.graduation.course.domain.RawCourse;
+import com.gist.graduation.course.domain.course.Course;
+import com.gist.graduation.course.domain.course.CourseRepository;
 import com.gist.graduation.course.domain.dto.CourseResponse;
+import com.gist.graduation.course.domain.rawcourse.RawCourse;
 import com.gist.graduation.utils.CourseListParser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

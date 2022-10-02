@@ -2,8 +2,6 @@ package com.gist.graduation.requirment.domain.constants;
 
 import com.gist.graduation.course.domain.CourseInfo;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ScienceBasicConstants {

@@ -1,4 +1,4 @@
-package com.gist.graduation.exception;
+package com.gist.graduation.config.exception;
 
 import org.springframework.http.HttpStatus;
 

@@ -1,4 +1,4 @@
-package com.gist.graduation.course.domain;
+package com.gist.graduation.course.domain.course;
 
 import lombok.AccessLevel;
 import lombok.Getter;

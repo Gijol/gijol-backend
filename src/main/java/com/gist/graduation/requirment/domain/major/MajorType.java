@@ -2,7 +2,7 @@ package com.gist.graduation.requirment.domain.major;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.gist.graduation.course.domain.CourseInfo;
-import com.gist.graduation.exception.ApplicationException;
+import com.gist.graduation.config.exception.ApplicationException;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import lombok.RequiredArgsConstructor;
 

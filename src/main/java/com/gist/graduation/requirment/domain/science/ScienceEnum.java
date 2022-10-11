@@ -1,7 +1,7 @@
 package com.gist.graduation.requirment.domain.science;
 
 import com.gist.graduation.course.domain.CourseInfo;
-import com.gist.graduation.exception.ApplicationException;
+import com.gist.graduation.config.exception.ApplicationException;
 import com.gist.graduation.requirment.domain.constants.ScienceBasicConstants;
 import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;

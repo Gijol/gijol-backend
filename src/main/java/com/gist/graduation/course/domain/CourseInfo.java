@@ -47,6 +47,11 @@ public class CourseInfo {
         return String.format("%s(%s)", this.courseName, this.courseCode);
     }
 
+    public boolean belongToCoursesCode(List<String> coursesCode) {
+        return coursesCode.stream()
+                .anyMatch(s -> this.courseCode.contains(s));
+    }
+
     public static List<CourseInfo> from(Set<RegisteredCourse> registeredCourses) {
         return registeredCourses.stream()
                 .map(RegisteredCourse::toCourseInfo)

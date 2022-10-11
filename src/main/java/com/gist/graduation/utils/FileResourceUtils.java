@@ -1,6 +1,6 @@
 package com.gist.graduation.utils;
 
-import com.gist.graduation.exception.ApplicationException;
+import com.gist.graduation.config.exception.ApplicationException;
 import org.apache.commons.io.FileUtils;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;

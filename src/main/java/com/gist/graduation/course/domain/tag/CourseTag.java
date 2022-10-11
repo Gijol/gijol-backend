@@ -1,5 +1,7 @@
-package com.gist.graduation.course.domain;
+package com.gist.graduation.course.domain.tag;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.gist.graduation.course.domain.course.Course;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +20,7 @@ public class CourseTag {
     @Enumerated(EnumType.STRING)
     private CourseTagType courseTagType;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private Course course;
 

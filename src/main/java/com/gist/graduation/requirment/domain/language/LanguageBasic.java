@@ -1,9 +1,7 @@
 package com.gist.graduation.requirment.domain.language;
 
-import com.gist.graduation.course.domain.CourseInfo;
 import com.gist.graduation.requirment.domain.RequirementStatusBaseEntity;
 import com.gist.graduation.requirment.domain.major.MajorType;
-import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 
 import java.util.List;

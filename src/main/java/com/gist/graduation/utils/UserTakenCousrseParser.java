@@ -1,7 +1,6 @@
 package com.gist.graduation.utils;
 
-import com.gist.graduation.exception.ApplicationException;
-import com.gist.graduation.requirment.domain.etc.OthersEtc;
+import com.gist.graduation.config.exception.ApplicationException;
 import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import com.gist.graduation.utils.filter.Duplication;
@@ -18,8 +17,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.gist.graduation.requirment.domain.etc.OthersEtc.COLLOQUIUM;
 
 public class UserTakenCousrseParser {
 

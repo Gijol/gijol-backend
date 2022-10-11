@@ -1,9 +1,7 @@
-package com.gist.graduation.course.domain;
+package com.gist.graduation.course.domain.tag;
 
 
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
@@ -12,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
 public class CourseTags {
 
@@ -21,6 +18,10 @@ public class CourseTags {
 
     public CourseTags(List<CourseTag> courseTags) {
         this.courseTags = courseTags;
+    }
+
+    public CourseTags() {
+        this.courseTags = new ArrayList<>();
     }
 
     public void addCourseTag(CourseTag courseTag) {

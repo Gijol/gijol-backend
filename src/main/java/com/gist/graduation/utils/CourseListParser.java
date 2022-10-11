@@ -1,8 +1,8 @@
 package com.gist.graduation.utils;
 
 import com.gist.graduation.course.domain.CourseInfo;
-import com.gist.graduation.course.domain.RawCourse;
-import com.gist.graduation.exception.ApplicationException;
+import com.gist.graduation.course.domain.rawcourse.RawCourse;
+import com.gist.graduation.config.exception.ApplicationException;
 import com.gist.graduation.requirment.domain.constants.HumanitiesExceptionConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -128,8 +128,8 @@ public class CourseListParser {
         String indexString = row.getCell(INDEX).getStringCellValue();
         String yearString = row.getCell(YEAR_CELL_NUMBER).getStringCellValue();
         String semesterString = row.getCell(SEMESTER_CELL_NUMBER).getStringCellValue();
-        String courseCode = row.getCell(CODE_CELL_NUMBER).getStringCellValue().split("-")[0];
-        String courseName = row.getCell(COURSE_NAME_CELL_NUMBER).getStringCellValue();
+        String courseCode = row.getCell(CODE_CELL_NUMBER).getStringCellValue().split("-")[0].trim();
+        String courseName = row.getCell(COURSE_NAME_CELL_NUMBER).getStringCellValue().trim();
         String courseType = row.getCell(COURSE_TYPE_CELL_NUMBER).getStringCellValue();
         String professor = row.getCell(PROFESSOR_NUMBER).getStringCellValue();
         String creditString = row.getCell(CREDIT_CELL_NUMBER).getStringCellValue();

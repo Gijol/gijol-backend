@@ -4,10 +4,13 @@ import com.gist.graduation.course.domain.CourseInfo;
 import com.gist.graduation.course.domain.course.Course;
 import com.gist.graduation.course.domain.tag.CourseTag;
 import com.gist.graduation.course.domain.tag.CourseTagType;
+import com.gist.graduation.requirment.domain.minor.MinorType;
 import com.gist.graduation.utils.HumanitiesListParser;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.gist.graduation.requirment.domain.constants.MajorMandatoryConstants.Biology.BS;
 import static com.gist.graduation.requirment.domain.constants.MajorMandatoryConstants.Chemistry.CH;
@@ -25,6 +28,7 @@ public class CourseTagPolicy {
         tagHUS(courses);
         tagPPE(courses);
         tagMajor(courses);
+        tagMinor(courses);
     }
 
 
@@ -46,6 +50,13 @@ public class CourseTagPolicy {
         courses.stream()
                 .filter(s -> s.getCourseInfo().belongToCoursesCode(MAJOR_COURSE_CODE))
                 .forEach(s -> s.addTag(new CourseTag(CourseTagType.전공, s)));
+    }
+
+    private void tagMinor(List<Course> courses) {
+        List<String> minor = Arrays.stream(MinorType.values()).map(Enum::name).collect(Collectors.toList());
+        courses.stream()
+                .filter(s -> s.getCourseInfo().belongToCoursesCode(minor))
+                .forEach(s -> s.addTag(new CourseTag(CourseTagType.부전공, s)));
     }
 
 }

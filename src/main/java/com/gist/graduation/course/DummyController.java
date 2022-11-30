@@ -6,6 +6,7 @@ import com.gist.graduation.course.domain.dto.CourseResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -21,6 +22,11 @@ public class DummyController {
     @GetMapping("/courses/dummy")
     public List<CourseResponse> getCourses() {
         return courseService.findAll();
+    }
+
+    @GetMapping("/courses/minor")
+    public List<CourseResponse> getCourses(@RequestParam(required = false) String minorType) {
+        return courseService.findByMinor(minorType);
     }
 
 }

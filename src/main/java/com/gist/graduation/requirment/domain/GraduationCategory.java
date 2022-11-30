@@ -4,6 +4,7 @@ import com.gist.graduation.requirment.domain.etc.EtcMandatory;
 import com.gist.graduation.requirment.domain.humanities.Humanities;
 import com.gist.graduation.requirment.domain.language.LanguageBasic;
 import com.gist.graduation.requirment.domain.major.Major;
+import com.gist.graduation.requirment.domain.minor.Minor;
 import com.gist.graduation.requirment.domain.other.OtherUncheckedClass;
 import com.gist.graduation.requirment.domain.science.ScienceBasic;
 import lombok.Getter;
@@ -19,6 +20,7 @@ public class GraduationCategory {
     private final Humanities humanities;
     private final EtcMandatory etcMandatory;
     private final OtherUncheckedClass otherUncheckedClass;
+    private final Minor minor;
 
     public GraduationCategory() {
         this.languageBasic = new LanguageBasic();
@@ -27,6 +29,7 @@ public class GraduationCategory {
         this.humanities = new Humanities();
         this.etcMandatory = new EtcMandatory();
         this.otherUncheckedClass = new OtherUncheckedClass();
+        this.minor = new Minor();
     }
 
     public boolean checkSatisfied(GraduationRequirementStatus graduationRequirementStatus) {

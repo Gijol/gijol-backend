@@ -38,7 +38,7 @@ public class GraduationRequirementStatusService {
         log.info(userTakenCoursesList.toString());
         Integer studentId = UserTakenCousrseParser.getStudentId(file);
         GraduationRequirementStatus graduationRequirementStatus = new GraduationRequirementStatus();
-        graduationRequirementStatus.checkGraduationRequirements(studentId, userTakenCoursesList, request.getMajorType());
+        graduationRequirementStatus.checkGraduationRequirements(studentId, userTakenCoursesList, request.getMajorType(), request.getMinorType());
         log.info(graduationRequirementStatus.toString());
         return graduationRequirementStatus;
     }

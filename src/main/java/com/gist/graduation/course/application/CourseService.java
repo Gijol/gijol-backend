@@ -4,6 +4,8 @@ import com.gist.graduation.course.domain.course.Course;
 import com.gist.graduation.course.domain.course.CourseRepository;
 import com.gist.graduation.course.domain.dto.CourseResponse;
 import com.gist.graduation.course.domain.rawcourse.RawCourse;
+import com.gist.graduation.requirment.domain.minor.Minor;
+import com.gist.graduation.requirment.domain.minor.MinorType;
 import com.gist.graduation.utils.CourseListParser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,5 +35,12 @@ public class CourseService {
     public List<CourseResponse> findAll() {
         List<Course> courses = courseRepository.findAll();
         return CourseResponse.listOf(courses);
+    }
+
+    public List<CourseResponse> findByMinor(String minorType){
+        List<Course> courses = courseRepository.findAll();
+        Set<Course> filtered = courses.stream().filter(s -> s.getCourseInfo().belongToCoursesCode(List.of(minorType))).collect(Collectors.toSet());
+        return CourseResponse.listOf(filtered);
+
     }
 }

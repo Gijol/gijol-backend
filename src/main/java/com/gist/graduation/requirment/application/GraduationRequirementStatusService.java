@@ -2,6 +2,7 @@ package com.gist.graduation.requirment.application;
 
 import com.gist.graduation.requirment.domain.GraduationRequirementStatus;
 import com.gist.graduation.requirment.domain.major.MajorType;
+import com.gist.graduation.requirment.dto.DemoGradeToCheckRequest;
 import com.gist.graduation.requirment.dto.GradeToCheckRequest;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import com.gist.graduation.utils.UserTakenCousrseParser;
@@ -27,6 +28,17 @@ public class GraduationRequirementStatusService {
         Integer studentId = UserTakenCousrseParser.getStudentId(file);
         GraduationRequirementStatus graduationRequirementStatus = new GraduationRequirementStatus();
         graduationRequirementStatus.checkGraduationRequirements(studentId, userTakenCoursesList, request.getMajorType());
+        log.info(graduationRequirementStatus.toString());
+        return graduationRequirementStatus;
+    }
+
+    public GraduationRequirementStatus checkGraduationCondition(DemoGradeToCheckRequest request) throws IOException {
+        File file = multiPartToFile(request.getMultipartFile());
+        UserTakenCoursesList userTakenCoursesList = UserTakenCousrseParser.parseUserTakenCourse(file);
+        log.info(userTakenCoursesList.toString());
+        Integer studentId = UserTakenCousrseParser.getStudentId(file);
+        GraduationRequirementStatus graduationRequirementStatus = new GraduationRequirementStatus();
+        graduationRequirementStatus.checkGraduationRequirements(studentId, userTakenCoursesList, request.getMajorType(), request.getMinorType());
         log.info(graduationRequirementStatus.toString());
         return graduationRequirementStatus;
     }

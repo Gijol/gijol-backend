@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,7 +46,7 @@ public class CourseResponse {
         this.courseTags.addAll(courseTags);
     }
 
-    public static List<CourseResponse> listOf(List<Course> courses) {
+    public static List<CourseResponse> listOf(Collection<Course> courses) {
         return courses.stream()
                 .map(CourseResponse::of)
                 .collect(Collectors.toList());

@@ -52,6 +52,20 @@ public class CourseInfo {
                 .anyMatch(s -> this.courseCode.contains(s));
     }
 
+    public boolean isMinor(String code){
+        if (this.courseCode.contains("GS")){
+            return this.courseCode.substring(2).equals(code.substring(2));
+        }
+        return false;
+    }
+
+    public boolean isMinor(List<String> code){
+        if (this.courseCode.contains("GS")){
+            return code.stream().anyMatch(s -> s.substring(2).equals(this.courseCode.substring(2)));
+        }
+        return false;
+    }
+
     public static List<CourseInfo> from(Set<RegisteredCourse> registeredCourses) {
         return registeredCourses.stream()
                 .map(RegisteredCourse::toCourseInfo)

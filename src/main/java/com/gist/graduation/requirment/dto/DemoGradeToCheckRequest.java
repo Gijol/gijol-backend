@@ -6,7 +6,8 @@ import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 @Data
-public class GradeToCheckRequest {
+public class DemoGradeToCheckRequest {
     private MajorType majorType;
+    private MinorType minorType;
     private MultipartFile multipartFile;
 }

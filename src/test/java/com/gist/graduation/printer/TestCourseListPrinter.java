@@ -84,10 +84,10 @@ public class TestCourseListPrinter {
     }
 
     public void printCoursePretty(RegisteredCourse registeredCourse) {
-        System.out.print("new TakenCourse(");
+        System.out.print("new CourseInfo(");
         System.out.printf("\"%s\", ", registeredCourse.getName());
         System.out.printf("\"%s\", ", registeredCourse.getCode());
-        System.out.printf("\"%s\")\n", registeredCourse.getCredit());
+        System.out.printf("\"%s\"), \n", registeredCourse.getCredit());
     }
 
     public void printCourseCollectionPretty(Collection<RegisteredCourse> registeredCourse) {

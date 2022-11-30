@@ -55,6 +55,26 @@ public class CourseListPrinterTest {
     }
 
     @Test
+    void mathMinorPrinter() {
+        testCourseListPrinter.printByCode(courseList, "MM");
+    }
+
+    @Test
+    void EconomicMinorPrinter() {
+        testCourseListPrinter.printByCode(courseList, "EB");
+    }
+
+    @Test
+    void MBMinorPrinter() {
+        testCourseListPrinter.printByCode(courseList, "MB");
+    }
+
+    @Test
+    void LHMinorPrinter() {
+        testCourseListPrinter.printByCode(courseList, "LH");
+    }
+
+    @Test
     void softwareBasicPrinter() {
         testCourseListPrinter.printClassByCreditAndName(courseList, "소프트웨어", 2);
         testCourseListPrinter.printClassByCreditAndName(courseList, "물리화학", 3);

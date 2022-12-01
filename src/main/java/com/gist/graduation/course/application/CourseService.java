@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -34,11 +36,15 @@ public class CourseService {
     @Transactional(readOnly = true)
     public List<CourseResponse> findAll() {
         List<Course> courses = courseRepository.findAll();
+        Collections.shuffle(courses);
         return CourseResponse.listOf(courses);
     }
 
     public List<CourseResponse> findByMinor(String minorType){
         List<Course> courses = courseRepository.findAll();
+        if (minorType.equals("NONE")) {
+            return CourseResponse.listOf(courses);
+        }
         Set<Course> filtered = courses.stream().filter(s -> s.getCourseInfo().belongToCoursesCode(List.of(minorType))).collect(Collectors.toSet());
         return CourseResponse.listOf(filtered);
 

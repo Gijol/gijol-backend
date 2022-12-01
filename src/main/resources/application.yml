@@ -30,7 +30,7 @@ swagger:
 
 
 request:
-  origins: http://localhost:3000,http://localhost:3001,https://dev.gijol.im
+  origins: http://localhost:3000,http://localhost:3001,https://dev.gijol.im, https://gijol-renewal-frontend-2df075364-gijol.vercel.app
 
 
 ---

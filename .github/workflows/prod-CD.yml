@@ -1,4 +1,4 @@
-name: CD
+name: prod-CD
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
         with:
           username: ubuntu
           host: ${{ secrets.PROD_HOST }}
-          key: ${{ secrets.PRIVATE_KEY }}
+          key: ${{ secrets.AWS_PRIVATE_KEY }}
           source: "./build/libs/*.jar"
           target: "/home/ubuntu/deploy"
           strip_components: 2
@@ -30,7 +30,7 @@ jobs:
         with:
           username: ubuntu
           host: ${{ secrets.PROD_HOST }}
-          key: ${{ secrets.PRIVATE_KEY }}
+          key: ${{ secrets.AWS_PRIVATE_KEY }}
           source: "deploy/prod-deploy.sh"
           target: "/home/ubuntu/deploy"
           strip_components: 1
@@ -40,7 +40,7 @@ jobs:
         with:
           username: ubuntu
           host: ${{ secrets.PROD_HOST }}
-          key: ${{ secrets.PRIVATE_KEY }}
+          key: ${{ secrets.AWS_PRIVATE_KEY }}
           script_stop: true
           script: |
             cd /home/ubuntu/deploy

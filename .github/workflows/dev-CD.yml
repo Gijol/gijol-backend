@@ -20,7 +20,7 @@ jobs:
         with:
           username: ubuntu
           host: ${{ secrets.DEV_HOST }}
-          key: ${{ secrets.PRIVATE_KEY }}
+          key: ${{ secrets.AWS_PRIVATE_KEY }}
           source: "./build/libs/*.jar"
           target: "/home/ubuntu/deploy"
           strip_components: 2

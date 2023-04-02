@@ -37,7 +37,7 @@ public abstract class RequirementStatusBaseEntity {
         this.totalCredits += credit;
     }
 
-    public void setMinConditionCredits(Integer minConditionCredits){
+    public void setMinConditionCredits(Integer minConditionCredits) {
         this.minConditionCredits = minConditionCredits;
     }
 

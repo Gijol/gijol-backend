@@ -29,15 +29,16 @@ public class User extends BaseEntity {
     private String studentId;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    private final List<UserTakenCourse> userTakenCourses = new ArrayList<>();
+    private List<UserTakenCourse> userTakenCourses = new ArrayList<>();
 
     // graduationStatus
 
     @Builder
-    public User(String name, String email, String studentId) {
+    public User(String name, String email, String studentId, List<UserTakenCourse> userTakenCourses) {
         this.name = name;
         this.email = email;
         this.studentId = studentId;
+        this.userTakenCourses = userTakenCourses;
     }
 
 }

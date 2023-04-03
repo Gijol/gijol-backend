@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @Getter
 public class GoogleAuthRequest {
 
-    private String name;
-    private String email;
-    private String idToken;
+    protected String name;
+    protected String email;
+    protected String idToken;
 
     public GoogleAuthRequest(String name, String email, String idToken) {
         this.name = name;

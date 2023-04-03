@@ -2,7 +2,8 @@
 package com.gist.graduation.auth.argumentresolver;
 
 import com.gist.graduation.auth.annotation.AuthenticationPrincipal;
-import com.gist.graduation.auth.application.AuthService;
+import com.gist.graduation.auth.application.GoogleAuthService;
+import com.gist.graduation.auth.application.jwt.JWTAuthorizationHeaderParser;
 import com.gist.graduation.config.exception.ApplicationException;
 import com.gist.graduation.user.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver {
 
     private static final String AUTHORIZATION_HEADER = "Authorization";
-    private final AuthService authService;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -30,13 +30,13 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
-        HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
-        String token = request.getHeader(AUTHORIZATION_HEADER);
+        final HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
+        final String token = request.getHeader(AUTHORIZATION_HEADER);
         if (token.isBlank()) {
             throw new ApplicationException("No token in Header");
         }
 
-
-        return authService.findUserByNameAndEmail();
+        String parsedToken = JWTAuthorizationHeaderParser.parse(token);
+        return null;
     }
 }

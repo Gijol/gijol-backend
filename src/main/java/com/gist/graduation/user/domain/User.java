@@ -25,7 +25,7 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String email;
 
-    @Column(unique = true, nullable = false)
+    @Column(name = "student_id", unique = true, nullable = false)
     private String studentId;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)

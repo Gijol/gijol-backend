@@ -1,9 +1,10 @@
 package com.gist.graduation.auth.presentation;
 
-import com.gist.graduation.auth.application.GoogleAuthService;
 import com.gist.graduation.auth.application.AuthType;
+import com.gist.graduation.auth.application.GoogleAuthService;
 import com.gist.graduation.auth.dto.GoogleAuthRequest;
 import com.gist.graduation.auth.dto.GoogleSignUpRequest;
+import com.gist.graduation.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,7 @@ public class AuthController {
     private final GoogleAuthService googleAuthService;
 
     @PostMapping("/auth/google")
-    public ResponseEntity<?> singUpGoogleAuth(@RequestBody GoogleAuthRequest request){
+    public ResponseEntity<?> singUpGoogleAuth(@RequestBody GoogleAuthRequest request) {
 
         AuthType googleLoginType = googleAuthService.findGoogleLoginType(request);
 
@@ -29,14 +30,14 @@ public class AuthController {
     }
 
     @PostMapping("/auth/google/sign-in")
-    public ResponseEntity<?> signInGoogleAuth(@RequestBody GoogleAuthRequest request){
-        AuthType googleLoginType = googleAuthService.findGoogleLoginType(request);
+    public ResponseEntity<?> signInGoogleAuth(@RequestBody GoogleAuthRequest request) {
+        User user = googleAuthService.loginGoogleAuth(request);
 
-        return ResponseEntity.ok(googleLoginType);
+        return ResponseEntity.ok(user);
     }
 
     @PostMapping("/auth/google/sign-up")
-    public ResponseEntity<?> signUpGoogleAuth(@RequestBody GoogleSignUpRequest request){
+    public ResponseEntity<?> signUpGoogleAuth(@RequestBody GoogleSignUpRequest request) {
         Long id = googleAuthService.signUp(request);
         return ResponseEntity.created(URI.create(id.toString())).build();
     }

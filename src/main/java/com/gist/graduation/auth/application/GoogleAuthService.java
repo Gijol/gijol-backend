@@ -65,6 +65,6 @@ public class GoogleAuthService {
     }
 
     private boolean existUserByNameAndEmail(String name, String email) {
-        return userRepository.existUserByNameAndEmail(name, email);
+        return userRepository.existsUserByNameAndEmail(name, email);
     }
 }

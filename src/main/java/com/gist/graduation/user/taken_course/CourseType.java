@@ -14,5 +14,4 @@ public enum CourseType {
         return null;
     }
 
-
 }

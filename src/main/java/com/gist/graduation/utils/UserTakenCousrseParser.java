@@ -90,11 +90,13 @@ public class UserTakenCousrseParser {
         TakenCourse takenCourse = new TakenCourse(Integer.parseInt(year), semester, row.getCell(TYPE_CELL_NUM).getStringCellValue(), courseName, courseCode, credit);
 
 
+        // 재수강 처리 로직
         if (courseArray.contains(takenCourse) && Letter.isLetter(grade) && !Duplication.canDuplicate(courseCode)) {
             courseArray.remove(takenCourse);
             courseArray.add(takenCourse);
             return;
         }
+
 
         if (!FailGrade.isFail(grade)) {
             courseArray.add(takenCourse);

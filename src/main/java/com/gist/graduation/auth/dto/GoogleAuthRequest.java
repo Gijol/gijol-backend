@@ -10,11 +10,11 @@ public class GoogleAuthRequest {
 
     private String name;
     private String email;
-    private String expires;
+    private String idToken;
 
-    public GoogleAuthRequest(String name, String email, String expires) {
+    public GoogleAuthRequest(String name, String email, String idToken) {
         this.name = name;
         this.email = email;
-        this.expires = expires;
+        this.idToken = idToken;
     }
 }

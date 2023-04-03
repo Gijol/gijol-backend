@@ -7,8 +7,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
-@Table(name = "users")
+@Table(name = "users", indexes = {
+        @Index(name = "idx_user_student_id", columnList = "student_id"),
+        @Index(name = "idx_user_email", columnList = "email"),
+})
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -23,7 +28,8 @@ public class User extends BaseEntity {
     @Column(unique = true, nullable = false)
     private String studentId;
 
-    // userTakenCoruses
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private final List<UserTakenCourse> userTakenCourses = new ArrayList<>();
 
     // graduationStatus
 
@@ -33,4 +39,5 @@ public class User extends BaseEntity {
         this.email = email;
         this.studentId = studentId;
     }
+
 }

@@ -1,5 +1,7 @@
 package com.gist.graduation.user.taken_course;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 public enum CourseType {
     HUS,
     PPE,
@@ -12,6 +14,11 @@ public enum CourseType {
             }
         }
         return null;
+    }
+
+    @JsonCreator
+    public static CourseType fromString(String type) {
+        return CourseType.valueOf(type);
     }
 
 }

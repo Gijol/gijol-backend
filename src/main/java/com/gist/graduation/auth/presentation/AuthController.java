@@ -23,9 +23,7 @@ public class AuthController {
 
     @PostMapping("/auth/google")
     public ResponseEntity<?> singUpGoogleAuth(@RequestBody GoogleAuthRequest request) {
-
         AuthType googleLoginType = googleAuthService.findGoogleLoginType(request);
-
         return ResponseEntity.ok(googleLoginType);
     }
 

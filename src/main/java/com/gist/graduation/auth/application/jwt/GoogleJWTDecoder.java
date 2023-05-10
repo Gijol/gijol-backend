@@ -4,9 +4,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GoogleJWTProvider extends JWTProvider{
-
-
+public class GoogleJWTDecoder extends JWTProvider{
     @Override
     public void verifyJwt(String token) {
         DecodedJWT decodedJWT = this.decodeJWT(token);

@@ -1,6 +1,6 @@
 package com.gist.graduation.auth.application;
 
-import com.gist.graduation.auth.application.jwt.GoogleJWTProvider;
+import com.gist.graduation.auth.application.jwt.GoogleJWTDecoder;
 import com.gist.graduation.auth.application.jwt.LoginUser;
 import com.gist.graduation.auth.dto.GoogleAuthRequest;
 import com.gist.graduation.auth.dto.GoogleSignUpRequest;
@@ -17,7 +17,7 @@ public class GoogleAuthService {
 
     private final UserRepository userRepository;
 
-    private final GoogleJWTProvider jwtProvider;
+    private final GoogleJWTDecoder googleJWTDecoder;
 
     @Transactional
     public Long signUp(GoogleSignUpRequest request) {
@@ -29,8 +29,9 @@ public class GoogleAuthService {
                 .studentId(request.getStudentId())
                 .build();
 
-        user.getUserTakenCourses().addAll(request.getUserTakenCourseList());
-        return userRepository.save(user).getId();
+        user.getUserTakenCourses().addAll(request.toUserTakenCourseEntityList());
+        User savedUser = userRepository.save(user);
+        return savedUser.getId();
     }
 
 
@@ -51,9 +52,9 @@ public class GoogleAuthService {
 
     private LoginUser parseToLoginUserFromRequest(GoogleAuthRequest request) {
         String idToken = request.getIdToken();
-        jwtProvider.verifyJwt(idToken);
+        googleJWTDecoder.verifyJwt(idToken);
 
-        final LoginUser loginUser = jwtProvider.decodeToLoginUserByType(idToken);
+        final LoginUser loginUser = googleJWTDecoder.decodeToLoginUserByType(idToken);
         loginUser.verifyFromRequest(request);
 
         return loginUser;

@@ -11,13 +11,12 @@ import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class GoogleSignUpRequest extends GoogleAuthRequest {
+public class GoogleSignUpRequest{
 
     private String studentId;
     private List<UserTakenCourseRequest> userTakenCourseList;
 
-    public GoogleSignUpRequest(String name, String email, String idToken, String studentId, List<UserTakenCourseRequest> userTakenCourseList) {
-        super(name, email, idToken);
+    public GoogleSignUpRequest(String studentId, List<UserTakenCourseRequest> userTakenCourseList) {
         this.studentId = studentId;
         this.userTakenCourseList = userTakenCourseList;
     }

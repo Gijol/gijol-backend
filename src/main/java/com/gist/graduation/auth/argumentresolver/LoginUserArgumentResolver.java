@@ -2,8 +2,8 @@
 package com.gist.graduation.auth.argumentresolver;
 
 import com.gist.graduation.auth.annotation.AuthenticationPrincipal;
-import com.gist.graduation.auth.application.GoogleAuthService;
 import com.gist.graduation.auth.application.jwt.JWTAuthorizationHeaderParser;
+import com.gist.graduation.auth.infra.GoogleAuthTokenVerifier;
 import com.gist.graduation.config.exception.ApplicationException;
 import com.gist.graduation.user.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver {
 
     private static final String AUTHORIZATION_HEADER = "Authorization";
+    private final GoogleAuthTokenVerifier googleAuthTokenVerifier;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -35,8 +36,13 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
         if (token.isBlank()) {
             throw new ApplicationException("No token in Header");
         }
+        String idToken = JWTAuthorizationHeaderParser.parse(token);
 
-        String parsedToken = JWTAuthorizationHeaderParser.parse(token);
+        // verify
+        // check userdb
+        // if no -> unauthorization
+        // if yes -> users
+
         return null;
     }
 }

@@ -25,6 +25,9 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String email;
 
+    @Embedded
+    private GoogleAdditionalInfo googleAdditionalInfo;
+
     @Column(name = "student_id", unique = true, nullable = false)
     private String studentId;
 
@@ -34,11 +37,13 @@ public class User extends BaseEntity {
     // graduationStatus
 
     @Builder
-    public User(String name, String email, String studentId, List<UserTakenCourse> userTakenCourses) {
+    public User(String name, String email, String pictureUrl, String givenName,
+                String familyName, String locale, String studentId,
+                List<UserTakenCourse> userTakenCourses) {
         this.name = name;
         this.email = email;
+        this.googleAdditionalInfo = new GoogleAdditionalInfo(pictureUrl, givenName, familyName, locale);
         this.studentId = studentId;
         this.userTakenCourses = userTakenCourses;
     }
-
 }

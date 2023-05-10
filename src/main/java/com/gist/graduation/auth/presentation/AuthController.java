@@ -1,16 +1,13 @@
 package com.gist.graduation.auth.presentation;
 
+import com.gist.graduation.auth.annotation.GoogleIdTokenRequired;
 import com.gist.graduation.auth.application.AuthType;
 import com.gist.graduation.auth.application.GoogleAuthService;
-import com.gist.graduation.auth.dto.GoogleAuthRequest;
 import com.gist.graduation.auth.dto.GoogleSignUpRequest;
-import com.gist.graduation.user.domain.User;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
@@ -21,24 +18,19 @@ public class AuthController {
 
     private final GoogleAuthService googleAuthService;
 
+    @ApiOperation(value = "회원 존재 여부 API", notes = "회원이면 SIGN_IN, 회원이 아니면 SIGN_UP을 반환합니다. 헤더에서 구글 id 토큰과 함께 요청해야 합니다.")
     @PostMapping("/auth/google")
-    public ResponseEntity<?> singUpGoogleAuth(@RequestBody GoogleAuthRequest request) {
-
-        AuthType googleLoginType = googleAuthService.findGoogleLoginType(request);
-
+    @GoogleIdTokenRequired
+    public ResponseEntity<?> singUpGoogleAuth(@RequestAttribute String idToken) {
+        AuthType googleLoginType = googleAuthService.findGoogleLoginType(idToken);
         return ResponseEntity.ok(googleLoginType);
     }
 
-    @PostMapping("/auth/google/sign-in")
-    public ResponseEntity<?> signInGoogleAuth(@RequestBody GoogleAuthRequest request) {
-        User user = googleAuthService.loginGoogleAuth(request);
-
-        return ResponseEntity.ok(user);
-    }
-
+    @ApiOperation(value = "회원 가입 API", notes = "회원 가입을 진행하는 API입니다. 헤더에서 구글 id 토큰과 함께 요청해야 합니다.")
     @PostMapping("/auth/google/sign-up")
-    public ResponseEntity<?> signUpGoogleAuth(@RequestBody GoogleSignUpRequest request) {
-        Long id = googleAuthService.signUp(request);
+    @GoogleIdTokenRequired
+    public ResponseEntity<?> signUpGoogleAuth(@RequestAttribute String idToken, @RequestBody GoogleSignUpRequest request) {
+        Long id = googleAuthService.signUp(request, idToken);
         return ResponseEntity.created(URI.create(id.toString())).build();
     }
 }

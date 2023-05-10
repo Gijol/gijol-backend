@@ -2,9 +2,12 @@
 package com.gist.graduation.auth.argumentresolver;
 
 import com.gist.graduation.auth.annotation.AuthenticationPrincipal;
+import com.gist.graduation.auth.application.GoogleAuthService;
 import com.gist.graduation.auth.application.jwt.JWTAuthorizationHeaderParser;
+import com.gist.graduation.auth.dto.GoogleIdTokenVerificationResponse;
 import com.gist.graduation.auth.infra.GoogleAuthTokenVerifier;
 import com.gist.graduation.config.exception.ApplicationException;
+import com.gist.graduation.config.exception.AuthorizationException;
 import com.gist.graduation.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
@@ -22,6 +25,7 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
 
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private final GoogleAuthTokenVerifier googleAuthTokenVerifier;
+    private final GoogleAuthService googleAuthService;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -30,19 +34,17 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
     }
 
     @Override
-    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
+    public User resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         final HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
         final String token = request.getHeader(AUTHORIZATION_HEADER);
         if (token.isBlank()) {
             throw new ApplicationException("No token in Header");
         }
-        String idToken = JWTAuthorizationHeaderParser.parse(token);
+        final String idToken = JWTAuthorizationHeaderParser.parse(token);
 
-        // verify
-        // check userdb
-        // if no -> unauthorization
-        // if yes -> users
+        final GoogleIdTokenVerificationResponse response = googleAuthTokenVerifier.verifyGoogleOAuth2IdToken(idToken);
 
-        return null;
+        return googleAuthService.findUserFromVerifiedIdTokenResponse(response)
+                .orElseThrow(AuthorizationException::unAuthorized);
     }
 }

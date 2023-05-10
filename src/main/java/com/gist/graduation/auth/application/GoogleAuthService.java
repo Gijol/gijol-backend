@@ -38,7 +38,6 @@ public class GoogleAuthService {
                 .userTakenCourses(request.toUserTakenCourseEntityList())
                 .build();
 
-
         return userRepository.save(user).getId();
     }
 

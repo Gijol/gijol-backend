@@ -1,9 +1,11 @@
 package com.gist.graduation.auth.presentation;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gist.graduation.auth.annotation.GoogleIdTokenRequired;
 import com.gist.graduation.auth.application.AuthType;
 import com.gist.graduation.auth.application.GoogleAuthService;
 import com.gist.graduation.auth.dto.GoogleSignUpRequest;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

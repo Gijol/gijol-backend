@@ -18,7 +18,7 @@ public enum CourseType {
 
     @JsonCreator
     public static CourseType fromString(String type) {
-        return CourseType.valueOf(type);
+        return CourseType.stringOf(type);
     }
 
 }

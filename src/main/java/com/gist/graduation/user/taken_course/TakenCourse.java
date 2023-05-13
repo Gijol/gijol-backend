@@ -2,6 +2,7 @@ package com.gist.graduation.user.taken_course;
 
 import com.gist.graduation.course.domain.CourseInfo;
 import com.gist.graduation.utils.RegisteredCourse;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.util.List;
@@ -19,13 +20,18 @@ public class TakenCourse {
     private final String courseCode;
     private final Integer credit;
 
-    public TakenCourse(int year, String semester, String courseType, String courseName, String courseCode, String credit) {
+    @Builder
+    public TakenCourse(int year, String semester, CourseType courseType, String courseName, String courseCode, String credit) {
         this.year = year;
         this.semester = semester;
-        this.courseType = CourseType.stringOf(courseType);
+        this.courseType = courseType;
         this.courseName = courseName;
         this.courseCode = courseCode;
         this.credit = Integer.parseInt(credit);
+    }
+
+    public TakenCourse(int year, String semester, String courseType, String courseName, String courseCode, String credit) {
+        this(year, semester, CourseType.valueOf(courseType), courseName, courseCode, credit);
     }
 
     public TakenCourse(String courseName, String courseCode, String credit) {

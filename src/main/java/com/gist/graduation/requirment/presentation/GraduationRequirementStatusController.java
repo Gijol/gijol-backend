@@ -32,7 +32,7 @@ public class GraduationRequirementStatusController {
 
     @PostMapping("/demo")
     public ResponseEntity<GraduationRequirementStatus> checkGraduationDemo(DemoGradeToCheckRequest request) throws IOException {
-        GraduationRequirementStatus graduationRequirementStatus = graduationRequirementStatusService.checkGraduationCondition(request);
+        GraduationRequirementStatus graduationRequirementStatus = graduationRequirementStatusService.checkGraduationConditionForDemo(request);
         return ResponseEntity.ok().body(graduationRequirementStatus);
     }
 

@@ -16,7 +16,10 @@ public class UserTakenCoursesAndGradeResponse {
     private List<UserTakenCourseBySemesterResponse> userTakenCourseBySemesterResponses;
     private BigDecimal averageGrade;
 
-    성
+    public UserTakenCoursesAndGradeResponse(List<UserTakenCourseBySemesterResponse> userTakenCourseBySemesterResponses, BigDecimal averageGrade) {
+        this.userTakenCourseBySemesterResponses = userTakenCourseBySemesterResponses;
+        this.averageGrade = averageGrade;
+    }
 
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     @Getter

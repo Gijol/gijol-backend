@@ -20,7 +20,6 @@ import java.util.UUID;
 @Slf4j
 public class GraduationRequirementStatusService {
 
-
     public GraduationRequirementStatus checkGraduationCondition(GradeToCheckRequest request) throws IOException {
         File file = multiPartToFile(request.getMultipartFile());
         UserTakenCoursesList userTakenCoursesList = UserTakenCousrseParser.parseUserTakenCourse(file);
@@ -32,7 +31,7 @@ public class GraduationRequirementStatusService {
         return graduationRequirementStatus;
     }
 
-    public GraduationRequirementStatus checkGraduationCondition(DemoGradeToCheckRequest request) throws IOException {
+    public GraduationRequirementStatus checkGraduationConditionForDemo(DemoGradeToCheckRequest request) throws IOException {
         File file = multiPartToFile(request.getMultipartFile());
         UserTakenCoursesList userTakenCoursesList = UserTakenCousrseParser.parseUserTakenCourse(file);
         log.info(userTakenCoursesList.toString());

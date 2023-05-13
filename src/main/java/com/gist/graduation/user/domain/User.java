@@ -1,6 +1,10 @@
 package com.gist.graduation.user.domain;
 
 import com.gist.graduation.common.BaseEntity;
+import com.gist.graduation.requirment.domain.GraduationRequirementStatus;
+import com.gist.graduation.requirment.domain.major.MajorType;
+import com.gist.graduation.user.taken_course.TakenCourse;
+import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,6 +13,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Table(name = "users", indexes = {
         @Index(name = "idx_user_student_id", columnList = "student_id"),
@@ -29,7 +34,11 @@ public class User extends BaseEntity {
     private GoogleAdditionalInfo googleAdditionalInfo;
 
     @Column(name = "student_id", unique = true, nullable = false)
-    private String studentId;
+    private Integer studentId;
+
+    @Column(name = "major_type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private MajorType majorType;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<UserTakenCourse> userTakenCourses = new ArrayList<>();
@@ -38,12 +47,26 @@ public class User extends BaseEntity {
 
     @Builder
     public User(String name, String email, String pictureUrl, String givenName,
-                String familyName, String locale, String studentId,
-                List<UserTakenCourse> userTakenCourses) {
+                MajorType majorType, String familyName, String locale,
+                Integer studentId, List<UserTakenCourse> userTakenCourses) {
         this.name = name;
         this.email = email;
+        this.majorType = majorType;
         this.googleAdditionalInfo = new GoogleAdditionalInfo(pictureUrl, givenName, familyName, locale);
         this.studentId = studentId;
         this.userTakenCourses = userTakenCourses;
+    }
+
+    public GraduationRequirementStatus checkGraduationStatus(){
+        final GraduationRequirementStatus graduationRequirementStatus = new GraduationRequirementStatus();
+        graduationRequirementStatus.checkGraduationRequirements(this.studentId, this.toUserTakenCoursesList(), this.majorType);
+        return graduationRequirementStatus;
+    }
+
+    private UserTakenCoursesList toUserTakenCoursesList(){
+        List<TakenCourse> takenCourses = this.userTakenCourses.stream()
+                .map(UserTakenCourse::toTakenCourse)
+                .collect(Collectors.toList());
+        return new UserTakenCoursesList(takenCourses);
     }
 }

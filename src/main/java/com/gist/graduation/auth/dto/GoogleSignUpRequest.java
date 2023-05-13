@@ -1,5 +1,6 @@
 package com.gist.graduation.auth.dto;
 
+import com.gist.graduation.requirment.domain.major.MajorType;
 import com.gist.graduation.user.domain.UserTakenCourse;
 import com.gist.graduation.user.taken_course.CourseType;
 import lombok.AccessLevel;
@@ -13,11 +14,13 @@ import java.util.stream.Collectors;
 @Getter
 public class GoogleSignUpRequest{
 
-    private String studentId;
+    private Integer studentId;
+    private MajorType majorType;
     private List<UserTakenCourseRequest> userTakenCourseList;
 
-    public GoogleSignUpRequest(String studentId, List<UserTakenCourseRequest> userTakenCourseList) {
+    public GoogleSignUpRequest(Integer studentId, MajorType majorType, List<UserTakenCourseRequest> userTakenCourseList) {
         this.studentId = studentId;
+        this.majorType = majorType;
         this.userTakenCourseList = userTakenCourseList;
     }
 

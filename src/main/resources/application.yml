@@ -15,7 +15,7 @@ swagger:
   protocol: http
 
 request:
-  origins: http://localhost:3000,https://dev.gijol.im
+  origins: http://localhost:3000,https://dev.gijol.im, https://gijol-v2.vercel.app
 
 ---
 

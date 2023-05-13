@@ -1,6 +1,7 @@
 package com.gist.graduation.user.domain;
 
 import com.gist.graduation.common.BaseEntity;
+import com.gist.graduation.user.domain.vo.YearAndSemester;
 import com.gist.graduation.user.taken_course.CourseType;
 import com.gist.graduation.user.taken_course.TakenCourse;
 import lombok.AccessLevel;
@@ -8,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 
 @Entity
@@ -15,8 +17,8 @@ import javax.persistence.Entity;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserTakenCourse extends BaseEntity {
 
-    private int year;
-    private String semester;
+    @Embedded
+    private YearAndSemester yearAndSemester;
     private CourseType courseType;
     private String courseName;
     private String courseCode;
@@ -25,8 +27,7 @@ public class UserTakenCourse extends BaseEntity {
 
     @Builder
     public UserTakenCourse(int year, String semester, CourseType courseType, String courseName, String courseCode, Integer credit, String grade) {
-        this.year = year;
-        this.semester = semester;
+        this.yearAndSemester = new YearAndSemester(year, semester);
         this.courseType = courseType;
         this.courseName = courseName;
         this.courseCode = courseCode;
@@ -36,8 +37,8 @@ public class UserTakenCourse extends BaseEntity {
 
     public TakenCourse toTakenCourse(){
         return TakenCourse.builder()
-                .year(this.year)
-                .semester(this.semester)
+                .year(this.getYear())
+                .semester(this.getSemester())
                 .courseType(this.courseType)
                 .courseName(this.courseName)
                 .courseCode(this.courseCode)
@@ -45,4 +46,11 @@ public class UserTakenCourse extends BaseEntity {
                 .build();
     }
 
+    public int getYear() {
+        return this.yearAndSemester.getYear();
+    }
+
+    public String getSemester() {
+        return this.yearAndSemester.getSemester();
+    }
 }

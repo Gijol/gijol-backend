@@ -31,7 +31,7 @@ public class TakenCourse {
     }
 
     public TakenCourse(int year, String semester, String courseType, String courseName, String courseCode, String credit) {
-        this(year, semester, CourseType.valueOf(courseType), courseName, courseCode, credit);
+        this(year, semester, CourseType.stringOf(courseType), courseName, courseCode, credit);
     }
 
     public TakenCourse(String courseName, String courseCode, String credit) {

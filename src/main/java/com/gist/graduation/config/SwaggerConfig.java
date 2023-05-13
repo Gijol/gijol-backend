@@ -1,8 +1,10 @@
 package com.gist.graduation.config;
 
+import com.gist.graduation.auth.annotation.AuthenticationPrincipal;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import springfox.documentation.builders.*;
 import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
@@ -12,6 +14,7 @@ import springfox.documentation.service.RequestParameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
+import javax.persistence.metamodel.SetAttribute;
 import java.util.Collections;
 
 @Configuration
@@ -39,7 +42,8 @@ public class SwaggerConfig {
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.gist.graduation"))
                 .paths(PathSelectors.any())
-                .build();
+                .build()
+                .ignoredParameterTypes(AuthenticationPrincipal.class, RequestAttribute.class);
     }
 
     public ApiInfo apiInfo() {

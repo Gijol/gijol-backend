@@ -14,11 +14,11 @@ import java.util.stream.Collectors;
 @Getter
 public class GoogleSignUpRequest{
 
-    private Integer studentId;
+    private String studentId;
     private MajorType majorType;
     private List<UserTakenCourseRequest> userTakenCourseList;
 
-    public GoogleSignUpRequest(Integer studentId, MajorType majorType, List<UserTakenCourseRequest> userTakenCourseList) {
+    public GoogleSignUpRequest(String studentId, MajorType majorType, List<UserTakenCourseRequest> userTakenCourseList) {
         this.studentId = studentId;
         this.majorType = majorType;
         this.userTakenCourseList = userTakenCourseList;

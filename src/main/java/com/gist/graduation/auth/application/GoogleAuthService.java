@@ -34,7 +34,8 @@ public class GoogleAuthService {
                 .givenName(googleIdTokenVerificationResponse.getGiven_name())
                 .familyName(googleIdTokenVerificationResponse.getFamily_name())
                 .locale(googleIdTokenVerificationResponse.getLocale())
-                .studentId(request.getStudentId())
+                .studentId(Integer.valueOf(request.getStudentId()))
+                .majorType(request.getMajorType())
                 .userTakenCourses(request.toUserTakenCourseEntityList())
                 .build();
 

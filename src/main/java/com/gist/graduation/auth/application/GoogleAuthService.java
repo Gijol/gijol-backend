@@ -25,7 +25,10 @@ public class GoogleAuthService {
         GoogleIdTokenVerificationResponse googleIdTokenVerificationResponse = googleAuthTokenVerifier.verifyGoogleOAuth2IdToken(idToken);
         final String email = googleIdTokenVerificationResponse.getEmail();
         final String name = googleIdTokenVerificationResponse.getName();
+        final Integer studentId = Integer.valueOf(request.getStudentId());
+
         if (userRepository.existsUserByNameAndEmail(name, email)) throw new ApplicationException("이미 존재하는 회원입니다.");
+        if( userRepository.existsUserByStudentId(studentId)) throw new ApplicationException("이미 존재하는 학번입니다.");
 
         final User user = User.builder()
                 .email(email)
@@ -34,7 +37,7 @@ public class GoogleAuthService {
                 .givenName(googleIdTokenVerificationResponse.getGiven_name())
                 .familyName(googleIdTokenVerificationResponse.getFamily_name())
                 .locale(googleIdTokenVerificationResponse.getLocale())
-                .studentId(Integer.valueOf(request.getStudentId()))
+                .studentId(studentId)
                 .majorType(request.getMajorType())
                 .userTakenCourses(request.toUserTakenCourseEntityList())
                 .build();

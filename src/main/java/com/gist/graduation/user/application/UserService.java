@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final GraduationCalculator graduationCalculator;
 
     public GraduationRequirementStatus checkGraduationRequirementForUser(User user) {
         final GraduationRequirementStatus graduationRequirementStatus = user.checkGraduationStatus();
@@ -31,36 +32,22 @@ public class UserService {
 
     public UserTakenCoursesAndGradeResponse findUserTakenCourseAndAverageGrade(User user) {
 
-        Map<YearAndSemester, List<UserTakenCourseResponse>> userTakenListByYearAndSemester = user.getUserTakenCourses()
+        Map<YearAndSemester, List<UserTakenCourse>> userTakenListByYearAndSemester = user.getUserTakenCourses()
                 .stream()
-                .collect(
-                        Collectors.groupingBy(UserTakenCourse::getYearAndSemester,
-                                Collectors.mapping(UserTakenCourseResponse::from, Collectors.toList())
-                        )
-                );
+                .collect(Collectors.groupingBy(UserTakenCourse::getYearAndSemester));
 
         List<UserTakenCourseBySemesterResponse> userTakenCourseBySemesterResponses = userTakenListByYearAndSemester.entrySet()
                 .stream()
                 .map(entry -> {
                     YearAndSemester key = entry.getKey();
-                    List<UserTakenCourseResponse> value = entry.getValue();
-                    BigDecimal averageGradeBySemester = calculateAverageGradeBySemester(value);
-                    return new UserTakenCourseBySemesterResponse(key.getYear(), key.getSemester(), averageGradeBySemester, value);
+                    List<UserTakenCourse> value = entry.getValue();
+                    BigDecimal averageGradeBySemester = graduationCalculator.calculateTotalAverageGrade(value);
+                    return new UserTakenCourseBySemesterResponse(key.getYear(), key.getSemester(), averageGradeBySemester, UserTakenCourseResponse.listFrom(value));
                 })
                 .collect(Collectors.toList());
 
-        BigDecimal averageGrade = calculateTotalAverageGrade(userTakenCourseBySemesterResponses);
+        BigDecimal averageGrade = graduationCalculator.calculateTotalAverageGrade(user.getUserTakenCourses());
 
         return new UserTakenCoursesAndGradeResponse(userTakenCourseBySemesterResponses, averageGrade);
     }
-
-    private BigDecimal calculateTotalAverageGrade(List<UserTakenCourseBySemesterResponse> userTakenCourseBySemesterResponses) {
-        return BigDecimal.ZERO;
-    }
-
-
-    private BigDecimal calculateAverageGradeBySemester(List<UserTakenCourseResponse> userTakenCourses) {
-        return BigDecimal.ZERO;
-    }
-
 }

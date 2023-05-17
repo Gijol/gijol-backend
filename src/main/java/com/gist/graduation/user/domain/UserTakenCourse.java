@@ -1,6 +1,7 @@
 package com.gist.graduation.user.domain;
 
 import com.gist.graduation.common.BaseEntity;
+import com.gist.graduation.user.domain.vo.LetterGrade;
 import com.gist.graduation.user.domain.vo.YearAndSemester;
 import com.gist.graduation.user.taken_course.CourseType;
 import com.gist.graduation.user.taken_course.TakenCourse;
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import java.math.BigDecimal;
 
 @Entity
 @Getter
@@ -44,6 +46,10 @@ public class UserTakenCourse extends BaseEntity {
                 .courseCode(this.courseCode)
                 .credit(this.credit.toString())
                 .build();
+    }
+
+    public BigDecimal multiplyCreditAndGrade(){
+        return LetterGrade.getGradePointByGrade(this.grade).multiply(BigDecimal.valueOf(this.credit));
     }
 
     public int getYear() {

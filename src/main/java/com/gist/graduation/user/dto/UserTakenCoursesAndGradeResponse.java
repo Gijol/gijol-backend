@@ -1,6 +1,7 @@
 package com.gist.graduation.user.dto;
 
 import com.gist.graduation.user.domain.UserTakenCourse;
+import com.gist.graduation.user.domain.vo.LetterGrade;
 import com.gist.graduation.user.taken_course.CourseType;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -55,8 +57,19 @@ public class UserTakenCoursesAndGradeResponse {
             this.grade = grade;
         }
 
-        public static UserTakenCourseResponse from(UserTakenCourse userTakenCourse){
+        private static UserTakenCourseResponse from(UserTakenCourse userTakenCourse){
             return new UserTakenCourseResponse(userTakenCourse.getCourseType(), userTakenCourse.getCourseName(), userTakenCourse.getCourseCode(), userTakenCourse.getCredit(), userTakenCourse.getGrade());
+        }
+
+        public static List<UserTakenCourseResponse> listFrom(List<UserTakenCourse> userTakenCourse){
+            return userTakenCourse.stream()
+                    .map(UserTakenCourseResponse::from)
+                    .collect(Collectors.toList());
+
+        }
+
+        public BigDecimal multiplyCreditAndGrade(){
+            return LetterGrade.getGradePointByGrade(this.grade).multiply(BigDecimal.valueOf(this.credit));
         }
     }
 }

@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Table(name = "users", indexes = {
-        @Index(name = "idx_user_student_id", columnList = "student_id"),
         @Index(name = "idx_user_email", columnList = "email"),
 })
 @Getter

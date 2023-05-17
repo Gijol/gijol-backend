@@ -15,19 +15,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class GraduationCalculator {
 
-    public BigDecimal calculateAverageGradeBySemester(List<UserTakenCourseResponse> userTakenCourses) {
-        BigDecimal totalCreditAndGrade = userTakenCourses.stream()
-                .map(UserTakenCourseResponse::multiplyCreditAndGrade)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-        BigDecimal totalCredit = userTakenCourses.stream()
-                .map(UserTakenCourseResponse::getCredit)
-                .map(BigDecimal::new)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-        return totalCreditAndGrade.divide(totalCredit, 3, RoundingMode.DOWN);
-    }
-
     public BigDecimal calculateTotalAverageGrade(List<UserTakenCourse> userTakenCourses) {
         BigDecimal totalCreditAndGrade = userTakenCourses.stream()
                 .map(UserTakenCourse::multiplyCreditAndGrade)
@@ -37,6 +24,6 @@ public class GraduationCalculator {
                 .map(UserTakenCourse::getCredit)
                 .map(BigDecimal::new)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        return totalCreditAndGrade.divide(totalCredit, 3, RoundingMode.DOWN);
+        return totalCreditAndGrade.divide(totalCredit, 2, RoundingMode.FLOOR);
     }
 }

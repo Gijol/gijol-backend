@@ -18,7 +18,6 @@ public class GoogleSignUpRequest{
 
     @NotBlank
     private String studentId;
-    @NotEmpty
     private MajorType majorType;
     private List<UserTakenCourseRequest> userTakenCourseList;
 

@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Table(name = "users", indexes = {
-        @Index(name = "idx_user_student_id", columnList = "student_id"),
         @Index(name = "idx_user_email", columnList = "email"),
 })
 @Getter
@@ -34,7 +33,7 @@ public class User extends BaseEntity {
     private GoogleAdditionalInfo googleAdditionalInfo;
 
     @Column(name = "student_id", unique = true, nullable = false)
-    private Integer studentId;
+    private String studentId;
 
     @Column(name = "major_type", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -48,7 +47,7 @@ public class User extends BaseEntity {
     @Builder
     public User(String name, String email, String pictureUrl, String givenName,
                 MajorType majorType, String familyName, String locale,
-                Integer studentId, List<UserTakenCourse> userTakenCourses) {
+                String studentId, List<UserTakenCourse> userTakenCourses) {
         this.name = name;
         this.email = email;
         this.majorType = majorType;
@@ -59,8 +58,12 @@ public class User extends BaseEntity {
 
     public GraduationRequirementStatus checkGraduationStatus(){
         final GraduationRequirementStatus graduationRequirementStatus = new GraduationRequirementStatus();
-        graduationRequirementStatus.checkGraduationRequirements(this.studentId, this.toUserTakenCoursesList(), this.majorType);
+        graduationRequirementStatus.checkGraduationRequirements(getStudentIdGroup(), this.toUserTakenCoursesList(), this.majorType);
         return graduationRequirementStatus;
+    }
+
+    public Integer getStudentIdGroup(){
+        return Integer.parseInt(this.studentId.substring(studentId.length() - 6, studentId.length() - 4));
     }
 
     private UserTakenCoursesList toUserTakenCoursesList(){

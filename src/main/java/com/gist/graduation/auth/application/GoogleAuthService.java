@@ -25,7 +25,7 @@ public class GoogleAuthService {
         GoogleIdTokenVerificationResponse googleIdTokenVerificationResponse = googleAuthTokenVerifier.verifyGoogleOAuth2IdToken(idToken);
         final String email = googleIdTokenVerificationResponse.getEmail();
         final String name = googleIdTokenVerificationResponse.getName();
-        final Integer studentId = Integer.valueOf(request.getStudentId());
+        final String studentId = request.getStudentId().trim();
 
         if (userRepository.existsUserByNameAndEmail(name, email)) throw new ApplicationException("이미 존재하는 회원입니다.");
         if( userRepository.existsUserByStudentId(studentId)) throw new ApplicationException("이미 존재하는 학번입니다.");

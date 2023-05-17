@@ -7,6 +7,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,7 +16,9 @@ import java.util.stream.Collectors;
 @Getter
 public class GoogleSignUpRequest{
 
+    @NotBlank
     private String studentId;
+    @NotEmpty
     private MajorType majorType;
     private List<UserTakenCourseRequest> userTakenCourseList;
 

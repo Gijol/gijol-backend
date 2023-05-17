@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
@@ -29,7 +30,7 @@ public class AuthController {
     @ApiOperation(value = "회원 가입 API", notes = "회원 가입을 진행하는 API입니다. 헤더에서 구글 id 토큰과 함께 요청해야 합니다.")
     @PostMapping("/auth/google/sign-up")
     @GoogleIdTokenRequired
-    public ResponseEntity<?> signUpGoogleAuth(@RequestAttribute String idToken, @RequestBody GoogleSignUpRequest request) {
+    public ResponseEntity<?> signUpGoogleAuth(@RequestAttribute String idToken, @Valid @RequestBody GoogleSignUpRequest request) {
         Long id = googleAuthService.signUp(request, idToken);
         return ResponseEntity.created(URI.create(id.toString())).build();
     }

@@ -12,7 +12,7 @@ public class ControllerAdvice {
 
     @ExceptionHandler(ApplicationException.class)
     public ResponseEntity<ErrorResponse> applicationException(ApplicationException ex) {
-        log.warn("Application Exception: ", ex.getMessage());
+        log.warn("Application Exception: " + ex.getMessage());
         return ResponseEntity.status(ex.getHttpStatus()).body(new ErrorResponse(ex.getMessage()));
     }
 
@@ -23,7 +23,7 @@ public class ControllerAdvice {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> globalException(Exception ex) {
-        log.error("Internal Server Exception: ", ex.getMessage());
+        log.error("Internal Server Exception: " +  ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse(ex.getMessage()));
     }
 }

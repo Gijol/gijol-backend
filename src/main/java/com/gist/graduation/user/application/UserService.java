@@ -31,8 +31,9 @@ public class UserService {
     }
 
     public UserTakenCoursesAndGradeResponse findUserTakenCourseAndAverageGrade(User user) {
+        List<UserTakenCourse> userTakenCourses = user.getUserTakenCourses();
 
-        Map<YearAndSemester, List<UserTakenCourse>> userTakenListByYearAndSemester = user.getUserTakenCourses()
+        Map<YearAndSemester, List<UserTakenCourse>> userTakenListByYearAndSemester = userTakenCourses
                 .stream()
                 .collect(Collectors.groupingBy(UserTakenCourse::getYearAndSemester));
 
@@ -46,8 +47,11 @@ public class UserService {
                 })
                 .collect(Collectors.toList());
 
-        BigDecimal averageGrade = graduationCalculator.calculateTotalAverageGrade(user.getUserTakenCourses());
+        BigDecimal averageGrade = graduationCalculator.calculateTotalAverageGrade(userTakenCourses);
+        final int totalCredit = userTakenCourses.stream()
+                .mapToInt(UserTakenCourse::getCredit)
+                .sum();
 
-        return new UserTakenCoursesAndGradeResponse(userTakenCourseBySemesterResponses, averageGrade);
+        return new UserTakenCoursesAndGradeResponse(userTakenCourseBySemesterResponses, averageGrade, totalCredit);
     }
 }

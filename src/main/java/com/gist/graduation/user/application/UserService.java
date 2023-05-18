@@ -48,7 +48,10 @@ public class UserService {
                 .collect(Collectors.toList());
 
         BigDecimal averageGrade = graduationCalculator.calculateTotalAverageGrade(userTakenCourses);
+        final int totalCredit = userTakenCourses.stream()
+                .mapToInt(UserTakenCourse::getCredit)
+                .sum();
 
-        return new UserTakenCoursesAndGradeResponse(userTakenCourseBySemesterResponses, averageGrade);
+        return new UserTakenCoursesAndGradeResponse(userTakenCourseBySemesterResponses, averageGrade, totalCredit);
     }
 }

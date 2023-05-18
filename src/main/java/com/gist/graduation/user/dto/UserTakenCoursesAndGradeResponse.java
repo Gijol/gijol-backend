@@ -16,11 +16,12 @@ public class UserTakenCoursesAndGradeResponse {
 
     private List<UserTakenCourseBySemesterResponse> userTakenCourseBySemesterResponses;
     private BigDecimal averageGrade;
-    private Long totalCredit;
+    private int totalCredit;
 
-    public UserTakenCoursesAndGradeResponse(List<UserTakenCourseBySemesterResponse> userTakenCourseBySemesterResponses, BigDecimal averageGrade) {
+    public UserTakenCoursesAndGradeResponse(List<UserTakenCourseBySemesterResponse> userTakenCourseBySemesterResponses, BigDecimal averageGrade, int totalCredit) {
         this.userTakenCourseBySemesterResponses = userTakenCourseBySemesterResponses;
         this.averageGrade = averageGrade;
+        this.totalCredit = totalCredit;
     }
 
     @NoArgsConstructor(access = AccessLevel.PROTECTED)

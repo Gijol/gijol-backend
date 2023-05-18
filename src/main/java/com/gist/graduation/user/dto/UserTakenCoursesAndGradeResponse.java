@@ -1,7 +1,6 @@
 package com.gist.graduation.user.dto;
 
 import com.gist.graduation.user.domain.UserTakenCourse;
-import com.gist.graduation.user.domain.vo.LetterGrade;
 import com.gist.graduation.user.taken_course.CourseType;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -17,6 +16,7 @@ public class UserTakenCoursesAndGradeResponse {
 
     private List<UserTakenCourseBySemesterResponse> userTakenCourseBySemesterResponses;
     private BigDecimal averageGrade;
+    private Long totalCredit;
 
     public UserTakenCoursesAndGradeResponse(List<UserTakenCourseBySemesterResponse> userTakenCourseBySemesterResponses, BigDecimal averageGrade) {
         this.userTakenCourseBySemesterResponses = userTakenCourseBySemesterResponses;
@@ -42,7 +42,7 @@ public class UserTakenCoursesAndGradeResponse {
 
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     @Getter
-    public static class UserTakenCourseResponse{
+    public static class UserTakenCourseResponse {
         private CourseType courseType;
         private String courseName;
         private String courseCode;
@@ -57,19 +57,15 @@ public class UserTakenCoursesAndGradeResponse {
             this.grade = grade;
         }
 
-        private static UserTakenCourseResponse from(UserTakenCourse userTakenCourse){
+        private static UserTakenCourseResponse from(UserTakenCourse userTakenCourse) {
             return new UserTakenCourseResponse(userTakenCourse.getCourseType(), userTakenCourse.getCourseName(), userTakenCourse.getCourseCode(), userTakenCourse.getCredit(), userTakenCourse.getGrade());
         }
 
-        public static List<UserTakenCourseResponse> listFrom(List<UserTakenCourse> userTakenCourse){
+        public static List<UserTakenCourseResponse> listFrom(List<UserTakenCourse> userTakenCourse) {
             return userTakenCourse.stream()
                     .map(UserTakenCourseResponse::from)
                     .collect(Collectors.toList());
 
-        }
-
-        public BigDecimal multiplyCreditAndGrade(){
-            return LetterGrade.getGradePointByGrade(this.grade).multiply(BigDecimal.valueOf(this.credit));
         }
     }
 }

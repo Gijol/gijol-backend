@@ -5,6 +5,7 @@ import com.gist.graduation.requirment.domain.GraduationRequirementStatus;
 import com.gist.graduation.requirment.domain.major.MajorType;
 import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
+import com.gist.graduation.utils.converter.AesConverter;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,15 +25,18 @@ import java.util.stream.Collectors;
 public class User extends BaseEntity {
 
     @Column(nullable = false)
+    @Convert(converter = AesConverter.class)
     private String name;
 
     @Column(nullable = false)
+    @Convert(converter = AesConverter.class)
     private String email;
 
     @Embedded
     private GoogleAdditionalInfo googleAdditionalInfo;
 
     @Column(name = "student_id", unique = true, nullable = false)
+    @Convert(converter = AesConverter.class)
     private String studentId;
 
     @Column(name = "major_type", nullable = false)

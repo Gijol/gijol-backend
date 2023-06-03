@@ -10,7 +10,8 @@ spring:
       filter:
         enabled: true
 
-  http:
+server:
+  servlet:
     encoding:
       charset: UTF-8
       enabled: true
@@ -22,6 +23,9 @@ swagger:
 
 request:
   origins: http://localhost:3000,https://dev.gijol.im, https://gijol-v2.vercel.app
+
+aes:
+  key: "01234567890123456789012345678901"
 
 ---
 

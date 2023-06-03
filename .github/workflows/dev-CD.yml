@@ -18,7 +18,7 @@ jobs:
       - name: Deploy Dev use SCP
         uses: appleboy/scp-action@master
         with:
-          username: ${{ secrets.DEV_USERNAME }}
+          username: ubuntu
           host: ${{ secrets.DEV_HOST }}
           key: ${{ secrets.AWS_PRIVATE_KEY }}
           source: "./build/libs/*.jar"
@@ -28,7 +28,7 @@ jobs:
       - name: Transfer Deploy Script use SCP
         uses: appleboy/scp-action@master
         with:
-          username: ${{ secrets.DEV_USERNAME }}
+          username: ubuntu
           host: ${{ secrets.DEV_HOST }}
           key: ${{ secrets.AWS_PRIVATE_KEY }}
           source: "deploy/dev-deploy.sh"
@@ -38,9 +38,9 @@ jobs:
       - name: Execute Server Init Script
         uses: appleboy/ssh-action@master
         with:
-          username: ${{ secrets.DEV_USERNAME }}
+          username: ubuntu
           host: ${{ secrets.DEV_HOST }}
-          key: ${{ secrets.AWS_PRIVATE_KEY }}
+          password: ${{ secrets.DEV_PASSWORD }}
           script_stop: true
           script: |
             cd /home/ubuntu/deploy

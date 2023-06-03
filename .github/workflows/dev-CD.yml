@@ -40,7 +40,7 @@ jobs:
         with:
           username: ubuntu
           host: ${{ secrets.DEV_HOST }}
-          password: ${{ secrets.DEV_PASSWORD }}
+          key: ${{ secrets.AWS_PRIVATE_KEY }}
           script_stop: true
           script: |
             cd /home/ubuntu/deploy

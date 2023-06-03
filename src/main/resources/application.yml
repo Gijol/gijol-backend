@@ -10,6 +10,12 @@ spring:
       filter:
         enabled: true
 
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
 swagger:
   host: localhost:8080
   protocol: http

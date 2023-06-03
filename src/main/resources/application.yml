@@ -23,6 +23,7 @@ spring:
   config:
     activate:
       on-profile: dev
+    import: datasource/application-docker-mysql.yml
 
 swagger:
   host: dev-api.gijol.im

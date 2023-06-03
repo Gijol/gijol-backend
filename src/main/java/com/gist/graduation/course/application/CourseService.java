@@ -4,15 +4,12 @@ import com.gist.graduation.course.domain.course.Course;
 import com.gist.graduation.course.domain.course.CourseRepository;
 import com.gist.graduation.course.domain.dto.CourseResponse;
 import com.gist.graduation.course.domain.rawcourse.RawCourse;
-import com.gist.graduation.requirment.domain.minor.Minor;
-import com.gist.graduation.requirment.domain.minor.MinorType;
 import com.gist.graduation.utils.CourseListParser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -28,7 +25,8 @@ public class CourseService {
     @Transactional
     public List<Course> createCourses(File file) {
         List<RawCourse> rawCourses = CourseListParser.parseToRawCourse(file);
-        List<Course> courses = Course.listOf(rawCourses);
+        List<Course> courses = Course.listOf(rawCourses)
+                .subList(0, 100);
         courseTagPolicy.tagAllCourses(courses);
         return courseRepository.saveAll(courses);
     }
@@ -40,7 +38,7 @@ public class CourseService {
         return CourseResponse.listOf(courses);
     }
 
-    public List<CourseResponse> findByMinor(String minorType){
+    public List<CourseResponse> findByMinor(String minorType) {
         List<Course> courses = courseRepository.findAll();
         if (minorType.equals("NONE")) {
             return CourseResponse.listOf(courses);

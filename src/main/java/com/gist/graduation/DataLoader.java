@@ -24,6 +24,6 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
         File file = fileResourceUtils.convertPathResourceToCourseListFileAtServer();
         courseService.createCourses(file);
-        rawCourseService.saveRawCourses(file);
+//        rawCourseService.saveRawCourses(file);
     }
 }

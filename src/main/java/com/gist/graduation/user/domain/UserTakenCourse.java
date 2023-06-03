@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 
 @Entity
@@ -26,6 +28,9 @@ public class UserTakenCourse extends BaseEntity {
     private String courseCode;
     private Integer credit;
     private String grade;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 
     @Builder
     public UserTakenCourse(int year, String semester, CourseType courseType, String courseName, String courseCode, Integer credit, String grade) {
@@ -58,5 +63,9 @@ public class UserTakenCourse extends BaseEntity {
 
     public String getSemester() {
         return this.yearAndSemester.getSemester();
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

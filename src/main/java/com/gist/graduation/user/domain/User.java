@@ -57,7 +57,9 @@ public class User extends BaseEntity {
         this.majorType = majorType;
         this.googleAdditionalInfo = new GoogleAdditionalInfo(pictureUrl, givenName, familyName, locale);
         this.studentId = studentId;
-        this.userTakenCourses = userTakenCourses;
+        this.userTakenCourses = userTakenCourses.stream()
+                .peek(userTakenCourse -> userTakenCourse.setUser(this))
+                .collect(Collectors.toList());
     }
 
     public GraduationRequirementStatus checkGraduationStatus(){

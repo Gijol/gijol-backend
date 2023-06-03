@@ -1,10 +1,12 @@
 package com.gist.graduation.user.domain;
 
+import com.gist.graduation.utils.converter.AesConverter;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Embeddable;
 
 @Embeddable
@@ -13,9 +15,11 @@ import javax.persistence.Embeddable;
 public class GoogleAdditionalInfo {
 
     @Column(name = "google_picture_url")
+    @Convert(converter = AesConverter.class)
     private String pictureUrl;
 
     @Column(name = "given_name")
+    @Convert(converter = AesConverter.class)
     private String givenName;
 
     @Column(name = "family_name")

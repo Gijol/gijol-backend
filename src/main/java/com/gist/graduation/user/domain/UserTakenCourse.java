@@ -10,10 +10,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
@@ -30,6 +27,7 @@ public class UserTakenCourse extends BaseEntity {
     private String grade;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Builder
@@ -42,7 +40,7 @@ public class UserTakenCourse extends BaseEntity {
         this.grade = grade;
     }
 
-    public TakenCourse toTakenCourse(){
+    public TakenCourse toTakenCourse() {
         return TakenCourse.builder()
                 .year(this.getYear())
                 .semester(this.getSemester())
@@ -53,7 +51,7 @@ public class UserTakenCourse extends BaseEntity {
                 .build();
     }
 
-    public BigDecimal multiplyCreditAndGrade(){
+    public BigDecimal multiplyCreditAndGrade() {
         return LetterGrade.getGradePointByGrade(this.grade).multiply(BigDecimal.valueOf(this.credit));
     }
 

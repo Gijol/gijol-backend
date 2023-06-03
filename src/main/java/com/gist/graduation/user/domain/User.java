@@ -43,7 +43,7 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private MajorType majorType;
 
-    @OneToMany(mappedBy = "id", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<UserTakenCourse> userTakenCourses = new ArrayList<>();
 
     // graduationStatus
@@ -62,17 +62,17 @@ public class User extends BaseEntity {
                 .collect(Collectors.toList());
     }
 
-    public GraduationRequirementStatus checkGraduationStatus(){
+    public GraduationRequirementStatus checkGraduationStatus() {
         final GraduationRequirementStatus graduationRequirementStatus = new GraduationRequirementStatus();
         graduationRequirementStatus.checkGraduationRequirements(getStudentIdGroup(), this.toUserTakenCoursesList(), this.majorType);
         return graduationRequirementStatus;
     }
 
-    public Integer getStudentIdGroup(){
+    public Integer getStudentIdGroup() {
         return Integer.parseInt(this.studentId.substring(studentId.length() - 6, studentId.length() - 4));
     }
 
-    private UserTakenCoursesList toUserTakenCoursesList(){
+    private UserTakenCoursesList toUserTakenCoursesList() {
         List<TakenCourse> takenCourses = this.userTakenCourses.stream()
                 .map(UserTakenCourse::toTakenCourse)
                 .collect(Collectors.toList());

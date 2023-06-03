@@ -20,8 +20,7 @@ jobs:
         with:
           username: ${{ secrets.DEV_USERNAME }}
           host: ${{ secrets.DEV_HOST }}
-          password: ${{ secrets.DEV_PASSWORD }}
-          port: ${{ secrets.DEV_PORT }}
+          key: ${{ secrets.AWS_PRIVATE_KEY }}
           source: "./build/libs/*.jar"
           target: "/home/ubuntu/deploy"
           strip_components: 2
@@ -31,8 +30,7 @@ jobs:
         with:
           username: ${{ secrets.DEV_USERNAME }}
           host: ${{ secrets.DEV_HOST }}
-          password: ${{ secrets.DEV_PASSWORD }}
-          port: ${{ secrets.DEV_PORT }}
+          key: ${{ secrets.AWS_PRIVATE_KEY }}
           source: "deploy/dev-deploy.sh"
           target: "/home/ubuntu/deploy"
           strip_components: 1
@@ -42,8 +40,7 @@ jobs:
         with:
           username: ${{ secrets.DEV_USERNAME }}
           host: ${{ secrets.DEV_HOST }}
-          password: ${{ secrets.DEV_PASSWORD }}
-          port: ${{ secrets.DEV_PORT }}
+          key: ${{ secrets.AWS_PRIVATE_KEY }}
           script_stop: true
           script: |
             cd /home/ubuntu/deploy

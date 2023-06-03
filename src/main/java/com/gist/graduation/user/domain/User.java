@@ -72,10 +72,25 @@ public class User extends BaseEntity {
         return Integer.parseInt(this.studentId.substring(studentId.length() - 6, studentId.length() - 4));
     }
 
+    public void updateMajorType(MajorType majorType) {
+        this.majorType = majorType;
+    }
+
     private UserTakenCoursesList toUserTakenCoursesList() {
         List<TakenCourse> takenCourses = this.userTakenCourses.stream()
                 .map(UserTakenCourse::toTakenCourse)
                 .collect(Collectors.toList());
         return new UserTakenCoursesList(takenCourses);
+    }
+
+    public void updateTakenCourses(List<UserTakenCourse> userTakenCourseEntityList) {
+        this.userTakenCourses = userTakenCourseEntityList.stream()
+                .peek(userTakenCourse -> userTakenCourse.setUser(this))
+                .collect(Collectors.toList());
+    }
+
+
+    public void updateStudentId(String studentId) {
+        this.studentId = studentId;
     }
 }

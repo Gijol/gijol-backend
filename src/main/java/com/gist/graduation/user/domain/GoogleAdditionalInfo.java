@@ -23,6 +23,7 @@ public class GoogleAdditionalInfo {
     private String givenName;
 
     @Column(name = "family_name")
+    @Convert(converter = AesConverter.class)
     private String familyName;
 
     @Column(name = "locale")

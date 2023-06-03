@@ -1,16 +1,19 @@
 package com.gist.graduation.user.application;
 
 import com.gist.graduation.requirment.domain.GraduationRequirementStatus;
+import com.gist.graduation.requirment.domain.major.MajorType;
 import com.gist.graduation.user.domain.User;
 import com.gist.graduation.user.domain.UserTakenCourse;
 import com.gist.graduation.user.domain.vo.YearAndSemester;
 import com.gist.graduation.user.dto.UserTakenCoursesAndGradeResponse;
 import com.gist.graduation.user.dto.UserTakenCoursesAndGradeResponse.UserTakenCourseBySemesterResponse;
 import com.gist.graduation.user.dto.UserTakenCoursesAndGradeResponse.UserTakenCourseResponse;
+import com.gist.graduation.user.dto.UserTakenCoursesRequest;
 import com.gist.graduation.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -53,5 +56,16 @@ public class UserService {
                 .sum();
 
         return new UserTakenCoursesAndGradeResponse(userTakenCourseBySemesterResponses, averageGrade, totalCredit);
+    }
+
+    @Transactional
+    public void updateMajor(User user, MajorType majorType) {
+        user.updateMajorType(majorType);
+    }
+
+    @Transactional
+    public void updateTakenCourses(User user, UserTakenCoursesRequest userTakenCoursesRequest) {
+        user.updateTakenCourses(userTakenCoursesRequest.toUserTakenCourseEntityList());
+        user.updateStudentId(userTakenCoursesRequest.getStudentId());
     }
 }

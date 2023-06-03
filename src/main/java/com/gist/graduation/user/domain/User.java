@@ -40,6 +40,7 @@ public class User extends BaseEntity {
     private MajorType majorType;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "user_id")
     private List<UserTakenCourse> userTakenCourses = new ArrayList<>();
 
     // graduationStatus

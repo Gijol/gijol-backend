@@ -6,6 +6,7 @@ import com.gist.graduation.requirment.domain.GraduationRequirementStatus;
 import com.gist.graduation.requirment.domain.major.MajorType;
 import com.gist.graduation.user.application.UserService;
 import com.gist.graduation.user.domain.User;
+import com.gist.graduation.user.dto.UserInfoResponse;
 import com.gist.graduation.user.dto.UserTakenCoursesAndGradeResponse;
 import com.gist.graduation.user.dto.UserTakenCoursesRequest;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,12 @@ public class UserController {
     public ResponseEntity<?> checkTakenCourse(@AuthenticationPrincipal User user) {
         UserTakenCoursesAndGradeResponse userTakenCourseAndAverageGrade = userService.findUserTakenCourseAndAverageGrade(user);
         return ResponseEntity.ok(userTakenCourseAndAverageGrade);
+    }
+
+    @GetMapping("/")
+    @GoogleIdTokenRequired
+    public ResponseEntity<UserInfoResponse> getUserInfo(@AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(userService.getUserInfo(user));
     }
 
     @PutMapping("/taken-courses")

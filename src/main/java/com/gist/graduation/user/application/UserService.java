@@ -5,6 +5,7 @@ import com.gist.graduation.requirment.domain.major.MajorType;
 import com.gist.graduation.user.domain.User;
 import com.gist.graduation.user.domain.UserTakenCourse;
 import com.gist.graduation.user.domain.vo.YearAndSemester;
+import com.gist.graduation.user.dto.UserInfoResponse;
 import com.gist.graduation.user.dto.UserTakenCoursesAndGradeResponse;
 import com.gist.graduation.user.dto.UserTakenCoursesAndGradeResponse.UserTakenCourseBySemesterResponse;
 import com.gist.graduation.user.dto.UserTakenCoursesAndGradeResponse.UserTakenCourseResponse;
@@ -67,5 +68,9 @@ public class UserService {
     public void updateTakenCourses(User user, UserTakenCoursesRequest userTakenCoursesRequest) {
         user.updateTakenCourses(userTakenCoursesRequest.toUserTakenCourseEntityList());
         user.updateStudentId(userTakenCoursesRequest.getStudentId());
+    }
+
+    public UserInfoResponse getUserInfo(User user) {
+        return UserInfoResponse.of(user);
     }
 }

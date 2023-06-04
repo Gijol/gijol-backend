@@ -36,6 +36,7 @@
     <springProfile name="prod">
         <include resource="log-appender/file-info-appender.xml"/>
         <include resource="log-appender/file-error-appender.xml"/>
+        <include resource="privates/discord-appender-prod.xml"/>
         <root level="INFO">
             <appender-ref ref="FILE-INFO"/>
             <appender-ref ref="FILE-ERROR"/>

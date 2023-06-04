@@ -5,10 +5,13 @@
     <property name="INFO_LOG_FILE_NAME" value="info"/>
     <property name="ERROR_LOG_FILE_NAME" value="error"/>
     <property name="LOG_PATTERN" value="%-5level %d{yy-MM-dd HH:mm:ss} [%logger{0}:%line] - %msg%n"/>
+    <springProperty scope="context" name="DISCORD_WEBHOOK_URI" source="logging.discord.webhook-uri"/>
     <springProfile name="local">
-        <include resource="log-appender/console-appender.xml" />
+        <include resource="log-appender/console-appender.xml"/>
+        <include resource="privates/discord-appender.xml"/>
         <logger name="com.gist.graduation" level="INFO" additivity="false">
             <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="ASYNC_DISCORD"/>
         </logger>
         <root level="WARN">
             <appender-ref ref="CONSOLE"/>
@@ -17,6 +20,7 @@
     <springProfile name="dev">
         <include resource="log-appender/file-info-appender.xml"/>
         <include resource="log-appender/file-error-appender.xml"/>
+        <include resource="privates/discord-appender.xml"/>
         <logger name="org.hibernate.SQL" level="DEBUG">
             <appender-ref ref="FILE-INFO"/>
         </logger>
@@ -26,6 +30,7 @@
         <root level="INFO">
             <appender-ref ref="FILE-INFO"/>
             <appender-ref ref="FILE-ERROR"/>
+            <appender-ref ref="ASYNC_DISCORD"/>
         </root>
     </springProfile>
     <springProfile name="prod">

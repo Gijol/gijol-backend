@@ -34,47 +34,48 @@ public class ScienceBasic extends RequirementStatusBaseEntity {
     }
 
     private void checkMathFrom2018(UserTakenCoursesList inputUserTakenCoursesList) {
+        UserTakenCoursesList userTakenCoursesList = this.getUserTakenCoursesList();
 
-        List<TakenCourse> userTakenMathCourses = inputUserTakenCoursesList.getTakenCourses()
-                .stream()
-                .filter(s -> CALCULUS.contains(s) || CORE_MATH.contains(s))
-                .collect(Collectors.toList());
+        userTakenCoursesList.addAll(inputUserTakenCoursesList.getTakenCourses().stream()
+                .filter(s -> s.belongsToCourseInfosAny(CALCULUS) || s.belongsToCourseInfosAny(CORE_MATH))
+                .collect(Collectors.toList()));
 
-        if (userTakenMathCourses.stream().noneMatch(CALCULUS::contains)) {
+        if (userTakenCoursesList.notExistAny(CALCULUS)) {
             this.getMessages().add(String.format("%s 중 한 과목을 수강해야 합니다.", CALCULUS));
         }
 
-        if (userTakenMathCourses.stream().noneMatch(CORE_MATH::contains)) {
+        if (userTakenCoursesList.notExistAny(CORE_MATH)) {
             this.getMessages().add(String.format("%s 중 한 과목을 수강해야 합니다.", CORE_MATH));
         }
-
-        getUserTakenCoursesList().addAll(userTakenMathCourses);
     }
 
-    private void checkScienceFrom2018(UserTakenCoursesList userTakenCoursesList) {
-        boolean tookComputer = checkComputerProgramming(userTakenCoursesList);
-        ScienceEnum.checkScienceBasicCourses(this, userTakenCoursesList);
+    private void checkScienceFrom2018(UserTakenCoursesList inputUserTakenCourses) {
+        boolean isTakenComputerProgramming = checkComputerProgramming(inputUserTakenCourses);
+        ScienceEnum.checkScienceBasicCourses(this, inputUserTakenCourses);
 
-        ScienceVerifier scienceVerifier = ScienceEnum.ofScienceVerifier(userTakenCoursesList);
+        ScienceVerifier scienceVerifier = ScienceEnum.ofScienceVerifier(inputUserTakenCourses);
 
         if(scienceVerifier.getCounts()<2){
-            this.addMessage("기초 과학 과목을 추천해주기에는 과목수가 너무 적어요! 본인의 관심에 맞는 과목을 수강해주세요 :)");
+            addMessage("기초 과학 과목을 추천해주기에는 과목수가 너무 적어요! 본인의 관심에 맞는 과목을 수강해주세요 :)");
             return;
         }
-        scienceVerifier.checkTwoBlock(this, tookComputer);
 
-        if (!tookComputer) {
+        scienceVerifier.checkTwoBlock(this, isTakenComputerProgramming);
+
+        if (!isTakenComputerProgramming) {
             scienceVerifier.checkThreeBlock(this);
         }
     }
 
-    private boolean checkComputerProgramming(UserTakenCoursesList userTakenCoursesList) {
-        Optional<TakenCourse> computerProgramming = userTakenCoursesList.getTakenCourses().stream()
-                .filter(s -> s.equals(COMPUTER_PROGRAMMING))
-                .findAny();
+    private boolean checkComputerProgramming(UserTakenCoursesList inputUserTakenCourses) {
+        UserTakenCoursesList userTakenCoursesList = this.getUserTakenCoursesList();
 
-        if (computerProgramming.isPresent()) {
-            this.getUserTakenCoursesList().getTakenCourses().add(computerProgramming.get());
+        userTakenCoursesList.addAll(inputUserTakenCourses.getTakenCourses().stream()
+                .filter(s -> s.equalsCourseInfo(COMPUTER_PROGRAMMING))
+                .collect(Collectors.toList())
+        );
+
+        if (userTakenCoursesList.contains(COMPUTER_PROGRAMMING)) {
             setMinConditionCredits(MIN_CONDITION_CREDITS_WITH_COMPUTER_PROGRAMMING);
             return true;
         }

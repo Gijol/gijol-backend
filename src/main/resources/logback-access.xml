@@ -5,7 +5,7 @@
     <property name="ACCESS_LOG_FILE_NAME" value="access"/>
     <property name="LOG_PATTERN"
               value="%n###### HTTP Request ######%n%fullRequest%n%n###### HTTP Response ######%n%fullResponse%n%n"/>
-    <springProfile name="local, dev,prod">
+    <springProfile name="dev,prod">
         <include resource="log-appender/file-access-appender.xml"/>
         <appender-ref ref="FILE-ACCESS"/>
     </springProfile>

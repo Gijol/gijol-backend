@@ -1,6 +1,6 @@
 package com.gist.graduation.printer;
 
-import com.gist.graduation.user.taken_course.TakenCourse;
+import com.gist.graduation.course.domain.CourseInfo;
 import com.gist.graduation.utils.RegisteredCourse;
 
 import java.util.Collection;
@@ -84,10 +84,10 @@ public class TestCourseListPrinter {
     }
 
     public void printCoursePretty(RegisteredCourse registeredCourse) {
-        System.out.print("new TakenCourse(");
+        System.out.print("new CourseInfo(");
         System.out.printf("\"%s\", ", registeredCourse.getName());
         System.out.printf("\"%s\", ", registeredCourse.getCode());
-        System.out.printf("\"%s\")\n", registeredCourse.getCredit());
+        System.out.printf("\"%s\"), \n", registeredCourse.getCredit());
     }
 
     public void printCourseCollectionPretty(Collection<RegisteredCourse> registeredCourse) {
@@ -99,12 +99,12 @@ public class TestCourseListPrinter {
         }
     }
 
-    public void printTakenCourseCollectionPretty(Collection<TakenCourse> takenCourses) {
-        for (TakenCourse course : takenCourses) {
+    public void printTakenCourseCollectionPretty(Collection<CourseInfo> takenCourses) {
+        for (CourseInfo course : takenCourses) {
             System.out.print("new TakenCourse(");
             System.out.printf("\"%s\", ", course.getCourseName());
             System.out.printf("\"%s\", ", course.getCourseCode());
-            System.out.printf("\"%s\"),\n", course.getCredit());
+            System.out.printf("\"%s\"),\n", course.getCourseCredit());
         }
     }
 

@@ -1,7 +1,6 @@
 package com.gist.graduation.requirment.domain;
 
 import com.gist.graduation.requirment.domain.major.MajorType;
-import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import lombok.Getter;
 import lombok.ToString;
@@ -11,7 +10,7 @@ import java.util.List;
 
 @Getter
 @ToString
-public class RequirementStatusBaseEntity {
+public abstract class RequirementStatusBaseEntity {
 
     private final UserTakenCoursesList userTakenCoursesList;
 
@@ -32,24 +31,18 @@ public class RequirementStatusBaseEntity {
         this.messages = new ArrayList<>();
     }
 
-    public void checkRequirementByStudentId(Integer studentId, UserTakenCoursesList inputUserTakenCoursesList, MajorType majorType) {
-
-    }
+    public abstract void checkRequirementByStudentId(Integer studentId, UserTakenCoursesList inputUserTakenCoursesList, MajorType majorType);
 
     public void addCredit(Integer credit) {
         this.totalCredits += credit;
     }
 
-    public void setMinConditionCredits(Integer minConditionCredits){
+    public void setMinConditionCredits(Integer minConditionCredits) {
         this.minConditionCredits = minConditionCredits;
     }
 
     public void isSatisfied() {
         this.satisfied = true;
-    }
-
-    public void addCourse(TakenCourse course) {
-        this.userTakenCoursesList.getTakenCourses().add(course);
     }
 
     public void addMessage(String message) {

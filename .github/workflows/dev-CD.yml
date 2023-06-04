@@ -9,8 +9,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source code
+      - name: Checkout repository and submodules
         uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.SUBMODULE_GITHUB_TOKEN }}
+          submodules: true
         
       - name: Build App
         run: ./gradlew bootJar
@@ -20,7 +23,7 @@ jobs:
         with:
           username: ubuntu
           host: ${{ secrets.DEV_HOST }}
-          key: ${{ secrets.PRIVATE_KEY }}
+          key: ${{ secrets.AWS_PRIVATE_KEY }}
           source: "./build/libs/*.jar"
           target: "/home/ubuntu/deploy"
           strip_components: 2
@@ -30,7 +33,7 @@ jobs:
         with:
           username: ubuntu
           host: ${{ secrets.DEV_HOST }}
-          key: ${{ secrets.PRIVATE_KEY }}
+          key: ${{ secrets.AWS_PRIVATE_KEY }}
           source: "deploy/dev-deploy.sh"
           target: "/home/ubuntu/deploy"
           strip_components: 1
@@ -40,7 +43,7 @@ jobs:
         with:
           username: ubuntu
           host: ${{ secrets.DEV_HOST }}
-          key: ${{ secrets.PRIVATE_KEY }}
+          key: ${{ secrets.AWS_PRIVATE_KEY }}
           script_stop: true
           script: |
             cd /home/ubuntu/deploy

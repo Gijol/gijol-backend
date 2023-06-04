@@ -1,11 +1,15 @@
 package com.gist.graduation.requirment.domain.science;
 
+import com.gist.graduation.course.domain.CourseInfo;
+import com.gist.graduation.config.exception.ApplicationException;
+import com.gist.graduation.requirment.domain.constants.ScienceBasicConstants;
 import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 import lombok.AllArgsConstructor;
 import lombok.ToString;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,59 +22,59 @@ public enum ScienceEnum {
     CHEMISTRY_BLOCK,
     BIOLOGY_BLOCK;
 
-    private final List<TakenCourse> courseList = new ArrayList<>();
+    public static final String PHYSICS = "물리";
+    public static final String CHEMISTRY = "화학";
+    public static final String BIOLOGY = "생명";
+    private final List<CourseInfo> courseList = new ArrayList<>();
 
     static {
-        PHYSICS_BLOCK.courseList.addAll(PHYSICS);
+        PHYSICS_BLOCK.courseList.addAll(ScienceBasicConstants.Science.PHYSICS);
         PHYSICS_BLOCK.courseList.add(PHYSICS_EXPERIMENT);
-        CHEMISTRY_BLOCK.courseList.addAll(CHEMISTRY);
+        CHEMISTRY_BLOCK.courseList.addAll(ScienceBasicConstants.Science.CHEMISTRY);
         CHEMISTRY_BLOCK.courseList.add(CHEMISTRY_EXPERIMENT);
-        BIOLOGY_BLOCK.courseList.addAll(BIOLOGY);
+        BIOLOGY_BLOCK.courseList.addAll(ScienceBasicConstants.Science.BIOLOGY);
         BIOLOGY_BLOCK.courseList.add(BIOLOGY_EXPERIMENT);
     }
 
-    public static void checkScienceBasicCourses(ScienceBasic scienceBasic, UserTakenCoursesList userTakenCoursesList) {
+    public static void checkScienceBasicCourses(ScienceBasic scienceBasic, UserTakenCoursesList inputUserTakenCourses) {
+        UserTakenCoursesList userTakenCourses = scienceBasic.getUserTakenCoursesList();
+
         for (ScienceEnum scienceEnum : values()) {
-            List<TakenCourse> takenCourses = userTakenCoursesList.getTakenCourses().stream()
-                    .filter(scienceEnum.courseList::contains)
+            List<TakenCourse> takenCourses = inputUserTakenCourses.getTakenCourses().stream()
+                    .filter(s -> s.belongsToCourseInfosAny(scienceEnum.courseList))
                     .collect(Collectors.toList());
             scienceBasic.getUserTakenCoursesList().addAll(takenCourses);
         }
-        addSoftwareBasic(scienceBasic, userTakenCoursesList);
+        addSoftwareBasic(scienceBasic, inputUserTakenCourses);
     }
 
     // software basic and coding check and add
-    private static void addSoftwareBasic(ScienceBasic scienceBasic, UserTakenCoursesList userTakenCoursesList) {
-        userTakenCoursesList.getTakenCourses().forEach(s -> {
-            if (s.equals(SOFTWARE_BASIC_AND_CODING)) scienceBasic.getUserTakenCoursesList().getTakenCourses().add(s);
+    private static void addSoftwareBasic(ScienceBasic scienceBasic, UserTakenCoursesList inputUserTakenCourses) {
+        inputUserTakenCourses.getTakenCourses().forEach(s -> {
+            if (s.equalsCourseInfo(SOFTWARE_BASIC_AND_CODING)) scienceBasic.getUserTakenCoursesList().add(s);
         });
     }
 
-    public static ScienceVerifier ofScienceVerifier(UserTakenCoursesList userTakenCoursesList) {
-        ScienceBlock physicsBlock = new ScienceBlock();
-        ScienceBlock chemistryBlock = new ScienceBlock();
-        ScienceBlock biologyBlock = new ScienceBlock();
-        int i = 0;
+    public static ScienceVerifier ofScienceVerifier(UserTakenCoursesList inputUserTakenCourses) {
 
-        for (ScienceEnum scienceEnum : values()) {
-            List<TakenCourse> takenCourses = userTakenCoursesList.getTakenCourses().stream()
-                    .filter(scienceEnum.courseList::contains)
-                    .collect(Collectors.toList());
+        List<ScienceBlock> scienceBlockList = Arrays.stream(values()).
+                map(scienceEnum -> {
+                    List<TakenCourse> scienceCourses = inputUserTakenCourses.getTakenCourses().stream()
+                            .filter(s -> s.belongsToCourseInfosAny(scienceEnum.courseList))
+                            .collect(Collectors.toList());
 
-            if (i == 0) {
-                physicsBlock = new ScienceBlock(takenCourses, ofStatus(takenCourses), "물리");
-            }
+                    if (scienceEnum.name().equals(PHYSICS_BLOCK.name())) {
+                        return new ScienceBlock(scienceCourses, ofStatus(scienceCourses), PHYSICS);
+                    } else if (scienceEnum.name().equals(CHEMISTRY_BLOCK.name())) {
+                        return new ScienceBlock(scienceCourses, ofStatus(scienceCourses), CHEMISTRY);
+                    } else if (scienceEnum.name().equals(BIOLOGY_BLOCK.name())) {
+                        return new ScienceBlock(scienceCourses, ofStatus(scienceCourses), BIOLOGY);
+                    }
+                    throw new ApplicationException("기초 과학 블록을 찾을 수 없습니다.");
+                })
+                .collect(Collectors.toList());
 
-            if (i == 1) {
-                chemistryBlock = new ScienceBlock(takenCourses, ofStatus(takenCourses), "화학");
-            }
-
-            if (i == 2) {
-                biologyBlock = new ScienceBlock(takenCourses, ofStatus(takenCourses), "생명");
-            }
-            i++;
-        }
-        return ScienceVerifier.of(physicsBlock, chemistryBlock, biologyBlock);
+        return ScienceVerifier.of(scienceBlockList.get(0), scienceBlockList.get(1), scienceBlockList.get(2));
     }
 
 

@@ -1,6 +1,8 @@
 package com.gist.graduation.user.taken_course;
 
+import com.gist.graduation.course.domain.CourseInfo;
 import com.gist.graduation.utils.RegisteredCourse;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.util.List;
@@ -18,19 +20,33 @@ public class TakenCourse {
     private final String courseCode;
     private final Integer credit;
 
-    public TakenCourse(int year, String semester, String courseType, String courseName, String courseCode, String credit) {
+    @Builder
+    public TakenCourse(int year, String semester, CourseType courseType, String courseName, String courseCode, String credit) {
         this.year = year;
         this.semester = semester;
-        this.courseType = CourseType.stringOf(courseType);
+        this.courseType = courseType;
         this.courseName = courseName;
         this.courseCode = courseCode;
         this.credit = Integer.parseInt(credit);
+    }
+
+    public TakenCourse(int year, String semester, String courseType, String courseName, String courseCode, String credit) {
+        this(year, semester, CourseType.stringOf(courseType), courseName, courseCode, credit);
     }
 
     public TakenCourse(String courseName, String courseCode, String credit) {
         this.courseName = courseName;
         this.courseCode = courseCode;
         this.credit = Integer.parseInt(credit);
+    }
+
+    public boolean equalsCourseInfo(CourseInfo courseInfo) {
+        return this.courseCode.equals(courseInfo.getCourseCode());
+    }
+
+    public boolean belongsToCourseInfosAny(List<CourseInfo> courseInfos) {
+        return courseInfos.stream()
+                .anyMatch(this::equalsCourseInfo);
     }
 
     @Override
@@ -51,8 +67,13 @@ public class TakenCourse {
         return String.format("%s(%s)", this.courseName, this.courseCode);
     }
 
-    public void setCourseType(CourseType type){
+    public void setCourseType(CourseType type) {
         this.courseType = type;
+    }
+
+    public TakenCourse setCourseTypeTo(CourseType type) {
+        this.courseType = type;
+        return this;
     }
 
     public static TakenCourse of(RegisteredCourse registeredCourse) {
@@ -64,4 +85,6 @@ public class TakenCourse {
                 .map(TakenCourse::of)
                 .collect(Collectors.toList());
     }
+
+
 }

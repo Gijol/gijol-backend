@@ -2,7 +2,6 @@ package com.gist.graduation.requirment.domain.language;
 
 import com.gist.graduation.requirment.domain.RequirementStatusBaseEntity;
 import com.gist.graduation.requirment.domain.major.MajorType;
-import com.gist.graduation.user.taken_course.TakenCourse;
 import com.gist.graduation.user.taken_course.UserTakenCoursesList;
 
 import java.util.List;
@@ -14,10 +13,10 @@ public class LanguageBasic extends RequirementStatusBaseEntity {
     private static final int LANGUAGE_BASIC_MIN_CREDIT = 7;
 
     @Override
-    public void checkRequirementByStudentId(Integer studentId, UserTakenCoursesList inputUserTakenCoursesList, MajorType majorType) {
+    public void checkRequirementByStudentId(Integer studentId, UserTakenCoursesList inputUserTakenCourses, MajorType majorType) {
         if (studentId >= 18) {
-            checkEnglishFrom2018(inputUserTakenCoursesList);
-            checkWritingFrom2018(inputUserTakenCoursesList);
+            checkEnglishFrom2018(inputUserTakenCourses);
+            checkWritingFrom2018(inputUserTakenCourses);
         }
 
         if (this.getMessages().isEmpty()) {
@@ -28,35 +27,36 @@ public class LanguageBasic extends RequirementStatusBaseEntity {
         setMinConditionCredits(LANGUAGE_BASIC_MIN_CREDIT);
     }
 
-    private void checkEnglishFrom2018(UserTakenCoursesList inputUserTakenCoursesList) {
-        UserTakenCoursesList userTakenCoursesList = this.getUserTakenCoursesList();
+    private void checkEnglishFrom2018(UserTakenCoursesList inputUserTakenCourses) {
+        UserTakenCoursesList userTakenCourses = this.getUserTakenCoursesList();
 
-        userTakenCoursesList.addAll(inputUserTakenCoursesList.getTakenCourses()
+        userTakenCourses.addAll(inputUserTakenCourses.getTakenCourses()
                 .stream()
-                .filter(s -> s.equals(ENGLISH_I) || s.equals(ENGLISH_I_PRESENTATION) || s.equals(ENGLISH_II))
+                .filter(s -> s.belongsToCourseInfosAny(List.of(ENGLISH_I, ENGLISH_II, ENGLISH_I_PRESENTATION)))
                 .collect(Collectors.toList())
         );
 
-        if (userTakenCoursesList.notExist(ENGLISH_I) && userTakenCoursesList.notExist(ENGLISH_I_PRESENTATION)) {
-            this.getMessages().add(String.format("%s 또는 %s을 수강해야 합니다.", ENGLISH_I, ENGLISH_I_PRESENTATION));
+        if (userTakenCourses.notExistAny(List.of(ENGLISH_I, ENGLISH_I_PRESENTATION))) {
+            addMessage(String.format("%s 또는 %s을 수강해야 합니다.", ENGLISH_I, ENGLISH_I_PRESENTATION));
         }
 
-        if (inputUserTakenCoursesList.notExist(ENGLISH_II)) {
-            this.getMessages().add(String.format("%s를 수강해야 합니다.", ENGLISH_II));
+        if (userTakenCourses.notExist(ENGLISH_II)) {
+            addMessage(String.format("%s를 수강해야 합니다.", ENGLISH_II));
         }
     }
 
     private void checkWritingFrom2018(UserTakenCoursesList inputUserTakenCoursesList) {
-        List<TakenCourse> userTakenCourses = inputUserTakenCoursesList.getTakenCourses()
+        UserTakenCoursesList userTakenCourses = this.getUserTakenCoursesList();
+
+        userTakenCourses.addAll(inputUserTakenCoursesList.getTakenCourses()
                 .stream()
-                .filter(WRITING_COURSE_LIST::contains)
-                .collect(Collectors.toList());
+                .filter(s -> s.belongsToCourseInfosAny(WRITING_COURSE_INFOS))
+                .collect(Collectors.toList())
+        );
 
-        if (userTakenCourses.isEmpty()) {
-            this.getMessages().add(String.format("%s 중 한 과목을 수강해야 합니다.", WRITING_COURSE_LIST));
+        if (userTakenCourses.notExistAny(WRITING_COURSE_INFOS)) {
+            addMessage(String.format("%s 중 한 과목을 수강해야 합니다.", WRITING_COURSE_INFOS));
         }
-
-        getUserTakenCoursesList().addAll(userTakenCourses);
     }
 
 

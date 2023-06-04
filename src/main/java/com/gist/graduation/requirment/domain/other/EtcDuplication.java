@@ -23,9 +23,4 @@ public class EtcDuplication {
             inputUserTakenCoursesList.getTakenCourses().add(creativityCourses.get(0));
         }
     }
-
-
-
-
-
 }

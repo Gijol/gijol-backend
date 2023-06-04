@@ -1,7 +1,6 @@
 package com.gist.graduation.user.application;
 
 import com.gist.graduation.requirment.domain.GraduationRequirementStatus;
-import com.gist.graduation.requirment.domain.major.MajorType;
 import com.gist.graduation.user.domain.User;
 import com.gist.graduation.user.domain.UserTakenCourse;
 import com.gist.graduation.user.domain.vo.YearAndSemester;
@@ -60,7 +59,7 @@ public class UserService {
     }
 
     @Transactional
-    public void updateMajor(User user, MajorType majorType) {
+    public void updateMajor(User user, String majorType) {
         user.updateMajorType(majorType);
     }
 

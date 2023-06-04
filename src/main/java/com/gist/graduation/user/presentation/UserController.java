@@ -3,7 +3,6 @@ package com.gist.graduation.user.presentation;
 import com.gist.graduation.auth.annotation.AuthenticationPrincipal;
 import com.gist.graduation.auth.annotation.GoogleIdTokenRequired;
 import com.gist.graduation.requirment.domain.GraduationRequirementStatus;
-import com.gist.graduation.requirment.domain.major.MajorType;
 import com.gist.graduation.user.application.UserService;
 import com.gist.graduation.user.domain.User;
 import com.gist.graduation.user.dto.UserInfoResponse;
@@ -51,7 +50,7 @@ public class UserController {
 
     @PutMapping("/major")
     @GoogleIdTokenRequired
-    public ResponseEntity<?> changeMajor(@AuthenticationPrincipal User user, @RequestBody MajorType majorType) {
+    public ResponseEntity<?> changeMajor(@AuthenticationPrincipal User user, @RequestBody String majorType) {
         userService.updateMajor(user, majorType);
         return ResponseEntity.noContent().build();
     }

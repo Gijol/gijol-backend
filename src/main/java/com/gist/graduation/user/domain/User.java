@@ -72,8 +72,8 @@ public class User extends BaseEntity {
         return Integer.parseInt(this.studentId.substring(studentId.length() - 6, studentId.length() - 4));
     }
 
-    public void updateMajorType(String majorType) {
-        this.majorType = MajorType.fromMajorType(majorType);
+    public void updateMajorType(MajorType majorType) {
+        this.majorType = majorType;
     }
 
     private UserTakenCoursesList toUserTakenCoursesList() {

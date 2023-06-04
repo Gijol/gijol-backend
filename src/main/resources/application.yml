@@ -50,6 +50,7 @@ spring:
   config:
     activate:
       on-profile: prod
+    import: privates/application-db-prod.yml
 
 swagger:
   host: api.gijol.im

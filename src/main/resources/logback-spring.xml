@@ -14,7 +14,21 @@
             <appender-ref ref="CONSOLE"/>
         </root>
     </springProfile>
-    <springProfile name="dev,prod">
+    <springProfile name="dev">
+        <include resource="log-appender/file-info-appender.xml"/>
+        <include resource="log-appender/file-error-appender.xml"/>
+        <logger name="org.hibernate.SQL" level="DEBUG">
+            <appender-ref ref="FILE-INFO"/>
+        </logger>
+        <logger name="org.hibernate.type" level="TRACE">
+            <appender-ref ref="FILE-INFO"/>
+        </logger>
+        <root level="INFO">
+            <appender-ref ref="FILE-INFO"/>
+            <appender-ref ref="FILE-ERROR"/>
+        </root>
+    </springProfile>
+    <springProfile name="prod">
         <include resource="log-appender/file-info-appender.xml"/>
         <include resource="log-appender/file-error-appender.xml"/>
         <root level="INFO">

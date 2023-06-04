@@ -7,10 +7,12 @@ import com.gist.graduation.user.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
+@Transactional
 class UserServiceTest {
 
     @Autowired
@@ -23,11 +25,14 @@ class UserServiceTest {
     void checkGraduationRequirementForUser() {
         //given
         final User user = Fixtures.createUser();
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
 
         //when
-        GraduationRequirementStatus graduationRequirementStatus = userService.checkGraduationRequirementForUser(user);
+        User foundUser = userRepository.findById(savedUser.getId()).orElseThrow(IllegalArgumentException::new);
+        GraduationRequirementStatus graduationRequirementStatus = userService.checkGraduationRequirementForUser(foundUser);
 
+        // then
         assertThat(graduationRequirementStatus.getTotalCredits()).isEqualTo(10);
     }
+
 }

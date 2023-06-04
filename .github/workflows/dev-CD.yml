@@ -12,7 +12,8 @@ jobs:
       - name: Checkout repository and submodules
         uses: actions/checkout@v2
         with:
-          submodules: recursive
+          token: ${{ secrets.SUBMODULE_GITHUB_TOKEN }}
+          submodules: true
         
       - name: Build App
         run: ./gradlew bootJar

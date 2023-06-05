@@ -13,10 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,18 +26,12 @@ public class CourseService {
     public List<Course> createCourses(File file) {
         List<RawCourse> rawCourses = CourseListParser.parseToRawCourse(file);
         List<Course> courses = Course.listOf(rawCourses)
-                .subList(0, 100);
+                .subList(0, 300);
         courseTagPolicy.tagAllCourses(courses);
         return courseRepository.saveAll(courses);
     }
 
     @Transactional(readOnly = true)
-    public List<CourseResponse> findAll() {
-        List<Course> courses = courseRepository.findAll();
-        Collections.shuffle(courses);
-        return CourseResponse.listOf(courses);
-    }
-
     public List<CourseResponse> findByMinor(MinorType minorType, Pageable pageable) {
         final Page<Course> courses = courseRepository.findCoursesByCourseCodeWithNone(minorType.name(), pageable);
         return CourseResponse.listOf(courses.toList());

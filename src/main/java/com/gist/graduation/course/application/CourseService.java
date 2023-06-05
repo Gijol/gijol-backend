@@ -4,8 +4,11 @@ import com.gist.graduation.course.domain.course.Course;
 import com.gist.graduation.course.domain.course.CourseRepository;
 import com.gist.graduation.course.domain.dto.CourseResponse;
 import com.gist.graduation.course.domain.rawcourse.RawCourse;
+import com.gist.graduation.requirment.domain.minor.MinorType;
 import com.gist.graduation.utils.CourseListParser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,13 +41,9 @@ public class CourseService {
         return CourseResponse.listOf(courses);
     }
 
-    public List<CourseResponse> findByMinor(String minorType) {
-        List<Course> courses = courseRepository.findAll();
-        if (minorType.equals("NONE")) {
-            return CourseResponse.listOf(courses);
-        }
-        Set<Course> filtered = courses.stream().filter(s -> s.getCourseInfo().belongToCoursesCode(List.of(minorType))).collect(Collectors.toSet());
-        return CourseResponse.listOf(filtered);
+    public List<CourseResponse> findByMinor(MinorType minorType, Pageable pageable) {
+        final Page<Course> courses = courseRepository.findCoursesByCourseCodeWithNone(minorType.name(), pageable);
+        return CourseResponse.listOf(courses.toList());
 
     }
 }

@@ -6,6 +6,8 @@ import com.gist.graduation.course.domain.tag.CourseTagType;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.util.Streamable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -46,7 +48,7 @@ public class CourseResponse {
         this.courseTags.addAll(courseTags);
     }
 
-    public static List<CourseResponse> listOf(Collection<Course> courses) {
+    public static List<CourseResponse> listOf(List<Course> courses) {
         return courses.stream()
                 .map(CourseResponse::of)
                 .collect(Collectors.toList());

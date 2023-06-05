@@ -2,6 +2,7 @@ package com.gist.graduation.course.domain.tag;
 
 
 import lombok.Getter;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
@@ -14,6 +15,7 @@ import java.util.List;
 public class CourseTags {
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @BatchSize(size = 200)
     private List<CourseTag> courseTags = new ArrayList<>();
 
     public CourseTags(List<CourseTag> courseTags) {

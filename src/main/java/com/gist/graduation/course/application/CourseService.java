@@ -1,6 +1,7 @@
 package com.gist.graduation.course.application;
 
 import com.gist.graduation.course.domain.course.Course;
+import com.gist.graduation.course.domain.course.CourseTagBulkRepository;
 import com.gist.graduation.course.domain.course.CourseRepository;
 import com.gist.graduation.course.domain.dto.CourseResponse;
 import com.gist.graduation.course.domain.rawcourse.RawCourse;
@@ -19,20 +20,20 @@ public class CourseService {
 
     private final CourseRepository courseRepository;
     private final CourseTagPolicy courseTagPolicy;
+    private final CourseTagBulkRepository courseTagBulkRepository;
 
-    @Transactional
-    public List<Course> createCourses(File file) {
+    public void createCourses(File file) {
         List<RawCourse> rawCourses = CourseListParser.parseToRawCourse(file);
-        List<Course> courses = Course.listOf(rawCourses)
-                .subList(0, 300);
-        courseTagPolicy.tagAllCourses(courses);
-        return courseRepository.saveAll(courses);
+        List<Course> courses = Course.listOf(rawCourses);
+        List<Course> savedCourses = courseRepository.saveAllAndFlush(courses);
+        courseTagPolicy.tagAllCourses(savedCourses);
+        courseTagBulkRepository.saveAllCourseTags(savedCourses);
     }
 
     @Transactional(readOnly = true)
     public List<CourseResponse> findByMinor(String code, Pageable pageable) {
         if (code.equalsIgnoreCase("NONE")) {
-            return CourseResponse.listOf(courseRepository.findAllByRandom(pageable.getPageSize(), pageable.getOffset()));
+            return CourseResponse.listOf(courseRepository.findAllCourses(pageable.getPageSize(), pageable.getOffset()));
         }
         return CourseResponse.listOf(courseRepository.findCoursesByCourseCode(code, pageable).toList());
 

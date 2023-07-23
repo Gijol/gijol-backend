@@ -7,6 +7,7 @@ import com.gist.graduation.course.domain.tag.CourseTags;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -29,6 +30,9 @@ public class Course {
 
     @Lob
     private String prerequisite;
+
+    @Lob
+    private String description;
 
     public Course(String courseCode, String courseName, int courseCredit, String prerequisite) {
         this(null, courseCode, courseName, courseCredit, prerequisite);
@@ -83,5 +87,13 @@ public class Course {
     public static Course of(RawCourse rawCourse) {
         CourseInfo courseInfo = rawCourse.getCourseInfo();
         return new Course(courseInfo.getCourseCode(), courseInfo.getCourseName(), courseInfo.getCourseCredit(), rawCourse.getPrerequisite());
+    }
+
+    public void updateDescription(String description) {
+        if (StringUtils.isEmpty(description)) {
+            this.description = null;
+            return;
+        }
+        this.description = description;
     }
 }

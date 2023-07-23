@@ -5,7 +5,8 @@ create table course
     course_credit integer not null,
     course_name   varchar(255),
     prerequisite  longtext,
-    primary key (id)
+    description   longtext
+        primary key (id)
 )
 
 create table course_tag

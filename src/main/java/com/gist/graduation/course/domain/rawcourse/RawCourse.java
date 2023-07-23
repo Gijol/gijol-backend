@@ -1,7 +1,7 @@
 package com.gist.graduation.course.domain.rawcourse;
 
 import com.gist.graduation.course.domain.CourseInfo;
-import com.gist.graduation.course.domain.course.Semester;
+import com.gist.graduation.course.domain.course.vo.Semester;
 import com.gist.graduation.utils.RegisteredCourse;
 import lombok.AccessLevel;
 import lombok.Getter;

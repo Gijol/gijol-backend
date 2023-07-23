@@ -1,8 +1,10 @@
 package com.gist.graduation.course.application;
 
+import com.gist.graduation.course.application.description.DescriptionJsonDto;
+import com.gist.graduation.course.application.description.DescriptionJsonParser;
 import com.gist.graduation.course.domain.course.Course;
-import com.gist.graduation.course.domain.course.CourseTagBulkRepository;
 import com.gist.graduation.course.domain.course.CourseRepository;
+import com.gist.graduation.course.domain.course.CourseTagBulkRepository;
 import com.gist.graduation.course.domain.dto.CourseResponse;
 import com.gist.graduation.course.domain.rawcourse.RawCourse;
 import com.gist.graduation.utils.CourseListParser;
@@ -25,7 +27,15 @@ public class CourseService {
     public void createCourses(File file) {
         List<RawCourse> rawCourses = CourseListParser.parseToRawCourse(file);
         List<Course> courses = Course.listOf(rawCourses);
-        List<Course> savedCourses = courseRepository.saveAllAndFlush(courses);
+
+        List<DescriptionJsonDto> courseDescriptionFromJsonFile = DescriptionJsonParser.getCourseDescriptionFromJsonFile();
+        for (DescriptionJsonDto descriptionJsonDto : courseDescriptionFromJsonFile) {
+            courses.stream()
+                    .filter(course -> course.getCourseInfo().getCourseCode().equals(descriptionJsonDto.getCourseCode()))
+                    .forEach(course -> course.updateDescription(descriptionJsonDto.getCourseDescription()));
+        }
+
+        List<Course> savedCourses = courseRepository.saveAll(courses);
         courseTagPolicy.tagAllCourses(savedCourses);
         courseTagBulkRepository.saveAllCourseTags(savedCourses);
     }
@@ -33,9 +43,8 @@ public class CourseService {
     @Transactional(readOnly = true)
     public List<CourseResponse> findByMinor(String code, Pageable pageable) {
         if (code.equalsIgnoreCase("NONE")) {
-            return CourseResponse.listOf(courseRepository.findAllCourses(pageable.getPageSize(), pageable.getOffset()));
+            return CourseResponse.listOf(courseRepository.findAll(pageable).toList());
         }
         return CourseResponse.listOf(courseRepository.findCoursesByCourseCode(code, pageable).toList());
-
     }
 }

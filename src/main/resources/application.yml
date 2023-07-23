@@ -9,6 +9,8 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
+  main:
+    allow-bean-definition-overriding: true
 
 server:
   servlet:

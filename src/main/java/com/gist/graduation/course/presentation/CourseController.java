@@ -21,8 +21,8 @@ public class CourseController {
     private final CourseService courseService;
 
     @GetMapping("")
-    public List<CourseResponse> getCourses(@RequestParam(required = false, defaultValue = "NONE") MinorType minorType, @PageableDefault(size = 20) Pageable pageable) {
-        return courseService.findByMinor(minorType, pageable);
+    public List<CourseResponse> getCourses(@RequestParam(required = false, defaultValue = "NONE") MinorType minorType, @PageableDefault(size = 20, page = 0) Pageable pageable) {
+        return courseService.findByMinor(minorType.name(), pageable);
     }
 
 }

@@ -4,10 +4,8 @@ import com.gist.graduation.course.domain.course.Course;
 import com.gist.graduation.course.domain.course.CourseRepository;
 import com.gist.graduation.course.domain.dto.CourseResponse;
 import com.gist.graduation.course.domain.rawcourse.RawCourse;
-import com.gist.graduation.requirment.domain.minor.MinorType;
 import com.gist.graduation.utils.CourseListParser;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,9 +30,11 @@ public class CourseService {
     }
 
     @Transactional(readOnly = true)
-    public List<CourseResponse> findByMinor(MinorType minorType, Pageable pageable) {
-        final Page<Course> courses = courseRepository.findCoursesByCourseCodeWithNone(minorType.name(), pageable);
-        return CourseResponse.listOf(courses.toList());
+    public List<CourseResponse> findByMinor(String code, Pageable pageable) {
+        if (code.equalsIgnoreCase("NONE")) {
+            return CourseResponse.listOf(courseRepository.findAllByRandom(pageable.getPageSize(), pageable.getOffset()));
+        }
+        return CourseResponse.listOf(courseRepository.findCoursesByCourseCode(code, pageable).toList());
 
     }
 }

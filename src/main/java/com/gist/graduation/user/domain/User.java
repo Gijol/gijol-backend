@@ -35,7 +35,7 @@ public class User extends BaseEntity {
     @Embedded
     private GoogleAdditionalInfo googleAdditionalInfo;
 
-    @Column(name = "student_id", unique = true, nullable = false)
+    @Column(name = "student_id", nullable = false)
     @Convert(converter = AesConverter.class)
     private String studentId;
 

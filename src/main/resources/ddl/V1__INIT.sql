@@ -69,8 +69,8 @@ create table user_taken_course
     primary key (id)
 )
 
-alter table users
-    add constraint UK_qh3otyipv2k9hqte4a1abcyhq unique (student_id)
+-- alter table users
+--     add constraint UK_qh3otyipv2k9hqte4a1abcyhq unique (student_id)
 
 alter table course_tag
     add constraint FK3tta6lkm8fr0rgfyr4y3xrr3u

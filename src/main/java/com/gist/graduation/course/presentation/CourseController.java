@@ -3,9 +3,13 @@ package com.gist.graduation.course.presentation;
 import com.gist.graduation.course.application.CourseService;
 import com.gist.graduation.course.domain.dto.CourseResponse;
 import com.gist.graduation.requirment.domain.minor.MinorType;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,8 +25,13 @@ public class CourseController {
     private final CourseService courseService;
 
     @GetMapping("")
-    public List<CourseResponse> getCourses(@RequestParam(required = false, defaultValue = "NONE") MinorType minorType, @PageableDefault(size = 20, page = 0) Pageable pageable) {
-        return courseService.findByMinor(minorType.name(), pageable);
+    @ApiParam(value = "page", type = "integer",example = "20")
+    public List<CourseResponse> getCourses(@RequestParam(required = false, defaultValue = "NONE") MinorType minorType,
+                                           @RequestParam(required = false, defaultValue = "0") int page,
+                                           @RequestParam(required = false, defaultValue = "20") int size
+                                           )
+    {
+        return courseService.findByMinor(minorType.name(), PageRequest.of(page, size));
     }
 
 }

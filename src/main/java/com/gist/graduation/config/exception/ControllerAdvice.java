@@ -12,7 +12,7 @@ public class ControllerAdvice {
 
     @ExceptionHandler(ApplicationException.class)
     public ResponseEntity<ErrorResponse> applicationException(ApplicationException ex) {
-        log.warn("Application Exception: " + ex.getMessage());
+        log.warn("Application Exception: ", ex);
         return ResponseEntity.status(ex.getHttpStatus()).body(new ErrorResponse(ex.getMessage()));
     }
 

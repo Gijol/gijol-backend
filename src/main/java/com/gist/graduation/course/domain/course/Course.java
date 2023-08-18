@@ -86,7 +86,7 @@ public class Course {
 
     public static Course of(RawCourse rawCourse) {
         CourseInfo courseInfo = rawCourse.getCourseInfo();
-        return new Course(courseInfo.getCourseCode(), courseInfo.getCourseName(), courseInfo.getCourseCredit(), rawCourse.getPrerequisite());
+        return new Course(courseInfo.getCourseCode().trim(), courseInfo.getCourseName().trim(), courseInfo.getCourseCredit(), rawCourse.getPrerequisite());
     }
 
     public void updateDescription(String description) {

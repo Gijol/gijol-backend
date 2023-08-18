@@ -17,11 +17,14 @@ import java.util.stream.Collectors;
 public class GoogleSignUpRequest{
 
     @NotBlank
+    private String name;
+    @NotBlank
     private String studentId;
     private MajorType majorType;
     private List<UserTakenCourseRequest> userTakenCourseList;
 
-    public GoogleSignUpRequest(String studentId, MajorType majorType, List<UserTakenCourseRequest> userTakenCourseList) {
+    public GoogleSignUpRequest(String naem, String studentId, MajorType majorType, List<UserTakenCourseRequest> userTakenCourseList) {
+        this.name = naem;
         this.studentId = studentId;
         this.majorType = majorType;
         this.userTakenCourseList = userTakenCourseList;

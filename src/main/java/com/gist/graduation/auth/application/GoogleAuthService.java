@@ -22,13 +22,14 @@ public class GoogleAuthService {
 
     @Transactional
     public Long signUp(GoogleSignUpRequest request, String idToken) {
-        GoogleIdTokenVerificationResponse googleIdTokenVerificationResponse = googleAuthTokenVerifier.verifyGoogleOAuth2IdToken(idToken);
+        final GoogleIdTokenVerificationResponse googleIdTokenVerificationResponse = googleAuthTokenVerifier.verifyGoogleOAuth2IdToken(idToken);
         final String email = googleIdTokenVerificationResponse.getEmail();
-        final String name = googleIdTokenVerificationResponse.getName();
+        final String name = request.getName();
         final String studentId = request.getStudentId().trim();
 
         if (userRepository.existsUserByEmail(email)) throw new ApplicationException("이미 존재하는 회원입니다.");
         if (userRepository.existsUserByStudentId(studentId)) throw new ApplicationException("이미 존재하는 학번입니다.");
+
 
         final User user = User.builder()
                 .email(email)
@@ -41,7 +42,6 @@ public class GoogleAuthService {
                 .majorType(request.getMajorType())
                 .userTakenCourses(request.toUserTakenCourseEntityList())
                 .build();
-
         return userRepository.save(user).getId();
     }
 

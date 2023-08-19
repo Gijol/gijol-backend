@@ -1,6 +1,5 @@
 package com.gist.graduation.auth.application;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -13,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class AuthTypeResponse {
 
     @JsonProperty("isNewUser")
-    private boolean existUser;
+    private boolean isnNewUser;
 
 }

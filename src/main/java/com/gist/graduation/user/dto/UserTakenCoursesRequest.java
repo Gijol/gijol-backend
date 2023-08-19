@@ -1,5 +1,6 @@
 package com.gist.graduation.user.dto;
 
+import com.gist.graduation.user.domain.User;
 import com.gist.graduation.user.domain.UserTakenCourse;
 import com.gist.graduation.user.taken_course.CourseType;
 import lombok.AccessLevel;
@@ -24,9 +25,10 @@ public class UserTakenCoursesRequest {
         this.userTakenCourseList = userTakenCourseList;
     }
 
-    public List<UserTakenCourse> toUserTakenCourseEntityList() {
+    public List<UserTakenCourse> toUserTakenCourseEntityList(User user) {
         return this.userTakenCourseList.stream()
                 .map(UserTakenCourseRequest::toEntity)
+                .peek(s -> s.setUser(user))
                 .collect(Collectors.toList());
     }
 

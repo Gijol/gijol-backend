@@ -69,8 +69,8 @@ public class UserService {
     @Transactional
     public void updateTakenCourses(User user, UserTakenCoursesRequest userTakenCoursesRequest) {
         userTakenCourseRepository.deleteByUserId(user.getId());
-        user.updateTakenCourses(userTakenCoursesRequest.toUserTakenCourseEntityList());
-        user.updateStudentId(userTakenCoursesRequest.getStudentId());
+        userTakenCourseRepository.saveAll(userTakenCoursesRequest.toUserTakenCourseEntityList(user));
+        userRepository.updateUserById(userTakenCoursesRequest.getStudentId(), user.getId());
     }
 
     @Transactional

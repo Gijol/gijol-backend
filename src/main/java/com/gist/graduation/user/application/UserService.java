@@ -11,6 +11,7 @@ import com.gist.graduation.user.dto.UserTakenCoursesAndGradeResponse.UserTakenCo
 import com.gist.graduation.user.dto.UserTakenCoursesAndGradeResponse.UserTakenCourseResponse;
 import com.gist.graduation.user.dto.UserTakenCoursesRequest;
 import com.gist.graduation.user.repository.UserRepository;
+import com.gist.graduation.user.repository.UserTakenCourseRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserTakenCourseRepository userTakenCourseRepository;
     private final GraduationCalculator graduationCalculator;
 
     public GraduationRequirementStatus checkGraduationRequirementForUser(User user) {
@@ -66,6 +68,7 @@ public class UserService {
 
     @Transactional
     public void updateTakenCourses(User user, UserTakenCoursesRequest userTakenCoursesRequest) {
+        userTakenCourseRepository.deleteByUserId(user.getId());
         user.updateTakenCourses(userTakenCoursesRequest.toUserTakenCourseEntityList());
         user.updateStudentId(userTakenCoursesRequest.getStudentId());
     }

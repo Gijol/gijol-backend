@@ -8,8 +8,11 @@ import lombok.NoArgsConstructor;
 @Getter
 public class GoogleAuthBaseResponse {
     private String email;
+    private String name;
 
-    public GoogleAuthBaseResponse(String email) {
+    public GoogleAuthBaseResponse(String email, String name) {
         this.email = email;
+        this.name = name;
     }
+
 }

@@ -1,6 +1,9 @@
 create table course
 (
     id            bigint  not null auto_increment,
+    created_at    timestamp,
+    deleted_at    timestamp,
+    updated_at    timestamp,
     course_code   varchar(255),
     course_credit integer not null,
     course_name   varchar(255),
@@ -12,6 +15,9 @@ create table course
 create table course_tag
 (
     id              bigint not null auto_increment,
+    created_at      timestamp,
+    deleted_at      timestamp,
+    updated_at      timestamp,
     course_tag_type varchar(255),
     course_id       bigint,
     primary key (id)
@@ -20,6 +26,9 @@ create table course_tag
 create table raw_course
 (
     id               bigint  not null auto_increment,
+    created_at       timestamp,
+    deleted_at       timestamp,
+    updated_at       timestamp,
     course_code      varchar(255),
     course_credit    integer not null,
     course_name      varchar(255),
@@ -36,8 +45,9 @@ create table raw_course
 create table users
 (
     id                 bigint       not null auto_increment,
-    created_at         datetime(6),
-    updated_at         datetime(6),
+    created_at         timestamp,
+    deleted_at         timestamp,
+    updated_at         timestamp,
     email              varchar(255) not null,
     family_name        varchar(255),
     given_name         varchar(255),
@@ -56,8 +66,9 @@ create index idx_user_email on users (email)
 create table user_taken_course
 (
     id          bigint not null auto_increment,
-    created_at  datetime(6),
-    updated_at  datetime(6),
+    created_at  timestamp,
+    deleted_at  timestamp,
+    updated_at  timestamp,
     course_code varchar(255),
     course_name varchar(255),
     course_type integer,

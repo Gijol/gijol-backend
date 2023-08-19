@@ -28,7 +28,6 @@ public class ClerkGoogleAuthVerifierGoogle implements GoogleOAuthTokenVerifier {
     private final String[] allowedUrls;
     private final Long accessTokenTime;
     private static final String EMAIL = "email";
-    private static final String NAME = "name";
 
 
     public ClerkGoogleAuthVerifierGoogle(
@@ -52,7 +51,7 @@ public class ClerkGoogleAuthVerifierGoogle implements GoogleOAuthTokenVerifier {
                     .build();
             final DecodedJWT decodedJWT = jwtVerifier.verify(token);
             validateDecodedJwt(decodedJWT);
-            return new GoogleAuthBaseResponse(decodedJWT.getClaim(EMAIL).asString(), decodedJWT.getClaim(NAME).asString());
+            return new GoogleAuthBaseResponse(decodedJWT.getClaim(EMAIL).asString());
         } catch (JWTVerificationException e) {
             throw new AuthorizationException("유효하지 않은 토큰입니다. " + e.getMessage());
         } catch (Exception e) {
@@ -61,8 +60,8 @@ public class ClerkGoogleAuthVerifierGoogle implements GoogleOAuthTokenVerifier {
     }
 
     private void validateDecodedJwt(DecodedJWT decodedJWT) {
-        if (!decodedJWT.getClaims().containsKey(EMAIL) || !decodedJWT.getClaims().containsKey(NAME)) {
-            throw new AuthorizationException("토큰에 이메일 혹은 이름이 존재하지 않습니다.");
+        if (!decodedJWT.getClaims().containsKey(EMAIL)) {
+            throw new AuthorizationException("토큰에 이메일이 존재하지 않습니다.");
         }
     }
 

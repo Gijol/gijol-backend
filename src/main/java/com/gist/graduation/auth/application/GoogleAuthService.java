@@ -39,7 +39,6 @@ public class GoogleAuthService {
         return userRepository.save(user).getId();
     }
 
-
     public Boolean isNewUser(String token) {
         GoogleAuthBaseResponse googleAuthBaseResponse = googleAuthTokenVerifier.verify(token);
         Optional<User> user = findUserFromToken(googleAuthBaseResponse);

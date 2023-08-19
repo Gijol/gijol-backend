@@ -30,7 +30,6 @@ public class GoogleAuthService {
         if (userRepository.existsUserByEmail(email)) throw new ApplicationException("이미 존재하는 회원입니다.");
         if (userRepository.existsUserByStudentId(studentId)) throw new ApplicationException("이미 존재하는 학번입니다.");
 
-
         final User user = User.builder()
                 .email(email)
                 .name(name)

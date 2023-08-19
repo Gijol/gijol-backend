@@ -26,6 +26,9 @@ swagger:
 request:
   origins: http://localhost:3000,https://dev.gijol.im, https://gijol-v2.vercel.app
 
+clerk:
+  public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAn1gLqfLMyt9pjnQ3DPDQrknwWw0HUNk8YYj+pPCGYDyswqtbsGKLD2weqjzwe6ffELrCbSN+UMVysSqAEgViIbnw6FG7Iyvs9WZTWXDxPscU8NE+JSITQsMLd0wkW9ZEzDTcSSumXu1Y8AW48W+Gf4IIDOICTqIKLPZBqcEGjK9Y2oyxJZYwLBqLB2SCWIhaahYk7/bt9s/ueG6ugoOn9fhXTl4U/5lE8sukXO1hQo6F5AChYVSEDCxX0vOqy0xRF1B7gDLIPbBccb+/od3h0qlsCPgKktxyfO0bq7GWjlgImuOmzFcVPR2d9W00p7z7dMqLdA9r2L/MPtLVbRsmeQIDAQAB
+
 aes:
   key: "01234567890123456789012345678901"
 

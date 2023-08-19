@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Where(clause = "delete_at is null ")
+@Where(clause = "deleted_at is null ")
 public class UserTakenCourse extends BaseEntity {
 
     @Embedded

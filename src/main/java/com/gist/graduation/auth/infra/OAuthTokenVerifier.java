@@ -7,5 +7,5 @@ import java.security.spec.InvalidKeySpecException;
 
 public interface OAuthTokenVerifier {
 
-    GoogleAuthBaseResponse verify(String token) throws NoSuchAlgorithmException, InvalidKeySpecException;
+    GoogleAuthBaseResponse verify(String token);
 }

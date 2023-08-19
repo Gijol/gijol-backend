@@ -1,8 +1,8 @@
 package com.gist.graduation.auth.application;
 
-import com.gist.graduation.auth.dto.GoogleIdTokenVerificationResponse;
+import com.gist.graduation.auth.dto.GoogleAuthBaseResponse;
 import com.gist.graduation.auth.dto.GoogleSignUpRequest;
-import com.gist.graduation.auth.infra.GoogleAuthTokenVerifier;
+import com.gist.graduation.auth.infra.OAuthTokenVerifier;
 import com.gist.graduation.config.exception.ApplicationException;
 import com.gist.graduation.user.domain.User;
 import com.gist.graduation.user.repository.UserRepository;
@@ -18,12 +18,12 @@ public class GoogleAuthService {
 
     private final UserRepository userRepository;
 
-    private final GoogleAuthTokenVerifier googleAuthTokenVerifier;
+    private final OAuthTokenVerifier googleAuthTokenVerifier;
 
     @Transactional
     public Long signUp(GoogleSignUpRequest request, String idToken) {
-        final GoogleIdTokenVerificationResponse googleIdTokenVerificationResponse = googleAuthTokenVerifier.verifyGoogleOAuth2IdToken(idToken);
-        final String email = googleIdTokenVerificationResponse.getEmail();
+        final GoogleAuthBaseResponse googleAuthBaseResponse = googleAuthTokenVerifier.verify(idToken);
+        final String email = googleAuthBaseResponse.getEmail();
         final String name = request.getName();
         final String studentId = request.getStudentId().trim();
 
@@ -33,10 +33,6 @@ public class GoogleAuthService {
         final User user = User.builder()
                 .email(email)
                 .name(name)
-                .pictureUrl(googleIdTokenVerificationResponse.getPicture())
-                .givenName(googleIdTokenVerificationResponse.getGiven_name())
-                .familyName(googleIdTokenVerificationResponse.getFamily_name())
-                .locale(googleIdTokenVerificationResponse.getLocale())
                 .studentId(studentId)
                 .majorType(request.getMajorType())
                 .userTakenCourses(request.toUserTakenCourseEntityList())
@@ -45,14 +41,14 @@ public class GoogleAuthService {
     }
 
 
-    public AuthType findGoogleLoginType(String idToken) {
-        GoogleIdTokenVerificationResponse response = googleAuthTokenVerifier.verifyGoogleOAuth2IdToken(idToken);
-        Optional<User> user = findUserFromVerifiedIdTokenResponse(response);
+    public AuthType findGoogleLoginType(String token) {
+        GoogleAuthBaseResponse googleAuthBaseResponse = googleAuthTokenVerifier.verify(token);
+        Optional<User> user = findUserFromToken(googleAuthBaseResponse);
         if (user.isEmpty()) return AuthType.SIGN_UP;
         return AuthType.SIGN_IN;
     }
 
-    public Optional<User> findUserFromVerifiedIdTokenResponse(GoogleIdTokenVerificationResponse response) {
+    public Optional<User> findUserFromToken(GoogleAuthBaseResponse response) {
         final String email = response.getEmail();
         return userRepository.findUserByEmail(email);
     }

@@ -43,7 +43,7 @@ public class GoogleAuthService {
     public Boolean isNewUser(String token) {
         GoogleAuthBaseResponse googleAuthBaseResponse = googleAuthTokenVerifier.verify(token);
         Optional<User> user = findUserFromToken(googleAuthBaseResponse);
-        return user.isPresent();
+        return user.isEmpty();
     }
 
     public Optional<User> findUserFromToken(GoogleAuthBaseResponse response) {

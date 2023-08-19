@@ -13,12 +13,16 @@ public enum LetterGrade {
 
     A_PLUS("A+", BigDecimal.valueOf(4.5)),
     A_ZERO("A0", BigDecimal.valueOf(4.0)),
+    A("A", BigDecimal.valueOf(4.0)),
     B_PLUS("B+", BigDecimal.valueOf(3.5)),
     B_ZERO("B0", BigDecimal.valueOf(3.0)),
+    B("B", BigDecimal.valueOf(3.0)),
     C_PLUS("C+", BigDecimal.valueOf(2.5)),
     C_ZERO("C0", BigDecimal.valueOf(2.0)),
+    C("C", BigDecimal.valueOf(2.0)),
     D_PLUS("D+", BigDecimal.valueOf(1.5)),
     D_ZERO("D0", BigDecimal.valueOf(1.0)),
+    D("D", BigDecimal.valueOf(1.0)),
     F("F", BigDecimal.valueOf(0.0));
 
     private final String grade;

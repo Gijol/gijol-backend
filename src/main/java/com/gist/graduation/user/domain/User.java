@@ -1,6 +1,7 @@
 package com.gist.graduation.user.domain;
 
 import com.gist.graduation.common.BaseEntity;
+import com.gist.graduation.config.exception.ApplicationException;
 import com.gist.graduation.requirment.domain.GraduationRequirementStatus;
 import com.gist.graduation.requirment.domain.major.MajorType;
 import com.gist.graduation.user.taken_course.TakenCourse;
@@ -10,6 +11,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -92,5 +94,12 @@ public class User extends BaseEntity {
 
     public void updateStudentId(String studentId) {
         this.studentId = studentId;
+    }
+
+    public void updateName(String name) {
+        if (!StringUtils.hasLength(name)) {
+            throw new ApplicationException("이름은 공백일 수 없습니다.");
+        }
+        this.name = name;
     }
 }

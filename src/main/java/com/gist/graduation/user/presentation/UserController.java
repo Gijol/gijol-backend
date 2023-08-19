@@ -5,10 +5,7 @@ import com.gist.graduation.auth.annotation.GoogleIdTokenRequired;
 import com.gist.graduation.requirment.domain.GraduationRequirementStatus;
 import com.gist.graduation.user.application.UserService;
 import com.gist.graduation.user.domain.User;
-import com.gist.graduation.user.dto.UpdateMajorRequest;
-import com.gist.graduation.user.dto.UserInfoResponse;
-import com.gist.graduation.user.dto.UserTakenCoursesAndGradeResponse;
-import com.gist.graduation.user.dto.UserTakenCoursesRequest;
+import com.gist.graduation.user.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -53,6 +50,13 @@ public class UserController {
     @GoogleIdTokenRequired
     public ResponseEntity<?> changeMajor(@AuthenticationPrincipal User user, @RequestBody UpdateMajorRequest request) {
         userService.updateMajor(user, request.getMajorType());
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/name")
+    @GoogleIdTokenRequired
+    public ResponseEntity<?> changeName(@AuthenticationPrincipal User user, @RequestBody UpdateNameRequest request) {
+        userService.updateName(user, request.getName());
         return ResponseEntity.noContent().build();
     }
 }

@@ -70,6 +70,11 @@ public class UserService {
         user.updateStudentId(userTakenCoursesRequest.getStudentId());
     }
 
+    @Transactional
+    public void updateName(User user, String name) {
+        user.updateName(name);
+    }
+
     public UserInfoResponse getUserInfo(User user) {
         return UserInfoResponse.of(user);
     }

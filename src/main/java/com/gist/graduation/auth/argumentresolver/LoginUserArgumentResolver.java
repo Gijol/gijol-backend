@@ -1,13 +1,10 @@
-
 package com.gist.graduation.auth.argumentresolver;
 
 import com.gist.graduation.auth.annotation.AuthenticationPrincipal;
 import com.gist.graduation.auth.application.GoogleAuthService;
 import com.gist.graduation.auth.application.jwt.JWTAuthorizationHeaderParser;
 import com.gist.graduation.auth.dto.GoogleAuthBaseResponse;
-import com.gist.graduation.auth.dto.GoogleIdTokenVerificationResponse;
-import com.gist.graduation.auth.infra.GoogleAuthTokenVerifier;
-import com.gist.graduation.auth.infra.OAuthTokenVerifier;
+import com.gist.graduation.auth.infra.GoogleOAuthTokenVerifier;
 import com.gist.graduation.config.exception.ApplicationException;
 import com.gist.graduation.config.exception.AuthorizationException;
 import com.gist.graduation.user.domain.User;
@@ -26,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver {
 
     private static final String AUTHORIZATION_HEADER = "Authorization";
-    private final OAuthTokenVerifier oAuthTokenVerifier;
+    private final GoogleOAuthTokenVerifier googleOAuthTokenVerifier;
     private final GoogleAuthService googleAuthService;
 
     @Override
@@ -44,7 +41,7 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
         }
         final String idToken = JWTAuthorizationHeaderParser.parse(token);
 
-        final GoogleAuthBaseResponse response = oAuthTokenVerifier.verify(idToken);
+        final GoogleAuthBaseResponse response = googleOAuthTokenVerifier.verify(idToken);
 
         return googleAuthService.findUserFromToken(response)
                 .orElseThrow(AuthorizationException::unAuthorized);

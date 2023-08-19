@@ -22,7 +22,7 @@ import java.util.Base64;
 
 @Component
 @Slf4j
-public class ClerkGoogleAuthVerifier implements OAuthTokenVerifier {
+public class ClerkGoogleAuthVerifierGoogle implements GoogleOAuthTokenVerifier {
 
     private final String publicKeyString;
     private final String[] allowedUrls;
@@ -30,7 +30,7 @@ public class ClerkGoogleAuthVerifier implements OAuthTokenVerifier {
     private static final String EMAIL = "email";
 
 
-    public ClerkGoogleAuthVerifier(
+    public ClerkGoogleAuthVerifierGoogle(
             @Value("${clerk.public-key}") String publicKeyString,
             @Value("${clerk.access-token.timeout:900}") Long accessTokenTime,
             @Value("${request.origins:http://localhost:3000}") String[] allowedUrls

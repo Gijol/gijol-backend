@@ -2,7 +2,7 @@ package com.gist.graduation.auth.application;
 
 import com.gist.graduation.auth.dto.GoogleAuthBaseResponse;
 import com.gist.graduation.auth.dto.GoogleSignUpRequest;
-import com.gist.graduation.auth.infra.OAuthTokenVerifier;
+import com.gist.graduation.auth.infra.GoogleOAuthTokenVerifier;
 import com.gist.graduation.config.exception.ApplicationException;
 import com.gist.graduation.user.domain.User;
 import com.gist.graduation.user.repository.UserRepository;
@@ -18,7 +18,7 @@ public class GoogleAuthService {
 
     private final UserRepository userRepository;
 
-    private final OAuthTokenVerifier googleAuthTokenVerifier;
+    private final GoogleOAuthTokenVerifier googleAuthTokenVerifier;
 
     @Transactional
     public Long signUp(GoogleSignUpRequest request, String idToken) {

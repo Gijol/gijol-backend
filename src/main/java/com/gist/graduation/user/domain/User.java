@@ -77,28 +77,24 @@ public class User extends BaseEntity {
     }
 
     private UserTakenCoursesList toUserTakenCoursesList() {
-        List<TakenCourse> takenCourses = this.userTakenCourses.stream()
+        List<TakenCourse> takenCourses = getUserTakenCourses().stream()
                 .map(UserTakenCourse::toTakenCourse)
                 .collect(Collectors.toList());
         return new UserTakenCoursesList(takenCourses);
     }
 
-    public void updateTakenCourses(List<UserTakenCourse> userTakenCourseEntityList) {
-        this.userTakenCourses = userTakenCourseEntityList.stream()
-                .peek(userTakenCourse -> userTakenCourse.setUser(this))
-                .collect(Collectors.toList());
-    }
-
-
-    public void updateStudentId(String studentId) {
-        this.studentId = studentId;
-    }
 
     public void updateName(String name) {
         if (!StringUtils.hasLength(name)) {
             throw new ApplicationException("이름은 공백일 수 없습니다.");
         }
         this.name = name;
+    }
+
+    public List<UserTakenCourse> getUserTakenCourses() {
+        return userTakenCourses.stream()
+                .filter(s -> !s.isDeleted())
+                .collect(Collectors.toList());
     }
 
     @Override

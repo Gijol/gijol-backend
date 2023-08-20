@@ -1,5 +1,6 @@
 package com.gist.graduation.course.domain.course;
 
+import com.gist.graduation.common.BaseEntity;
 import com.gist.graduation.course.domain.CourseInfo;
 import com.gist.graduation.course.domain.rawcourse.RawCourse;
 import com.gist.graduation.course.domain.tag.CourseTag;
@@ -9,18 +10,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.thymeleaf.util.StringUtils;
 
-import javax.persistence.*;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.Lob;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Course {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Course extends BaseEntity {
 
     @Embedded
     private CourseInfo courseInfo;
@@ -34,13 +33,8 @@ public class Course {
     @Lob
     private String description;
 
-    public Course(String courseCode, String courseName, int courseCredit, String prerequisite) {
-        this(null, courseCode, courseName, courseCredit, prerequisite);
-    }
-
-    private Course(Long id, String courseCode, String courseName, int courseCredit, String prerequisite) {
-        this.id = id;
-        this.courseInfo = new CourseInfo(courseCode, courseName, courseCredit);
+    private Course(String courseCode, String courseName, int courseCredit, String prerequisite) {
+        this.courseInfo = new CourseInfo(courseName, courseCode, courseCredit);
         this.courseTags = new CourseTags();
         this.prerequisite = prerequisite;
     }

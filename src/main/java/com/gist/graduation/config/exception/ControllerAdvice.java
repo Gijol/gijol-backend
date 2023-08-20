@@ -35,7 +35,7 @@ public class ControllerAdvice {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> globalException(Exception ex) {
-        log.error("Internal Server Exception: " + ex.getMessage());
+        log.error("Internal Server Exception: ", ex);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse(ex.getMessage()));
     }
 }

@@ -33,16 +33,6 @@ public class UserTakenCoursesList {
                 .anyMatch(s -> s.equalsCourseInfo(courseInfo));
     }
 
-    public boolean containsAll(List<CourseInfo> courseInfos) {
-        return courseInfos.stream()
-                .allMatch(this::contains);
-    }
-
-    public boolean containsAny(List<CourseInfo> courseInfos) {
-        return courseInfos.stream()
-                .anyMatch(this::contains);
-    }
-
 
     // 하나라도 포함되면 False 반환 ,아무것도 없으면 True 반환
     public boolean notExistAny(List<CourseInfo> courseInfos) {
@@ -50,10 +40,6 @@ public class UserTakenCoursesList {
                 .noneMatch(this::contains);
     }
 
-
-    public boolean notExist(TakenCourse takenCourse) {
-        return !this.takenCourses.contains(takenCourse);
-    }
 
     public boolean notExist(CourseInfo courseInfo) {
         return !this.contains(courseInfo);

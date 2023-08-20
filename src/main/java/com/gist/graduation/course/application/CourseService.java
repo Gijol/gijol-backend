@@ -3,8 +3,8 @@ package com.gist.graduation.course.application;
 import com.gist.graduation.course.application.description.DescriptionJsonDto;
 import com.gist.graduation.course.application.description.DescriptionJsonParser;
 import com.gist.graduation.course.domain.course.Course;
+import com.gist.graduation.course.domain.course.CourseBulkRepository;
 import com.gist.graduation.course.domain.course.CourseRepository;
-import com.gist.graduation.course.domain.course.CourseTagBulkRepository;
 import com.gist.graduation.course.domain.dto.CourseResponse;
 import com.gist.graduation.course.domain.rawcourse.RawCourse;
 import com.gist.graduation.utils.CourseListParser;
@@ -24,7 +24,7 @@ public class CourseService {
 
     private final CourseRepository courseRepository;
     private final CourseTagPolicy courseTagPolicy;
-    private final CourseTagBulkRepository courseTagBulkRepository;
+    private final CourseBulkRepository courseBulkRepository;
 
     public void createCourses(File file) {
         List<RawCourse> rawCourses = CourseListParser.parseToRawCourse(file);
@@ -38,8 +38,19 @@ public class CourseService {
         }
 
         List<Course> savedCourses = courseRepository.saveAll(courses);
+
+        setCourseIdToRawCourse(rawCourses, savedCourses);
         courseTagPolicy.tagAllCourses(savedCourses);
-        courseTagBulkRepository.saveAllCourseTags(savedCourses);
+        courseBulkRepository.saveAllCourseTags(savedCourses);
+        courseBulkRepository.saveAllRawCourses(rawCourses);
+    }
+
+    private void setCourseIdToRawCourse(List<RawCourse> rawCourses, List<Course> savedCourses) {
+        for (RawCourse rawCourse : rawCourses) {
+            savedCourses.stream()
+                    .filter(course -> course.belongToCourseInfo(List.of(rawCourse.getCourseInfo())))
+                    .forEach(course -> rawCourse.setCourseId(course.getId()));
+        }
     }
 
     @Transactional(readOnly = true)

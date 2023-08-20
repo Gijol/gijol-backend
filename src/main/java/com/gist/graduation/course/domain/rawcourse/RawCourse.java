@@ -1,7 +1,8 @@
 package com.gist.graduation.course.domain.rawcourse;
 
+import com.gist.graduation.common.BaseEntity;
 import com.gist.graduation.course.domain.CourseInfo;
-import com.gist.graduation.course.domain.course.vo.Semester;
+import com.gist.graduation.course.domain.course.vo.SemesterInfo;
 import com.gist.graduation.utils.RegisteredCourse;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -20,12 +21,10 @@ import java.util.stream.Collectors;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Table(name = "raw_course")
-public class RawCourse {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Table(name = "raw_course", indexes = {
+        @Index(name = "idx_raw_course_course_code", columnList = "course_code")
+})
+public class RawCourse extends BaseEntity {
 
     @Embedded
     private CourseInfo courseInfo;
@@ -33,7 +32,7 @@ public class RawCourse {
     private String courseType;
 
     @Embedded
-    private Semester semester;
+    private SemesterInfo semesterInfo;
 
     private String courseProfessor;
 
@@ -44,21 +43,22 @@ public class RawCourse {
     @Lob
     private String prerequisite;
 
-    public RawCourse(String courseCode, String courseName, String courseType, int courseYear, String courseSemester, int courseCredit, String courseProfessor, String courseTime, String courseRoom, String prerequisite) {
-        this(null, courseCode, courseName, courseType, courseYear, courseSemester, courseCredit, courseProfessor, courseTime, courseRoom, prerequisite);
-    }
+    @Column(name = "course_id")
+    private Long courseId;
 
-    private RawCourse(Long id, String courseCode, String courseName, String courseType, int courseYear, String courseSemester, int courseCredit, String courseProfessor, String courseTime, String courseRoom, String prerequisite) {
-        this.id = id;
-        this.courseInfo = new CourseInfo(courseCode, courseName, courseCredit);
+    public RawCourse(String courseCode, String courseName, String courseType, int courseYear, String courseSemester, int courseCredit, String courseProfessor, String courseTime, String courseRoom, String prerequisite) {
+        this.courseInfo = new CourseInfo(courseName, courseCode, courseCredit);
         this.courseType = courseType;
-        this.semester = new Semester(courseYear, courseSemester);
+        this.semesterInfo = new SemesterInfo(courseYear, courseSemester);
         this.courseProfessor = courseProfessor;
         this.courseTime = courseTime;
         this.courseRoom = courseRoom;
         this.prerequisite = prerequisite;
     }
 
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
+    }
 
     public static List<RawCourse> from(List<RegisteredCourse> courses) {
         return courses.stream()
@@ -68,6 +68,6 @@ public class RawCourse {
     }
 
     public static RawCourse of(RegisteredCourse course) {
-        return new RawCourse(course.getCode(), course.getName(), course.getType(), course.getYear(), course.getSemester(), course.getCredit(), course.getProfessor(), course.getTime(), course.getRoom(), course.getPrerequisite());
+        return new RawCourse(course.getCode().trim(), course.getName().trim(), course.getType(), course.getYear(), course.getSemester(), course.getCredit(), course.getProfessor(), course.getTime(), course.getRoom(), course.getPrerequisite());
     }
 }

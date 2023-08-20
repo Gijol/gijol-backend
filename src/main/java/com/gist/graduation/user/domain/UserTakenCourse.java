@@ -18,6 +18,9 @@ import java.math.BigDecimal;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Where(clause = "deleted_at is null ")
+@Table(name = "user_taken_course", indexes = {
+        @Index(name = "idx_user_taken_course_user_id", columnList = "user_id")
+})
 public class UserTakenCourse extends BaseEntity {
 
     @Embedded

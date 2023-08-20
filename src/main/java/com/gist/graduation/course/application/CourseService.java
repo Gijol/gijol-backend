@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -85,6 +86,7 @@ public class CourseService {
 
     public CourseHistoriesResponse findCourseHistoriesByCourseId(Long courseId) {
         List<RawCourse> rawCourses = rawCourseRepository.findAllByCourseId(courseId);
+        Collections.reverse(rawCourses);
         return CourseHistoriesResponse.from(rawCourses);
     }
 }

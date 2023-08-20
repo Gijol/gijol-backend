@@ -81,4 +81,10 @@ public class UserService {
     public UserInfoResponse getUserInfo(User user) {
         return UserInfoResponse.of(user);
     }
+
+    @Transactional
+    public void signOut(Long userId) {
+        userTakenCourseRepository.deleteByUserId(userId);
+        userRepository.deleteUserById(userId);
+    }
 }

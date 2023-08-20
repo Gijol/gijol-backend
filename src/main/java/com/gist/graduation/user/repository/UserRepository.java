@@ -17,8 +17,17 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findUserByEmail(String email);
 
     @Modifying
-    @Query("UPDATE User u SET u.studentId = :studentId WHERE u.id = :id AND u.updatedAt = now() ")
+    @Query("UPDATE User u SET u.studentId = :studentId, u.updatedAt = now()  WHERE u.id = :id")
     void updateUserById(@Param("studentId") String studentId, @Param("id") Long id);
+
+    @Modifying
+    @Query("UPDATE User u " +
+            "SET u.updatedAt = now(), " +
+            "u.deletedAt = now(),  " +
+            "u.email = null,  " +
+            "u.name = null " +
+            "WHERE u.id = :id")
+    void deleteUserById(@Param("id") Long id);
 
 
     boolean existsUserByNameAndEmail(String name, String email);

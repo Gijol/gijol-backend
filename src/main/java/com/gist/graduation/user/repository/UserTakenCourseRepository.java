@@ -10,7 +10,15 @@ public interface UserTakenCourseRepository extends JpaRepository<UserTakenCourse
 
     @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("UPDATE UserTakenCourse uk " +
-            "SET uk.deletedAt = now() " +
+            "SET uk.deletedAt = now(), " +
+            "uk.updatedAt = now(), " +
+            "uk.courseCode = null, " +
+            "uk.courseName = null, " +
+            "uk.courseType = null, " +
+            "uk.grade = null, " +
+            "uk.credit = null, " +
+            "uk.yearAndSemester.year = null, " +
+            "uk.yearAndSemester.semester = null " +
             "WHERE uk.user.id = :userId ")
     void deleteByUserId(@Param("userId") Long userId);
 }

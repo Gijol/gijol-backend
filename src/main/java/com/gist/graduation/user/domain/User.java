@@ -11,6 +11,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
@@ -24,24 +25,22 @@ import java.util.stream.Collectors;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Where(clause = "deleted_at is not null")
 public class User extends BaseEntity {
 
-    @Column(nullable = false)
+    @Column(name = "name")
     @Convert(converter = AesConverter.class)
     private String name;
 
-    @Column(nullable = false)
+    @Column(name = "email")
     @Convert(converter = AesConverter.class)
     private String email;
 
-    @Embedded
-    private GoogleAdditionalInfo googleAdditionalInfo;
-
-    @Column(name = "student_id", nullable = false)
+    @Column(name = "student_id")
     @Convert(converter = AesConverter.class)
     private String studentId;
 
-    @Column(name = "major_type", nullable = false)
+    @Column(name = "major_type")
     @Enumerated(EnumType.STRING)
     private MajorType majorType;
 
@@ -51,13 +50,12 @@ public class User extends BaseEntity {
     // graduationStatus
 
     @Builder
-    public User(String name, String email, String pictureUrl, String givenName,
-                MajorType majorType, String familyName, String locale,
+    public User(String name, String email,
+                MajorType majorType,
                 String studentId, List<UserTakenCourse> userTakenCourses) {
         this.name = name;
         this.email = email;
         this.majorType = majorType;
-        this.googleAdditionalInfo = new GoogleAdditionalInfo(pictureUrl, givenName, familyName, locale);
         this.studentId = studentId;
         this.userTakenCourses = userTakenCourses.stream()
                 .peek(userTakenCourse -> userTakenCourse.setUser(this))
@@ -101,5 +99,15 @@ public class User extends BaseEntity {
             throw new ApplicationException("이름은 공백일 수 없습니다.");
         }
         this.name = name;
+    }
+
+    @Override
+    public void clearData() {
+        super.clearData();
+        this.majorType = null;
+        this.name = null;
+        this.email = null;
+        this.studentId = null;
+
     }
 }

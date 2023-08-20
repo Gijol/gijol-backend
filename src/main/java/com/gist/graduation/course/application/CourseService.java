@@ -45,9 +45,11 @@ public class CourseService {
     @Transactional(readOnly = true)
     public Page<CourseResponse> findByMinor(String code, Pageable pageable) {
         if (code.equalsIgnoreCase("NONE")) {
-            return new PageImpl<>(CourseResponse.listOf(courseRepository.findAll(pageable).toList()));
+            Page<Course> courses = courseRepository.findAll(pageable);
+            return new PageImpl<>(CourseResponse.listOf(courses.toList()), pageable, courses.getTotalElements());
         }
-        return new PageImpl<>(CourseResponse.listOf(courseRepository.findCoursesByCourseCode(pageable, code)));
+        Page<Course> coursesByCourseCode = courseRepository.findCoursesByCourseCode(pageable, code);
+        return new PageImpl<>(CourseResponse.listOf(coursesByCourseCode.toList()), pageable, coursesByCourseCode.getTotalElements());
 
     }
 }

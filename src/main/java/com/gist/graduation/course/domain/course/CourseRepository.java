@@ -12,7 +12,7 @@ import java.util.List;
 public interface CourseRepository extends JpaRepository<Course, Long> {
 
     @Query("select c from Course c where c.courseInfo.courseCode like :code% ")
-    List<Course> findCoursesByCourseCode(Pageable pageable, @Param("code") String code);
+    Page<Course> findCoursesByCourseCode(Pageable pageable, @Param("code") String code);
 
 }
 

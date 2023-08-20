@@ -8,6 +8,7 @@ import com.gist.graduation.course.domain.tag.CourseTags;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.Embedded;
@@ -19,6 +20,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Where(clause = "deleted_at is null")
 public class Course extends BaseEntity {
 
     @Embedded

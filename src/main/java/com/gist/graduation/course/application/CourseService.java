@@ -76,7 +76,7 @@ public class CourseService {
         }
 
         if (code.equalsIgnoreCase("NONE")) {
-            Page<Course> courses = courseRepository.findAllBySearchString(pageable, courseSearchString);
+            Page<Course> courses = courseRepository.findAll(pageable, courseSearchString);
             return new PageImpl<>(CourseResponse.listOf(courses.toList()), pageable, courses.getTotalElements());
         }
         Page<Course> coursesByCourseCode = courseRepository.findCoursesByCourseCode(pageable, code, courseSearchString);

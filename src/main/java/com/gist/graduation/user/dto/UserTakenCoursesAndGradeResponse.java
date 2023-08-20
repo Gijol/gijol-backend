@@ -20,7 +20,7 @@ public class UserTakenCoursesAndGradeResponse {
 
     public UserTakenCoursesAndGradeResponse(List<UserTakenCourseBySemesterResponse> userTakenCourseBySemesterResponses, BigDecimal averageGrade, int totalCredit) {
         this.userTakenCourseBySemesterResponses = userTakenCourseBySemesterResponses;
-        this.averageGrade = averageGrade;
+        this.averageGrade = averageGrade == null ? BigDecimal.ZERO : averageGrade;
         this.totalCredit = totalCredit;
     }
 
@@ -36,7 +36,7 @@ public class UserTakenCoursesAndGradeResponse {
         public UserTakenCourseBySemesterResponse(int year, String semester, BigDecimal averageGradeBySemester, List<UserTakenCourseResponse> coursesAndGradeResponses) {
             this.year = year;
             this.semester = semester;
-            this.averageGradeBySemester = averageGradeBySemester;
+            this.averageGradeBySemester = averageGradeBySemester == null ? BigDecimal.ZERO : averageGradeBySemester;
             this.coursesAndGradeResponses = coursesAndGradeResponses;
         }
     }

@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Where(clause = "deleted_at is not null")
+@Where(clause = "deleted_at is null")
 public class User extends BaseEntity {
 
     @Column(name = "name")

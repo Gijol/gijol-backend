@@ -24,8 +24,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("UPDATE User u " +
             "SET u.updatedAt = now(), " +
             "u.deletedAt = now(),  " +
-            "u.email = null,  " +
-            "u.name = null " +
+            "u.email = null " +
             "WHERE u.id = :id")
     void deleteUserById(@Param("id") Long id);
 

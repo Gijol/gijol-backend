@@ -29,7 +29,6 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     Page<Course> findCoursesByCourseCode(Pageable pageable, @Param("code") String code);
 
 
-
     default Page<Course> findAll(Pageable pageable, @Param("courseSearchString") String courseSearchString){
         if (StringUtils.hasText(courseSearchString)){
             return findAllBySearchString(pageable, courseSearchString);

@@ -56,7 +56,7 @@ public class Course {
 
     public boolean belongToCourseInfo(List<CourseInfo> courseInfo) {
         return courseInfo.stream()
-                .anyMatch(s -> s.equals(this.courseInfo));
+                .anyMatch(s -> s.getCourseCode().equals(this.courseInfo.getCourseCode()));
     }
 
 

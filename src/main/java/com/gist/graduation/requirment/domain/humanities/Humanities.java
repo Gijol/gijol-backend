@@ -79,11 +79,10 @@ public class Humanities extends RequirementStatusBaseEntity {
         UserTakenCoursesList userTakenCourses = this.getUserTakenCoursesList();
         List<CourseInfo> humanitiesCourseList = HumanitiesListParser.getHumanitiesCoursesList();
 
-
         userTakenCourses.addAll(
                 inputUserTakenCoursesList.getTakenCourses().stream()
                         .filter(s -> s.belongsToCourseInfosAny(humanitiesCourseList))
-                        .filter(s -> !s.getCourseType().equals(CourseType.PPE) && !s.getCourseType().equals(CourseType.HUS))
+                        .filter(s -> !CourseType.PPE.equals(s.getCourseType()) && !CourseType.PPE.equals(s.getCourseType()))
                         .collect(Collectors.toList())
         );
 

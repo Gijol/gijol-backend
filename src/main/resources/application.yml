@@ -54,6 +54,21 @@ swagger:
 request:
   origins: http://localhost:3000,http://localhost:3001,https://dev.gijol.im, https://gijol-v2.vercel.app,
 
+---
+
+spring:
+  config:
+    activate:
+      on-profile: dev-db
+    import: privates/application-db-dev.yml
+
+swagger:
+  host: dev.api.gijol.im
+  protocol: https
+
+
+request:
+  origins: http://localhost:3000,http://localhost:3001,https://dev.gijol.im, https://gijol-v2.vercel.app,
 
 ---
 

@@ -18,11 +18,13 @@ public class CourseController {
 
     @GetMapping("")
     @ApiParam(value = "page", type = "integer", example = "20")
-    public ResponseEntity<Page<CourseResponse>> getCourses(@RequestParam(required = false, defaultValue = "NONE") CourseSearchCode courseSearchCode,
-                                                           @RequestParam(required = false, defaultValue = "0") int page,
-                                                           @RequestParam(required = false, defaultValue = "20") int size
+    public ResponseEntity<Page<CourseResponse>> getCourses(
+            @RequestParam(required = false, defaultValue = "NONE") CourseSearchCode courseSearchCode,
+            @RequestParam(required = false, defaultValue = "") String courseSearchString,
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "20") int size
     ) {
-        return ResponseEntity.ok(courseService.findByCourseSearchCode(courseSearchCode.name(), PageRequest.of(page, size)));
+        return ResponseEntity.ok(courseService.findByCourseSearchCode(courseSearchCode.name(), courseSearchString, PageRequest.of(page, size)));
     }
 
     @GetMapping("/{courseId}")

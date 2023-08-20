@@ -64,10 +64,10 @@ public class CourseService {
     }
 
     @Transactional(readOnly = true)
-    public Page<CourseResponse> findByCourseSearchCode(String code, Pageable pageable) {
+    public Page<CourseResponse> findByCourseSearchCode(String code, String courseSearchString, Pageable pageable) {
         CourseTagType courseType = CourseTagType.containsStringIgnoreCase(code);
         if (Objects.nonNull(courseType)) {
-            Page<CourseTag> courseTagsByCourseTagType = courseTagRepository.findCourseTagsByCourseTagType(courseType, pageable);
+            Page<CourseTag> courseTagsByCourseTagType = courseTagRepository.findCourseTagsByCourseTagType(courseType, courseSearchString, pageable);
             List<Course> courses = courseTagsByCourseTagType.stream()
                     .map(CourseTag::getCourse)
                     .collect(Collectors.toList());
@@ -76,10 +76,10 @@ public class CourseService {
         }
 
         if (code.equalsIgnoreCase("NONE")) {
-            Page<Course> courses = courseRepository.findAll(pageable);
+            Page<Course> courses = courseRepository.findAllBySearchString(pageable, courseSearchString);
             return new PageImpl<>(CourseResponse.listOf(courses.toList()), pageable, courses.getTotalElements());
         }
-        Page<Course> coursesByCourseCode = courseRepository.findCoursesByCourseCode(pageable, code);
+        Page<Course> coursesByCourseCode = courseRepository.findCoursesByCourseCode(pageable, code, courseSearchString);
         return new PageImpl<>(CourseResponse.listOf(coursesByCourseCode.toList()), pageable, coursesByCourseCode.getTotalElements());
 
     }

@@ -11,8 +11,14 @@ import java.util.List;
 
 public interface CourseRepository extends JpaRepository<Course, Long> {
 
-    @Query("select c from Course c where c.courseInfo.courseCode like :code% ")
-    Page<Course> findCoursesByCourseCode(Pageable pageable, @Param("code") String code);
+    @Query("select c from Course c where c.courseInfo.courseCode like :code% " +
+            "or c.courseInfo.courseName like %:courseSearchString% ")
+    Page<Course> findCoursesByCourseCode(Pageable pageable, @Param("code") String code, @Param("courseSearchString") String courseSearchString);
+
+    @Query("select c from Course c " +
+            "where c.courseInfo.courseCode like %:courseSearchString% " +
+            "or c.courseInfo.courseName like %:courseSearchString% ")
+    Page<Course> findAllBySearchString(Pageable pageable, @Param("courseSearchString") String courseSearchString);
 
 }
 

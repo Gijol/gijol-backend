@@ -24,6 +24,11 @@ public class GraduationCalculator {
                 .map(UserTakenCourse::getCredit)
                 .map(BigDecimal::new)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        if (totalCredit.compareTo(BigDecimal.ZERO) == 0){
+            return null;
+        }
+
         return totalCreditAndGrade.divide(totalCredit, 2, RoundingMode.FLOOR);
     }
 }

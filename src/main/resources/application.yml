@@ -107,3 +107,10 @@ management:
 
 request:
   origins: https://gijol.im,https://dev.gijol.im, https://gijol-v2.vercel.app
+
+logging:
+  level:
+    org:
+      springframework:
+        jdbc:
+          core: WARN

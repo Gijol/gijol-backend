@@ -13,7 +13,7 @@ import java.util.UUID;
 @Component
 public class FileResourceUtils {
 
-    public static final String COURSE_LIST_FILE_PATH = "/course-information/course_information_undergraduate.xls";
+    public static final String COURSE_LIST_FILE_PATH = "/course-information/course_information_undergraduate_0820.xls";
 
     public File convertPathResourceToCourseListFileAtServer() {
         ClassPathResource undergraduateResource = new ClassPathResource(COURSE_LIST_FILE_PATH);

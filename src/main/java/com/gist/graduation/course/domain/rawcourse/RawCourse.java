@@ -62,6 +62,7 @@ public class RawCourse {
 
     public static List<RawCourse> from(List<RegisteredCourse> courses) {
         return courses.stream()
+                .filter(s -> !s.getCode().startsWith("CM")) // 파싱 에러 코드 제거
                 .map(RawCourse::of)
                 .collect(Collectors.toList());
     }

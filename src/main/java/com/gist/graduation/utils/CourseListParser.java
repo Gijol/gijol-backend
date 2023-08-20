@@ -12,10 +12,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -99,6 +96,7 @@ public class CourseListParser {
 
     private static List<RegisteredCourse> parseRegistrationCourse(Sheet sheet) {
         List<RegisteredCourse> registeredCourses = new ArrayList<>();
+
         for (Row row : sheet) {
             if (!row.getCell(INDEX).getStringCellValue().matches("[0-9]+")) {
                 continue;

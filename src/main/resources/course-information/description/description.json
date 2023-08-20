@@ -157,7 +157,11 @@
   },
   {
     "courseCode": "CT4305",
-    "courseDescription": "서비스러닝의 목적은 교과에서 배운 지식을 지역사회 문제에 적용함으로써 기존의 지식을 강화하고, 새로운 지식을 경험으로 습득하고자 하는 것을 목표로 한다. 융합 캡스톤 디자인 및 실험/실습 체험 기반의 수업으로 학생들의 전공 및 재능을 지역공동체와 나누고 나아가 세계의 사회적 문제를 함께 생각하고 이를 해결한 방법에 대한 아이디어를 도출하여 프로젝트를 직접 제작해 본다.CT4310 인간-AI 상호작용: Special Topics on XR and Digital Twin Human-AI Interaction: Special Topics on XR and Digital Twin [3:0:3]본 과목에서는 사람과 AI-infused system의 상호작용에 관한 PBL (Project-Based Learning)을 수행한다. 매년 선정되는 국가 special topics를 다루며, 올해는 최근 부상하는 메타버스와 연계하여 Extended Reality and Digital Twin에 관한 프로젝트를 기획 및 제작한다. 구체적으로 RDW, 차량 XR, SR, NFT 연계 응용을 수행하며, 그 결과물에 대해 IR pitching을 목표로 한다."
+    "courseDescription": "서비스러닝의 목적은 교과에서 배운 지식을 지역사회 문제에 적용함으로써 기존의 지식을 강화하고, 새로운 지식을 경험으로 습득하고자 하는 것을 목표로 한다. 융합 캡스톤 디자인 및 실험/실습 체험 기반의 수업으로 학생들의 전공 및 재능을 지역공동체와 나누고 나아가 세계의 사회적 문제를 함께 생각하고 이를 해결한 방법에 대한 아이디어를 도출하여 프로젝트를 직접 제작해 본다."
+  },
+  {
+    "courseCode": "CT4310",
+    "courseDescription": "인간-AI 상호작용: Special Topics on XR and Digital Twin Human-AI Interaction: Special Topics on XR and Digital Twin [3:0:3]본 과목에서는 사람과 AI-infused system의 상호작용에 관한 PBL (Project-Based Learning)을 수행한다. 매년 선정되는 국가 special topics를 다루며, 올해는 최근 부상하는 메타버스와 연계하여 Extended Reality and Digital Twin에 관한 프로젝트를 기획 및 제작한다. 구체적으로 RDW, 차량 XR, SR, NFT 연계 응용을 수행하며, 그 결과물에 대해 IR pitching을 목표로 한다."
   },
   {
     "courseCode": "CT4504",

@@ -1,8 +1,8 @@
 package com.gist.graduation.auth.application;
 
-import com.gist.graduation.auth.dto.GoogleIdTokenVerificationResponse;
+import com.gist.graduation.auth.dto.GoogleAuthBaseResponse;
 import com.gist.graduation.auth.dto.GoogleSignUpRequest;
-import com.gist.graduation.auth.infra.GoogleAuthTokenVerifier;
+import com.gist.graduation.auth.infra.GoogleOAuthTokenVerifier;
 import com.gist.graduation.config.exception.ApplicationException;
 import com.gist.graduation.user.domain.User;
 import com.gist.graduation.user.repository.UserRepository;
@@ -18,45 +18,36 @@ public class GoogleAuthService {
 
     private final UserRepository userRepository;
 
-    private final GoogleAuthTokenVerifier googleAuthTokenVerifier;
+    private final GoogleOAuthTokenVerifier googleAuthTokenVerifier;
 
     @Transactional
-    public Long signUp(GoogleSignUpRequest request, String idToken) {
-        GoogleIdTokenVerificationResponse googleIdTokenVerificationResponse = googleAuthTokenVerifier.verifyGoogleOAuth2IdToken(idToken);
-        final String email = googleIdTokenVerificationResponse.getEmail();
-        final String name = googleIdTokenVerificationResponse.getName();
+    public Long signUp(GoogleSignUpRequest request, String token) {
+        final String name = request.getName();
         final String studentId = request.getStudentId().trim();
+        final GoogleAuthBaseResponse googleAuthBaseResponse = googleAuthTokenVerifier.verify(token);
+        final String email = googleAuthBaseResponse.getEmail();
 
-        if (userRepository.existsUserByNameAndEmail(name, email)) throw new ApplicationException("이미 존재하는 회원입니다.");
-        if( userRepository.existsUserByStudentId(studentId)) throw new ApplicationException("이미 존재하는 학번입니다.");
+        if (userRepository.existsUserByEmail(email)) throw new ApplicationException("이미 존재하는 회원입니다.");
 
         final User user = User.builder()
                 .email(email)
                 .name(name)
-                .pictureUrl(googleIdTokenVerificationResponse.getPicture())
-                .givenName(googleIdTokenVerificationResponse.getGiven_name())
-                .familyName(googleIdTokenVerificationResponse.getFamily_name())
-                .locale(googleIdTokenVerificationResponse.getLocale())
                 .studentId(studentId)
                 .majorType(request.getMajorType())
                 .userTakenCourses(request.toUserTakenCourseEntityList())
                 .build();
-
         return userRepository.save(user).getId();
     }
 
-
-    public AuthType findGoogleLoginType(String idToken) {
-        GoogleIdTokenVerificationResponse response = googleAuthTokenVerifier.verifyGoogleOAuth2IdToken(idToken);
-        Optional<User> user = findUserFromVerifiedIdTokenResponse(response);
-        if (user.isEmpty()) return AuthType.SIGN_UP;
-        return AuthType.SIGN_IN;
+    public Boolean isNewUser(String token) {
+        GoogleAuthBaseResponse googleAuthBaseResponse = googleAuthTokenVerifier.verify(token);
+        Optional<User> user = findUserFromToken(googleAuthBaseResponse);
+        return user.isEmpty();
     }
 
-    public Optional<User> findUserFromVerifiedIdTokenResponse(GoogleIdTokenVerificationResponse response) {
-        String email = response.getEmail();
-        String name = response.getName();
-        return userRepository.findUserByNameAndEmail(name, email);
+    public Optional<User> findUserFromToken(GoogleAuthBaseResponse response) {
+        final String email = response.getEmail();
+        return userRepository.findUserByEmail(email);
     }
 
 }

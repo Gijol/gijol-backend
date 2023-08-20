@@ -22,10 +22,43 @@ public abstract class BaseEntity {
     private Long id;
 
     @CreatedDate
+    @Column(name = "created_at",
+            columnDefinition = "timestamp null default null")
     private LocalDateTime createdAt;
 
     @LastModifiedDate
+    @Column(name = "updated_at",
+            columnDefinition = "timestamp null default null")
     private LocalDateTime updatedAt;
+
+    @Getter(value = AccessLevel.PROTECTED)
+    @Column(name = "deleted_at",
+            columnDefinition = "timestamp null default null")
+    private LocalDateTime deletedAt;
+
+    protected void softDelete(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
+    }
+
+    protected boolean isSoftDeleted() {
+        return null != deletedAt;
+    }
+
+    public void delete() {
+        softDelete(LocalDateTime.now());
+    }
+
+    public boolean isDeleted() {
+        return isSoftDeleted();
+    }
+
+    protected void undoDelete() {
+        this.deletedAt = null;
+    }
+
+    public void clearData() {
+        delete();
+    }
 
 
 }

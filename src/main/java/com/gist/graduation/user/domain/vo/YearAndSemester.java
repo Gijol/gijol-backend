@@ -14,7 +14,7 @@ import java.util.Objects;
 public class YearAndSemester {
 
     @Column(name = "year")
-    private int year;
+    private Integer year;
 
     @Column(name = "semester")
     private String semester;
@@ -29,7 +29,7 @@ public class YearAndSemester {
         if (this == o) return true;
         if (!(o instanceof YearAndSemester)) return false;
         YearAndSemester that = (YearAndSemester) o;
-        return year == that.year && Objects.equals(semester, that.semester);
+        return Objects.equals(year, that.year) && Objects.equals(semester, that.semester);
     }
 
     @Override

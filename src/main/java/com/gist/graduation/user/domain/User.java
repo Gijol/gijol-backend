@@ -1,6 +1,7 @@
 package com.gist.graduation.user.domain;
 
 import com.gist.graduation.common.BaseEntity;
+import com.gist.graduation.config.exception.ApplicationException;
 import com.gist.graduation.requirment.domain.GraduationRequirementStatus;
 import com.gist.graduation.requirment.domain.major.MajorType;
 import com.gist.graduation.user.taken_course.TakenCourse;
@@ -10,6 +11,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -22,24 +25,22 @@ import java.util.stream.Collectors;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Where(clause = "deleted_at is null")
 public class User extends BaseEntity {
 
-    @Column(nullable = false)
+    @Column(name = "name")
     @Convert(converter = AesConverter.class)
     private String name;
 
-    @Column(nullable = false)
+    @Column(name = "email")
     @Convert(converter = AesConverter.class)
     private String email;
 
-    @Embedded
-    private GoogleAdditionalInfo googleAdditionalInfo;
-
-    @Column(name = "student_id", unique = true, nullable = false)
+    @Column(name = "student_id")
     @Convert(converter = AesConverter.class)
     private String studentId;
 
-    @Column(name = "major_type", nullable = false)
+    @Column(name = "major_type")
     @Enumerated(EnumType.STRING)
     private MajorType majorType;
 
@@ -49,13 +50,12 @@ public class User extends BaseEntity {
     // graduationStatus
 
     @Builder
-    public User(String name, String email, String pictureUrl, String givenName,
-                MajorType majorType, String familyName, String locale,
+    public User(String name, String email,
+                MajorType majorType,
                 String studentId, List<UserTakenCourse> userTakenCourses) {
         this.name = name;
         this.email = email;
         this.majorType = majorType;
-        this.googleAdditionalInfo = new GoogleAdditionalInfo(pictureUrl, givenName, familyName, locale);
         this.studentId = studentId;
         this.userTakenCourses = userTakenCourses.stream()
                 .peek(userTakenCourse -> userTakenCourse.setUser(this))
@@ -77,20 +77,33 @@ public class User extends BaseEntity {
     }
 
     private UserTakenCoursesList toUserTakenCoursesList() {
-        List<TakenCourse> takenCourses = this.userTakenCourses.stream()
+        List<TakenCourse> takenCourses = getUserTakenCourses().stream()
                 .map(UserTakenCourse::toTakenCourse)
                 .collect(Collectors.toList());
         return new UserTakenCoursesList(takenCourses);
     }
 
-    public void updateTakenCourses(List<UserTakenCourse> userTakenCourseEntityList) {
-        this.userTakenCourses = userTakenCourseEntityList.stream()
-                .peek(userTakenCourse -> userTakenCourse.setUser(this))
+
+    public void updateName(String name) {
+        if (!StringUtils.hasLength(name)) {
+            throw new ApplicationException("이름은 공백일 수 없습니다.");
+        }
+        this.name = name;
+    }
+
+    public List<UserTakenCourse> getUserTakenCourses() {
+        return userTakenCourses.stream()
+                .filter(s -> !s.isDeleted())
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void clearData() {
+        super.clearData();
+        this.majorType = null;
+        this.name = null;
+        this.email = null;
+        this.studentId = null;
 
-    public void updateStudentId(String studentId) {
-        this.studentId = studentId;
     }
 }

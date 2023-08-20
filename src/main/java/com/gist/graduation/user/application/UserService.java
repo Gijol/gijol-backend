@@ -11,6 +11,7 @@ import com.gist.graduation.user.dto.UserTakenCoursesAndGradeResponse.UserTakenCo
 import com.gist.graduation.user.dto.UserTakenCoursesAndGradeResponse.UserTakenCourseResponse;
 import com.gist.graduation.user.dto.UserTakenCoursesRequest;
 import com.gist.graduation.user.repository.UserRepository;
+import com.gist.graduation.user.repository.UserTakenCourseRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserTakenCourseRepository userTakenCourseRepository;
     private final GraduationCalculator graduationCalculator;
 
     public GraduationRequirementStatus checkGraduationRequirementForUser(User user) {
@@ -66,11 +68,23 @@ public class UserService {
 
     @Transactional
     public void updateTakenCourses(User user, UserTakenCoursesRequest userTakenCoursesRequest) {
-        user.updateTakenCourses(userTakenCoursesRequest.toUserTakenCourseEntityList());
-        user.updateStudentId(userTakenCoursesRequest.getStudentId());
+        userTakenCourseRepository.deleteByUserId(user.getId());
+        userTakenCourseRepository.saveAll(userTakenCoursesRequest.toUserTakenCourseEntityList(user));
+        userRepository.updateUserById(userTakenCoursesRequest.getStudentId(), user.getId());
+    }
+
+    @Transactional
+    public void updateName(User user, String name) {
+        user.updateName(name);
     }
 
     public UserInfoResponse getUserInfo(User user) {
         return UserInfoResponse.of(user);
+    }
+
+    @Transactional
+    public void signOut(Long userId) {
+        userTakenCourseRepository.deleteByUserId(userId);
+        userRepository.deleteUserById(userId);
     }
 }

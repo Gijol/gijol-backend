@@ -8,20 +8,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class GoogleSignUpRequest{
+public class GoogleSignUpRequest {
 
+    @NotBlank
+    private String name;
     @NotBlank
     private String studentId;
     private MajorType majorType;
     private List<UserTakenCourseRequest> userTakenCourseList;
 
-    public GoogleSignUpRequest(String studentId, MajorType majorType, List<UserTakenCourseRequest> userTakenCourseList) {
+    public GoogleSignUpRequest(String naem, String studentId, MajorType majorType, List<UserTakenCourseRequest> userTakenCourseList) {
+        this.name = naem;
         this.studentId = studentId;
         this.majorType = majorType;
         this.userTakenCourseList = userTakenCourseList;
@@ -35,7 +37,7 @@ public class GoogleSignUpRequest{
 
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    static class UserTakenCourseRequest{
+    static class UserTakenCourseRequest {
         private int year;
         private String semester;
         private CourseType courseType;
@@ -54,7 +56,7 @@ public class GoogleSignUpRequest{
             this.grade = grade;
         }
 
-        public UserTakenCourse toEntity(){
+        public UserTakenCourse toEntity() {
             return UserTakenCourse.builder()
                     .year(this.year)
                     .semester(this.semester)

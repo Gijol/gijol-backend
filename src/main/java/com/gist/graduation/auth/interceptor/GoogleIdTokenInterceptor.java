@@ -25,8 +25,8 @@ public class GoogleIdTokenInterceptor implements HandlerInterceptor {
             if (Objects.isNull(credentials) || credentials.isBlank()) {
                 throw new AuthorizationException("유효한 토큰이 아닙니다.");
             }
-            String idToken = JWTAuthorizationHeaderParser.parse(credentials);
-            request.setAttribute("idToken", idToken);
+            String token = JWTAuthorizationHeaderParser.parse(credentials);
+            request.setAttribute("token", token);
         }
 
         return true;

@@ -1,6 +1,7 @@
 package com.gist.graduation.course.domain.tag;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.gist.graduation.common.BaseEntity;
 import com.gist.graduation.course.domain.course.Course;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -11,11 +12,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class CourseTag {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class CourseTag extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private CourseTagType courseTagType;
@@ -25,11 +22,6 @@ public class CourseTag {
     private Course course;
 
     public CourseTag(CourseTagType courseTagType, Course course) {
-        this(null, courseTagType, course);
-    }
-
-    private CourseTag(Long id, CourseTagType courseTagType, Course course) {
-        this.id = id;
         this.courseTagType = courseTagType;
         this.course = course;
     }

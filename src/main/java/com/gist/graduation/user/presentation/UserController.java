@@ -5,10 +5,8 @@ import com.gist.graduation.auth.annotation.GoogleIdTokenRequired;
 import com.gist.graduation.requirment.domain.GraduationRequirementStatus;
 import com.gist.graduation.user.application.UserService;
 import com.gist.graduation.user.domain.User;
-import com.gist.graduation.user.dto.UpdateMajorRequest;
-import com.gist.graduation.user.dto.UserInfoResponse;
-import com.gist.graduation.user.dto.UserTakenCoursesAndGradeResponse;
-import com.gist.graduation.user.dto.UserTakenCoursesRequest;
+import com.gist.graduation.user.dto.*;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +34,7 @@ public class UserController {
         return ResponseEntity.ok(userTakenCourseAndAverageGrade);
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     @GoogleIdTokenRequired
     public ResponseEntity<UserInfoResponse> getUserInfo(@AuthenticationPrincipal User user) {
         return ResponseEntity.ok(userService.getUserInfo(user));
@@ -53,6 +51,21 @@ public class UserController {
     @GoogleIdTokenRequired
     public ResponseEntity<?> changeMajor(@AuthenticationPrincipal User user, @RequestBody UpdateMajorRequest request) {
         userService.updateMajor(user, request.getMajorType());
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/name")
+    @GoogleIdTokenRequired
+    public ResponseEntity<?> changeName(@AuthenticationPrincipal User user, @RequestBody UpdateNameRequest request) {
+        userService.updateName(user, request.getName());
+        return ResponseEntity.noContent().build();
+    }
+
+    @ApiOperation(value = "회원 탈퇴 API", notes = "헤더에서 Oauth 토큰과 함께 요청해야 합니다")
+    @DeleteMapping("")
+    @GoogleIdTokenRequired
+    public ResponseEntity<?> signOut(@AuthenticationPrincipal User user) {
+        userService.signOut(user.getId());
         return ResponseEntity.noContent().build();
     }
 }

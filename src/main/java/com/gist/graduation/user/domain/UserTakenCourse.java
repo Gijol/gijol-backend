@@ -9,6 +9,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -16,6 +17,10 @@ import java.math.BigDecimal;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Where(clause = "deleted_at is null ")
+@Table(name = "user_taken_course", indexes = {
+        @Index(name = "idx_user_taken_course_user_id", columnList = "user_id")
+})
 public class UserTakenCourse extends BaseEntity {
 
     @Embedded

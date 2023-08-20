@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,29 +23,31 @@ public class CourseResponse {
     private int courseCredit;
 
     private String prerequisite;
+    private String description;
 
     private final List<CourseTagType> courseTags = new ArrayList<>();
 
 
-    public CourseResponse(Long id, String courseCode, String courseName, int courseCredit, String prerequisite) {
+    public CourseResponse(Long id, String courseCode, String courseName, int courseCredit, String prerequisite, String description) {
         this.id = id;
         this.courseCode = courseCode;
         this.courseName = courseName;
         this.courseCredit = courseCredit;
         this.prerequisite = prerequisite;
-        this.courseTags.addAll(courseTags);
+        this.description = description;
     }
 
-    public CourseResponse(Long id, String courseCode, String courseName, int courseCredit, String prerequisite, List<CourseTagType> courseTags) {
+    public CourseResponse(Long id, String courseCode, String courseName, int courseCredit, String prerequisite, String description, List<CourseTagType> courseTags) {
         this.id = id;
         this.courseCode = courseCode;
         this.courseName = courseName;
         this.courseCredit = courseCredit;
         this.prerequisite = prerequisite;
+        this.description = description;
         this.courseTags.addAll(courseTags);
     }
 
-    public static List<CourseResponse> listOf(Collection<Course> courses) {
+    public static List<CourseResponse> listOf(List<Course> courses) {
         return courses.stream()
                 .map(CourseResponse::of)
                 .collect(Collectors.toList());
@@ -63,6 +64,7 @@ public class CourseResponse {
                 course.getCourseInfo().getCourseName(),
                 course.getCourseInfo().getCourseCredit(),
                 course.getPrerequisite(),
+                course.getDescription(),
                 courseTags);
     }
 

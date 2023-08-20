@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.util.List;
 import java.util.Objects;
@@ -15,13 +16,19 @@ import java.util.stream.Collectors;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class CourseInfo {
+
+    @Column(name = "course_code")
     private String courseCode;
+
+    @Column(name = "course_name")
     private String courseName;
+
+    @Column(name = "course_credit")
     private int courseCredit;
 
     public CourseInfo(String courseName, String courseCode, int courseCredit) {
-        this.courseCode = courseCode;
         this.courseName = courseName;
+        this.courseCode = courseCode;
         this.courseCredit = courseCredit;
     }
 
@@ -52,15 +59,15 @@ public class CourseInfo {
                 .anyMatch(s -> this.courseCode.contains(s));
     }
 
-    public boolean isMinor(String code){
-        if (this.courseCode.contains("GS")){
+    public boolean isMinor(String code) {
+        if (this.courseCode.contains("GS")) {
             return this.courseCode.substring(2).equals(code.substring(2));
         }
         return false;
     }
 
-    public boolean isMinor(List<String> code){
-        if (this.courseCode.contains("GS")){
+    public boolean isMinor(List<String> code) {
+        if (this.courseCode.contains("GS")) {
             return code.stream().anyMatch(s -> s.substring(2).equals(this.courseCode.substring(2)));
         }
         return false;

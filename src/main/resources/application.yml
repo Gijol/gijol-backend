@@ -67,7 +67,7 @@ internal:
     course: dev-token
 
 request:
-  origins: http://localhost:3000,http://localhost:3001,https://dev.gijol.im, https://gijol-v2.vercel.app,
+  origins: http://localhost:3000,http://localhost:3001,https://dev.gijol.im, https://gijol-v2.vercel.app,https://gijol-v2-dev.vercel.app
 
 ---
 
@@ -109,7 +109,7 @@ request:
   origins: https://gijol.im,https://dev.gijol.im, https://gijol-v2.vercel.app
 
 logging:
-  level:
+  lƒevel:
     org:
       springframework:
         jdbc:

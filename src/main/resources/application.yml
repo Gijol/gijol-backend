@@ -106,7 +106,7 @@ management:
       enabled: false
 
 request:
-  origins: https://gijol.im,https://dev.gijol.im, https://gijol-v2.vercel.app
+  origins: https://gijol.im,https://dev.gijol.im, https://gijol-v2-dev.vercel.app
 
 logging:
   lƒevel:

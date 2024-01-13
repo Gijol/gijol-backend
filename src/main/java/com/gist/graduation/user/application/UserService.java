@@ -1,5 +1,6 @@
 package com.gist.graduation.user.application;
 
+import com.gist.graduation.config.exception.ApplicationException;
 import com.gist.graduation.requirment.domain.GraduationRequirementStatus;
 import com.gist.graduation.requirment.domain.major.MajorType;
 import com.gist.graduation.user.domain.User;
@@ -30,6 +31,12 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserTakenCourseRepository userTakenCourseRepository;
     private final GraduationCalculator graduationCalculator;
+
+    public GraduationRequirementStatus checkGraduationRequirementForUser(Long userId) {
+        final User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ApplicationException("존재하지 않는 유저입니다."));
+        return user.checkGraduationStatus();
+    }
 
     public GraduationRequirementStatus checkGraduationRequirementForUser(User user) {
         final GraduationRequirementStatus graduationRequirementStatus = user.checkGraduationStatus();

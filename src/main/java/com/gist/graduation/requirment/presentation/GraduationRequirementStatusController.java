@@ -20,6 +20,7 @@ import java.net.URI;
 @Slf4j
 @RestController
 @RequestMapping("/graduation")
+@Deprecated
 public class GraduationRequirementStatusController {
 
     private final GraduationRequirementStatusService graduationRequirementStatusService;

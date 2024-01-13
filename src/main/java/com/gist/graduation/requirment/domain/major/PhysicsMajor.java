@@ -10,7 +10,7 @@ import static com.gist.graduation.requirment.domain.constants.MajorMandatoryCons
 @RequiredArgsConstructor
 public enum PhysicsMajor implements MajorInterface {
 
-    FROM2018(List.of(18, 19, 20, 21, 22), List.of(PS2101, PS2102, PS2103, PS3103, PS3104, PS3105, PS3106, PS3107));
+    FROM2018(List.of(18, 19, 20, 21, 22, 23, 24), List.of(PS2101, PS2102, PS2103, PS3103, PS3104, PS3105, PS3106, PS3107));
 
     private final List<Integer> studentId;
     private final List<CourseInfo> mandatoryCourses;
@@ -20,9 +20,5 @@ public enum PhysicsMajor implements MajorInterface {
         return this.mandatoryCourses;
     }
 
-    @Override
-    public boolean contains(Integer studentId) {
-        return this.studentId.contains(studentId);
-    }
 
 }

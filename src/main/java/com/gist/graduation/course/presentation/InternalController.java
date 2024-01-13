@@ -42,7 +42,7 @@ public class InternalController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/graduation/requirements/{userId}")
+    @GetMapping("/graduation/requirements/{userId}")
     public ResponseEntity<GraduationRequirementStatus> checkGraduationRequirement(
             @PathVariable("userId") Long userId,
             @RequestParam(value = "token", defaultValue = "") String inputToken

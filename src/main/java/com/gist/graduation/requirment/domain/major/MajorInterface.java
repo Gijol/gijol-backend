@@ -47,6 +47,8 @@ public interface MajorInterface {
 
     List<CourseInfo> getMandatoryCourses();
 
-    boolean contains(Integer studentId);
+    default boolean contains(Integer studentId){
+        return studentId >= 18;
+    }
 
 }

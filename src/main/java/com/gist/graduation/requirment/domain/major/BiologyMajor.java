@@ -12,7 +12,7 @@ import static com.gist.graduation.requirment.domain.constants.MajorMandatoryCons
 @RequiredArgsConstructor
 public enum BiologyMajor implements MajorInterface {
 
-    FROM2021(List.of(18, 19, 20, 21, 22), List.of(BS2101, BS2102, BS2103, BS2103_1, BS2104, BS2104_1, BS3101, BS3105, BS3112));
+    FROM2021(List.of(18, 19, 20, 21, 22, 23, 24), List.of(BS2101, BS2102, BS2103, BS2103_1, BS2104, BS2104_1, BS3101, BS3105, BS3112));
 
 
     private final List<Integer> studentId;
@@ -57,8 +57,4 @@ public enum BiologyMajor implements MajorInterface {
         return this.mandatoryCourses;
     }
 
-    @Override
-    public boolean contains(Integer studentId) {
-        return this.studentId.contains(studentId);
-    }
 }
